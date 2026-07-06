@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaverse Creations | Bağımsız Oyun ve Yapay Zeka Stüdyosu</title>
+    <meta name="description" content="Galaverse Creations, karanlık atmosferli bağımsız oyunlar ve işletmeler için gelişmiş yapay zeka otomasyon çözümleri geliştiren bağımsız bir teknoloji stüdyosudur.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Theme Initialization Script to prevent FOUC -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('galaverse-theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+</head>
+<body>
+
+    <!-- Sticky Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <span class="logo-symbol">//</span> GALAVERSE <span class="accent-text">CREATIONS</span>
+            </a>
+            
+            <div class="nav-right">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#home" class="nav-link active" data-i18n="nav-home">Ana Sayfa</a></li>
+                    <li><a href="#projects" class="nav-link" data-i18n="nav-projects">Projeler</a></li>
+                    <li><a href="#services" class="nav-link" data-i18n="nav-services">Hizmetler</a></li>
+                    <li><a href="#assistant" class="nav-link" data-i18n="nav-assistant">Akıllı Asistan</a></li>
+                    <li><a href="#about" class="nav-link" data-i18n="nav-about">Hakkımızda</a></li>
+                </ul>
+
+                <!-- Language Switcher -->
+                <div class="lang-switch">
+                    <button class="lang-btn active" data-lang="tr">TR</button>
+                    <span class="lang-separator">|</span>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+
+                <!-- Theme Switcher -->
+                <button class="theme-toggle" id="theme-toggle" aria-label="Tema Değiştir">
+                    <!-- Sun Icon (for Light Mode) -->
+                    <svg class="theme-icon sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                    </svg>
+                    <!-- Moon Icon (for Dark Mode) -->
+                    <svg class="theme-icon moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+
+                <button class="menu-toggle" id="menu-toggle" aria-label="Menüyü Aç">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section" id="home">
+        <div class="hero-bg-overlay"></div>
+        <div class="hero-glow-blob"></div>
+        <div class="hero-content">
+            <div class="hero-badge" data-i18n="hero-badge">SİSTEM DURUMU: AKTİF</div>
+            <h1 class="hero-title preserve-html" data-i18n="hero-title">Karanlık Atmosferler,<br><span class="gradient-text">Cozy Dokunuşlar</span></h1>
+            <p class="hero-subtitle" data-i18n="hero-subtitle">Sıra dışı macera, korku ve cozy avcılık oyunları ile geleceğin kurumsal yapay zeka otomasyon çözümlerini tasarlıyoruz. Sıcak, atmosferik ve akıcı dijital deneyimler.</p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary"><span data-i18n="hero-btn-projects">Projeleri İncele</span></a>
+                <a href="#assistant" class="btn btn-outline"><span data-i18n="hero-btn-assistant">Asistanı Dene</span></a>
+            </div>
+        </div>
+        <a href="#projects" class="scroll-down" aria-label="Aşağı Kaydır">
+            <span class="scroll-text" data-i18n="hero-scroll">DİKEY AKIŞ</span>
+            <svg class="scroll-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+    </header>
+
+    <!-- Projects Section -->
+    <section class="projects-section" id="projects">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-subtitle" data-i18n="section-subtitle-projects">// PORTFÖYÜMÜZ</span>
+                <h2 class="section-title" data-i18n="section-title-projects">Geliştirilen Projeler</h2>
+                <p class="section-desc" data-i18n="section-desc-projects">Geliştirdiğimiz PC projelerinin yanı sıra daha önce mobil oyunlar da tasarladık; ancak güncelleme yayınlamadığımız için Play Store'dan kaldırılmıştır.</p>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="projects-grid">
+                <!-- Project 1: The Anomaly Detective -->
+                <div class="project-card">
+                    <div class="project-img-wrapper">
+                        <img src="images/anomaly_detective.jpg" alt="The Anomaly Detective" class="project-img">
+                        <div class="project-status" data-i18n="game1-status">YAYINDA</div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-meta">
+                            <span class="project-genre" data-i18n="game1-genre">ANOMALİ DEDEKTİFLİĞİ / KORKU</span>
+                            <span class="project-year">2026</span>
+                        </div>
+                        <h3 class="project-title">The Anomaly Detective</h3>
+                        <div class="project-role"><span data-i18n="project-role-label">Rol:</span> <span class="project-role-value" data-i18n="game1-role">Solo Geliştirici</span></div>
+                        <p class="project-desc" data-i18n="game1-desc">Sadece 4 ayda, sıfır bütçe ve sıkı bir planlamayla tek başıma geliştirip yayınladığım bu oyunda birbirine bağlı sistemlere odaklandım. Dinamik bir karakter kontrolcüsü, çalışan asansörler, etkileşimli bir dedektif panosu ve diyalog seçeneklerine sahip duyarlı bir radyo sistemi inşa ettim. Steam'de %100 olumlu inceleme alarak özellikle Asya pazarında güçlü bir ivme yakaladı. 12 dile tamamen yerelleştirildi. Bu proje, sürükleyici, yüksek kaliteli oynanış tasarlama ve cilalanmış bir ürünü hızla piyasaya sürme becerimi kanıtlamaktadır.</p>
+                        <div class="project-features">
+                            <span class="feature-tag" data-i18n="game1-tag1">Halüsinasyon Mekaniği</span>
+                            <span class="feature-tag" data-i18n="game1-tag2">Çıkarım Panosu</span>
+                            <span class="feature-tag" data-i18n="game1-tag3">Çoklu Sonlar</span>
+                        </div>
+                        <a href="https://store.steampowered.com/app/4181340/The_Anomaly_Detective/" target="_blank" rel="noopener noreferrer" class="btn-card">
+                            <span data-i18n="btn-steam">Steam'de İncele</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 4H20M20 4V12M20 4L12 12M9 20H15M4 12V18C4 19.1046 4.89543 20 6 20H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2: Lunhowl Coop Horror -->
+                <div class="project-card">
+                    <div class="project-img-wrapper">
+                        <img src="images/lunhowl.jpg" alt="Lunhowl Coop Horror" class="project-img">
+                        <div class="project-status" data-i18n="game2-status">ERKEN ERİŞİM</div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-meta">
+                            <span class="project-genre" data-i18n="game2-genre">CO-OP SURVIVAL HORROR</span>
+                            <span class="project-year">2025</span>
+                        </div>
+                        <h3 class="project-title">Lunhowl</h3>
+                        <div class="project-role"><span data-i18n="project-role-label">Rol:</span> <span class="project-role-value" data-i18n="game2-role">Solo Geliştirici</span></div>
+                        <p class="project-desc" data-i18n="game2-desc">Tamamen solo olarak geliştirdiğim Steam'deki ilk oyunum. Sunucu bakım maliyeti gerektirmeyen, Mirror kütüphanesi ve Steamworks P2P altyapısını kullanan 1-4 oyunculu bir co-op oyun mimarisi tasarladım. Steam Bulut Kayıtları, Başarımlar ve Steam Lobi Eşleştirmesini entegre ettim. Yüksek tutundurma oranına sahip oynanış döngüleri, modüler karakter özelleştirmeleri, düşman yapay zekası davranışları, dinamik aydınlatma ve DLC dağıtım hatları yazdım. 12 dile tamamen yerelleştirildi.</p>
+                        <div class="project-features">
+                            <span class="feature-tag" data-i18n="game2-tag1">Mirror Ağ Altyapısı</span>
+                            <span class="feature-tag" data-i18n="game2-tag2">Steamworks P2P</span>
+                            <span class="feature-tag" data-i18n="game2-tag3">Yapay Zeka Maskotlar</span>
+                        </div>
+                        <a href="https://store.steampowered.com/app/3614690/Lunhowl_Coop_Horror/" target="_blank" rel="noopener noreferrer" class="btn-card">
+                            <span data-i18n="btn-steam">Steam'de İncele</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 4H20M20 4V12M20 4L12 12M9 20H15M4 12V18C4 19.1046 4.89543 20 6 20H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 3: Spear of the Sky -->
+                <div class="project-card">
+                    <div class="project-img-wrapper">
+                        <img src="images/spear_of_the_sky.jpg" alt="Spear of the Sky" class="project-img">
+                        <div class="project-status" data-i18n="game3-status">GELİŞTİRİLME AŞAMASINDA</div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-meta">
+                            <span class="project-genre" data-i18n="game3-genre">COZY AVCI / BİRİNCİ ŞAHIS</span>
+                            <span class="project-year">2026</span>
+                        </div>
+                        <h3 class="project-title">Spear of the Sky</h3>
+                        <div class="project-role"><span data-i18n="project-role-label">Rol:</span> <span class="project-role-value" data-i18n="game3-role">Solo Geliştirici</span></div>
+                        <p class="project-desc" data-i18n="game3-desc">Oyuncuyu elde tutma oranını artırmaya yönelik ölçeklenebilir sistemler tasarlama becerimi sergileyen, geliştirme aşamasındaki bir PC oyunu. Prestige ilerleme sistemi, çevrimiçi liderlik tabloları ve oyun içi mağaza ekonomisi etrafında şekillenen üç farklı oynanış döngüsü (Klasik, Hayatta Kalma ve Boss Savaşı) geliştirdim. Steamworks arka planının tamamını (eşleştirme, liderlik tabloları, istatistikler ve başarımlar) entegre ettim. Aynı anda yüzlerce aktif, fizik tabanlı nesneyi desteklemek amacıyla performans ve varlık optimizasyonları gerçekleştirdim.</p>
+                        <div class="project-features">
+                            <span class="feature-tag" data-i18n="game3-tag1">Geri Dönen Mızrak</span>
+                            <span class="feature-tag" data-i18n="game3-tag2">Prestige İlerlemesi</span>
+                            <span class="feature-tag" data-i18n="game3-tag3">Liderlik Tabloları</span>
+                        </div>
+                        <a href="https://store.steampowered.com/app/4642840/Spear_of_the_Sky/" target="_blank" rel="noopener noreferrer" class="btn-card">
+                            <span data-i18n="btn-steam">Steam'de İncele</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 4H20M20 4V12M20 4L12 12M9 20H15M4 12V18C4 19.1046 4.89543 20 6 20H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upwork Freelance Services Section -->
+    <section class="services-section" id="services">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-subtitle" data-i18n="section-subtitle-services">// FREELANCE HİZMETLERİMİZ</span>
+                <h2 class="section-title" data-i18n="section-title-services">Upwork Hizmet Kataloğu</h2>
+                <p class="section-desc" data-i18n="section-desc-services">Hızlı oyun prototipleme, Unity mekanikleri, mobil/HTML5 uyumlu projeler ve yapay zeka destekli yerelleştirme hizmetleri için doğrudan Upwork üzerinden teklif alabilirsiniz.</p>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="services-grid">
+                <!-- Service 1: AI Localization -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="service-card-title" data-i18n="service1-title">AI Localization & Translation Setup</h3>
+                    <p class="service-card-desc" data-i18n="service1-desc">Oyununuzu yapay zeka destekli araçlarla ve Unity'nin Localization paketiyle hızlıca 12+ dile çevirip entegre edin.</p>
+                    <div class="service-meta">
+                        <span class="service-price" data-i18n="service1-price">30$'dan başlayan fiyatlarla</span>
+                        <span class="service-delivery" data-i18n="service-delivery-fast">Hızlı Teslimat</span>
+                    </div>
+                    <a href="https://www.upwork.com/freelancers/mertkunitydev" target="_blank" rel="noopener noreferrer" class="btn-service">
+                        <span data-i18n="btn-hire">Upwork'te Sipariş Ver</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Service 2: Rapid Prototyping -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                            <line x1="7" y1="2" x2="7" y2="22"></line>
+                            <line x1="17" y1="2" x2="17" y2="22"></line>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <line x1="2" y1="7" x2="7" y2="7"></line>
+                            <line x1="2" y1="17" x2="7" y2="17"></line>
+                            <line x1="17" y1="17" x2="22" y2="17"></line>
+                            <line x1="17" y1="7" x2="22" y2="7"></line>
+                        </svg>
+                    </div>
+                    <h3 class="service-card-title" data-i18n="service2-title">Playable Game Prototype (Unity / HTML5)</h3>
+                    <p class="service-card-desc" data-i18n="service2-desc">Fikirlerinizi hızlıca test etmek için ister Steam mekanikleri, ister mobil, isterseniz de tarayıcı destekli (HTML5) akıcı prototipler.</p>
+                    <div class="service-meta">
+                        <span class="service-price" data-i18n="service2-price">45$'dan başlayan fiyatlarla</span>
+                        <span class="service-delivery" data-i18n="service-delivery-fast">Hızlı Teslimat</span>
+                    </div>
+                    <a href="https://www.upwork.com/freelancers/mertkunitydev" target="_blank" rel="noopener noreferrer" class="btn-service">
+                        <span data-i18n="btn-hire">Upwork'te Sipariş Ver</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Service 3: Steamworks Integration -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                        </svg>
+                    </div>
+                    <h3 class="service-card-title" data-i18n="service3-title">Steamworks Integration for Unity</h3>
+                    <p class="service-card-desc" data-i18n="service3-desc">Lobi eşleştirmeleri, liderlik tabloları, bulut kayıtları, başarımlar ve DLC gibi tüm Steam API özelliklerini oyununuza bağlayın.</p>
+                    <div class="service-meta">
+                        <span class="service-price" data-i18n="service3-price">50$'dan başlayan fiyatlarla</span>
+                        <span class="service-delivery" data-i18n="service-delivery-fast">Hızlı Teslimat</span>
+                    </div>
+                    <a href="https://www.upwork.com/freelancers/mertkunitydev" target="_blank" rel="noopener noreferrer" class="btn-service">
+                        <span data-i18n="btn-hire">Upwork'te Sipariş Ver</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Intelligent Assistant Chat UI -->
+    <section class="assistant-section" id="assistant">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-subtitle" data-i18n="section-subtitle-assistant">// YAPAY ZEKA LABS</span>
+                <h2 class="section-title" data-i18n="section-title-assistant">Kurumsal Akıllı Asistan</h2>
+                <p class="section-desc" data-i18n="section-desc-assistant">Galaverse AI, işletmenizin veri tabanlarını, müşteri ilişkilerini ve lojistik süreçlerini optimize etmek amacıyla tasarlanmış özelleştirilebilir bir yapay zeka aracıdır.</p>
+                <div class="section-line"></div>
+            </div>
+
+            <!-- Assistant Workspace Grid -->
+            <div class="assistant-workspace">
+                <!-- Left: Chat Console UI -->
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <div class="chat-header-info">
+                            <div class="status-indicator online"></div>
+                            <div>
+                                <span class="chat-bot-name">GALAVERSE AI v1.0.4-beta</span>
+                                <span class="chat-bot-status" data-i18n="chat-status">Aktif & Öğreniyor</span>
+                            </div>
+                        </div>
+                        <div class="chat-header-actions">
+                            <span class="chat-latency" data-i18n="chat-latency">GECİKME: 42ms</span>
+                        </div>
+                    </div>
+
+                    <div class="chat-body" id="chat-body">
+                        <!-- Bot message -->
+                        <div class="chat-message bot">
+                            <div class="message-avatar">
+                                <img src="images/ai_avatar.png" alt="Galaverse AI Avatar">
+                            </div>
+                            <div class="message-wrapper">
+                                <div class="message-content">
+                                    <p data-i18n="chat-initial">Merhaba. Ben Galaverse Kurumsal Akıllı Asistanı. Sistemlerimizin entegrasyon kapasiteleri, makine öğrenimi modellerimiz veya otomasyon çözümlerimiz hakkında sorularınızı yanıtlayabilirim.</p>
+                                </div>
+                                <span class="message-time"><span data-i18n="chat-system">Sistem</span> • <span data-i18n="chat-now">Şimdi</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="chat-input-area" id="chat-form">
+                        <input type="text" id="chat-input" placeholder="Asistan ile konuşun..." data-i18n="chat-placeholder" autocomplete="off" required>
+                        <button type="submit" class="chat-send-btn" aria-label="Mesaj Gönder">
+                            <span class="btn-text" data-i18n="chat-send">GÖNDER</span>
+                            <svg class="send-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right: Configurator Form -->
+                <div class="config-container">
+                    <div class="config-header">
+                        <span class="config-header-title" data-i18n="cfg-title">Asistanı Özelleştir</span>
+                    </div>
+                    
+                    <div class="config-body">
+                        <p class="config-description" data-i18n="cfg-subtitle">Kendi şirketinizin bilgilerini girerek akıllı asistanın nasıl yanıt verdiğini anında test edin.</p>
+                        
+                        <div class="config-field">
+                            <label class="config-label" for="cfg-name" data-i18n="cfg-label-name">Şirket Adı (Maks. 30 Karakter)</label>
+                            <input type="text" id="cfg-name" class="config-input" maxlength="30" placeholder="Örn: Galaverse Tech">
+                        </div>
+
+                        <div class="config-field">
+                            <label class="config-label" for="cfg-desc" data-i18n="cfg-label-desc">Şirket Açıklaması (Maks. 120 Karakter)</label>
+                            <textarea id="cfg-desc" class="config-textarea" maxlength="120" placeholder="Örn: İşletmeler için mobil ve web çözümleri sunuyoruz."></textarea>
+                        </div>
+
+                        <div class="config-field">
+                            <label class="config-label" for="cfg-product" data-i18n="cfg-label-product">Hizmet/Ürün & Fiyatı (Maks. 50 Karakter)</label>
+                            <input type="text" id="cfg-product" class="config-input" maxlength="50" placeholder="Örn: Mobil Uygulama Geliştirme - $5,000">
+                        </div>
+                    </div>
+
+                    <div class="config-actions">
+                        <button type="button" id="cfg-btn-demo" class="config-btn config-btn-demo" data-i18n="cfg-btn-demo">Şablon Yükle</button>
+                        <button type="button" id="cfg-btn-apply" class="config-btn config-btn-apply" data-i18n="cfg-btn-apply">Güncelle</button>
+                    </div>
+
+                    <!-- Small Toast -->
+                    <div id="cfg-toast" class="config-toast">Sistem güncellendi!</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About & Contact Section -->
+    <section class="about-section" id="about">
+        <div class="section-container">
+            <div class="about-grid">
+                <div class="about-info">
+                    <span class="section-subtitle" data-i18n="section-subtitle-about">// MİSYON & VİZYON</span>
+                    <h2 class="section-title" data-i18n="section-title-about">Gerçekliğin Karanlık Yüzü, Geleceğin Kodları</h2>
+                    <p class="about-text" data-i18n="about-text-1">Galaverse Creations olarak 2024 yılında kurulduk. Atmosferik hikaye anlatıcılığı ile ileri düzey veri işlemeyi tek bir stüdyo çatısı altında birleştiriyoruz. Ekiplerimiz, gerilim dozu yüksek, derin hikaye anlatımlı oyunlar üretirken; aynı zamanda endüstriyel otomasyon süreçlerinde kullanılacak özelleştirilmiş yapay zeka katmanları geliştiriyor.</p>
+                    <p class="about-text" data-i18n="about-text-2">Felsefemiz net: Görsel gürültüden uzak, temiz, optimize ve sıcak tasarım ilkeleriyle şekillendirilmiş yüksek performanslı dijital ürünler.</p>
+                    <p class="about-text" data-i18n="about-text-3">Ayrıca Upwork platformu üzerinden küresel düzeyde bağımsız/freelance oyun geliştirme ve AI entegrasyonu hizmetleri sunuyoruz. Unity oyun mekanikleri, gelişmiş fizik simülasyonları, yapay zeka destekli bot ve asistan çözümleri ve optimizasyon alanlarında projelerinize can veriyoruz.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="contact-label" data-i18n="contact-label-email">İLETİŞİM / E-POSTA</span>
+                            <a href="mailto:galaversecreations@gmail.com" class="contact-value">galaversecreations@gmail.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label" data-i18n="contact-label-hq">MERKEZ</span>
+                            <span class="contact-value" data-i18n="contact-val-hq">Ankara, Türkiye</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label" data-i18n="contact-label-upwork">UPWORK</span>
+                            <a href="https://www.upwork.com/freelancers/mertkunitydev" target="_blank" rel="noopener noreferrer" class="contact-value">mertkunitydev (Mert K.)</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <span class="terminal-title">system_info.sh</span>
+                    </div>
+                    <div class="terminal-body">
+                        <p class="term-line"><span class="term-prompt">$</span> cat studio_specs.json</p>
+                        <p class="term-output">{</p>
+                        <p class="term-output">&nbsp;&nbsp;<span class="term-key">"name"</span>: <span class="term-val">"Galaverse Creations"</span>,</p>
+                        <p class="term-output">&nbsp;&nbsp;<span class="term-key">"focus"</span>: [<span class="term-val">"Indie Games"</span>, <span class="term-val">"AI Automation"</span>],</p>
+                        <p class="term-output">&nbsp;&nbsp;<span class="term-key">"tech_stack"</span>: [<span class="term-val">"Unity URP/HDRP"</span>, <span class="term-val">"LLMs"</span>, <span class="term-val">"WebGPU"</span>, <span class="term-val">"Rust"</span>],</p>
+                        <p class="term-output">&nbsp;&nbsp;<span class="term-key">"status"</span>: <span class="term-val">"Active Research & Development"</span></p>
+                        <p class="term-output">}</p>
+                        <p class="term-line"><span class="term-prompt">$</span> upwork-agent --status</p>
+                        <p class="term-output">Services: Freelance Game Dev & Custom AI Integration</p>
+                        <p class="term-output">Availability: OPEN FOR CONTRACTS (Unity / C# / Optimization)</p>
+                        <p class="term-line"><span class="term-prompt">$</span> <span class="blink">_</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p class="footer-copy" data-i18n="footer-copy">© 2026 Galaverse Creations. Tüm hakları saklıdır.</p>
+            <div class="footer-socials">
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Twitter">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+                    </svg>
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                        <rect x="2" y="9" width="4" height="12"/>
+                        <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                </a>
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="YouTube">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+                        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS Script -->
+    <script src="script.js"></script>
+</body>
+</html>
