@@ -107,7 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "contact-label-upwork": "UPWORK HİZMETLERİ",
             
             // Footer
-            "footer-copy": "© 2026 Galaverse Creations. Tüm hakları saklıdır."
+            "footer-copy": "© 2026 Galaverse Creations. Tüm hakları saklıdır.",
+            "footer-privacy": "Gizlilik Politikası"
         },
         en: {
             "nav-home": "Home",
@@ -213,7 +214,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "contact-label-upwork": "UPWORK SERVICES",
             
             // Footer
-            "footer-copy": "© 2026 Galaverse Creations. All rights reserved."
+            "footer-copy": "© 2026 Galaverse Creations. All rights reserved.",
+            "footer-privacy": "Privacy Policy"
         }
     };
 
@@ -429,76 +431,90 @@ document.addEventListener('DOMContentLoaded', () => {
         chatBody.scrollTop = chatBody.scrollHeight;
     }
 
+    let isChatLoading = false;
+
     chatForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        if (isChatLoading) return;
         
-        const messageText = chatInput.value.trim();
+        let messageText = chatInput.value.trim();
         if (!messageText) return;
+
+        // Truncate to maximum 500 characters to prevent API misuse
+        if (messageText.length > 500) {
+            messageText = messageText.substring(0, 500);
+        }
 
         const userLabel = currentLang === 'tr' ? 'Kullanıcı' : 'User';
         const systemLabel = currentLang === 'tr' ? 'Sistem' : 'System';
+        const sendBtn = chatForm.querySelector('.chat-send-btn');
 
-        // User Message HTML
-        const userMessageHTML = `
-            <div class="chat-message user">
-                <div class="message-avatar">
-                    <span class="user-avatar-icon">U</span>
-                </div>
-                <div class="message-wrapper">
-                    <div class="message-content">
-                        <p>${escapeHTML(messageText)}</p>
+        try {
+            isChatLoading = true;
+            chatInput.disabled = true;
+            if (sendBtn) sendBtn.disabled = true;
+
+            // User Message HTML
+            const userMessageHTML = `
+                <div class="chat-message user">
+                    <div class="message-avatar">
+                        <span class="user-avatar-icon">U</span>
                     </div>
-                    <span class="message-time"><span>${userLabel}</span> • ${getCurrentTimeString()}</span>
-                </div>
-            </div>
-        `;
-
-        // Append user message
-        chatBody.insertAdjacentHTML('beforeend', userMessageHTML);
-        chatInput.value = '';
-        scrollToBottom();
-
-        // Show typing indicator / loading message
-        const loadingText = currentLang === 'tr' ? 'Veri işleniyor...' : 'System processing...';
-        const loadingIndicatorHTML = `
-            <div class="chat-message bot" id="loading-indicator">
-                <div class="message-avatar">
-                    <img src="images/ai_avatar.png" alt="Galaverse AI Avatar">
-                </div>
-                <div class="message-wrapper">
-                    <div class="message-content" style="border-color: rgba(224, 157, 88, 0.3);">
-                        <div class="typing-indicator" style="display: flex; align-items: center; gap: 8px;">
-                            <span class="typing-dot" style="background-color: var(--accent); margin: 0;"></span>
-                            <span class="typing-dot" style="background-color: var(--accent); margin: 0;"></span>
-                            <span class="typing-dot" style="background-color: var(--accent); margin: 0;"></span>
-                            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--accent); margin-left: 8px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block;">
-                                ${loadingText}
-                            </span>
+                    <div class="message-wrapper">
+                        <div class="message-content">
+                            <p>${escapeHTML(messageText)}</p>
                         </div>
+                        <span class="message-time"><span>${userLabel}</span> • ${getCurrentTimeString()}</span>
                     </div>
-                    <span class="message-time"><span>${systemLabel}</span> • ${getCurrentTimeString()}</span>
                 </div>
-            </div>
-        `;
+            `;
 
-        chatBody.insertAdjacentHTML('beforeend', loadingIndicatorHTML);
-        scrollToBottom();
+            // Append user message
+            chatBody.insertAdjacentHTML('beforeend', userMessageHTML);
+            chatInput.value = '';
+            scrollToBottom();
 
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
+            // Show typing indicator / loading message
+            const loadingText = currentLang === 'tr' ? 'Veri işleniyor...' : 'System processing...';
+            const loadingIndicatorHTML = `
+                <div class="chat-message bot" id="loading-indicator">
+                    <div class="message-avatar">
+                        <img src="images/ai_avatar.png" alt="Galaverse AI Avatar">
+                    </div>
+                    <div class="message-wrapper">
+                        <div class="message-content" style="border-color: rgba(224, 157, 88, 0.3);">
+                            <div class="typing-indicator" style="display: flex; align-items: center; gap: 8px;">
+                                <span class="typing-dot" style="background-color: var(--accent); margin: 0;"></span>
+                                <span class="typing-dot" style="background-color: var(--accent); margin: 0;"></span>
+                                <span class="typing-dot" style="background-color: var(--accent); margin: 0;"></span>
+                                <span style="font-family: var(--font-mono); font-size: 11px; color: var(--accent); margin-left: 8px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block;">
+                                    ${loadingText}
+                                </span>
+                            </div>
+                        </div>
+                        <span class="message-time"><span>${systemLabel}</span> • ${getCurrentTimeString()}</span>
+                    </div>
+                </div>
+            `;
 
-        // Model Seçimi: En güncel ve hızlı sürüm olan 'gemini-2.5-flash' modelini kullanıyoruz.
-        const modelName = 'gemini-2.5-flash'; 
+            chatBody.insertAdjacentHTML('beforeend', loadingIndicatorHTML);
+            scrollToBottom();
 
-        // Şirket Özelleştirme Verilerini Al
-        const companyName = assistantConfig[currentLang].name;
-        const companyDesc = assistantConfig[currentLang].desc;
-        const companyProduct = assistantConfig[currentLang].product;
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
 
-        // Yapay Zekaya Gönderilecek Sistem & Kullanıcı Promptu
-        let systemPrompt = "";
-        if (currentLang === 'tr') {
-            systemPrompt = `Sen Galaverse Creations tarafından geliştirilmiş Kurumsal Akıllı Asistan'sın.
+            // Model Seçimi: En güncel ve hızlı sürüm olan 'gemini-2.5-flash' modelini kullanıyoruz.
+            const modelName = 'gemini-2.5-flash'; 
+
+            // Şirket Özelleştirme Verilerini Al
+            const companyName = assistantConfig[currentLang].name;
+            const companyDesc = assistantConfig[currentLang].desc;
+            const companyProduct = assistantConfig[currentLang].product;
+
+            // Yapay Zekaya Gönderilecek Sistem & Kullanıcı Promptu
+            let systemPrompt = "";
+            if (currentLang === 'tr') {
+                systemPrompt = `Sen Galaverse Creations tarafından geliştirilmiş Kurumsal Akıllı Asistan'sın.
 Şu an test modundasın ve şu şirket bilgilerini temsil ediyorsun:
 - Şirket Adı: ${companyName}
 - Şirket Açıklaması: ${companyDesc}
@@ -507,8 +523,8 @@ document.addEventListener('DOMContentLoaded', () => {
 Kullanıcıdan gelen sorulara bu şirket kimliğiyle cevap vermelisin. Kısa, net, samimi ama profesyonel ol. Cevaplarında fantastik/sihir temalarından uzak dur, endüstriyel ve teknolojik bir üslup kullan.
 
 Kullanıcının sorusu: ${messageText}`;
-        } else {
-            systemPrompt = `You are the Enterprise Smart Assistant developed by Galaverse Creations.
+            } else {
+                systemPrompt = `You are the Enterprise Smart Assistant developed by Galaverse Creations.
 You are currently in test mode representing the following company:
 - Company Name: ${companyName}
 - Company Description: ${companyDesc}
@@ -517,9 +533,8 @@ You are currently in test mode representing the following company:
 You must answer user questions based on this company identity. Keep it brief, clear, and highly professional. Avoid fantasy/magic themes; maintain an industrial and technological tone.
 
 User's question: ${messageText}`;
-        }
+            }
 
-        try {
             // POST request via transparent proxy
             const response = await fetch(`https://galaverse-ai-proxy.merttrem1181.workers.dev/v1beta/models/${modelName}:generateContent`, {
                 method: 'POST',
@@ -581,7 +596,6 @@ User's question: ${messageText}`;
             scrollToBottom();
 
         } catch (error) {
-            clearTimeout(timeoutId);
             console.error('Fetch error:', error);
 
             // Remove loading indicator
@@ -618,6 +632,11 @@ User's question: ${messageText}`;
 
             chatBody.insertAdjacentHTML('beforeend', errorResponseHTML);
             scrollToBottom();
+        } finally {
+            isChatLoading = false;
+            chatInput.disabled = false;
+            if (sendBtn) sendBtn.disabled = false;
+            chatInput.focus();
         }
     });
 

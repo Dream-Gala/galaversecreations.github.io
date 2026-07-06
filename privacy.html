@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gizlilik Politikası | Galaverse Creations</title>
+    <meta name="description" content="Galaverse Creations Gizlilik Politikası. Akıllı Asistan veri işleme ve kullanıcı verilerinin korunması detayları.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Theme Initialization Script to prevent FOUC -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('galaverse-theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+    <style>
+        .privacy-container {
+            max-width: 800px;
+            margin: 120px auto 60px auto;
+            padding: 40px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            transition: var(--transition-smooth);
+        }
+        [data-theme="dark"] .privacy-container {
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        .privacy-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        .privacy-subtitle {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 32px;
+            display: block;
+        }
+        .privacy-content h3 {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 32px;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+        .privacy-content p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        .privacy-content ul {
+            margin-bottom: 24px;
+            padding-left: 20px;
+            color: var(--text-secondary);
+        }
+        .privacy-content li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .back-home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+            transition: var(--transition-fast);
+        }
+        .back-home-btn:hover {
+            color: var(--accent-hover);
+            transform: translateX(-4px);
+        }
+        [data-lang-content] {
+            display: none;
+        }
+        body.lang-tr [data-lang-content="tr"] {
+            display: block;
+        }
+        body.lang-en [data-lang-content="en"] {
+            display: block;
+        }
+    </style>
+</head>
+<body class="lang-tr">
+
+    <!-- Sticky Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-symbol">//</span> GALAVERSE <span class="accent-text">CREATIONS</span>
+            </a>
+            
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link" data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a></li>
+                </ul>
+
+                <!-- Language Switcher -->
+                <div class="lang-switch">
+                    <button class="lang-btn active" data-lang="tr">TR</button>
+                    <span class="lang-separator">|</span>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+
+                <!-- Theme Switcher -->
+                <button class="theme-toggle" id="theme-toggle" aria-label="Tema Değiştir">
+                    <svg class="theme-icon sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                    </svg>
+                    <svg class="theme-icon moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="privacy-container">
+        <a href="index.html" class="back-home-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span data-tr="Ana Sayfaya Dön" data-en="Back to Home">Ana Sayfaya Dön</span>
+        </a>
+
+        <!-- TURKISH CONTENT -->
+        <div data-lang-content="tr" class="privacy-content">
+            <h1 class="privacy-title">Gizlilik Politikası</h1>
+            <span class="privacy-subtitle">// Son Güncelleme: 6 Temmuz 2026</span>
+            
+            <p>Galaverse Creations olarak gizliliğinize ve veri güvenliğinize büyük önem veriyoruz. Bu politika belgesi, web sitemizi ve bünyesindeki Akıllı Asistan (Chat UI) test modülünü kullanırken hangi verilerin nasıl işlendiğine dair şeffaf bilgi sağlamak amacıyla hazırlanmıştır.</p>
+            
+            <h3>1. Veri Depolama ve İşleme</h3>
+            <p>Akıllı Asistan ile yaptığınız yazışmalar ve sohbet geçmişi herhangi bir veri tabanına veya sunucuya kalıcı olarak <strong>kaydedilmez</strong>. Tüm sohbet geçmişi tarayıcınızın geçici belleğinde (session) tutulur ve sayfayı kapattığınızda veya yenilediğinizde tamamen silinir.</p>
+            
+            <h3>2. Asistan Özelleştirici ve API Kullanımı</h3>
+            <p>Asistanı test etmek için sağ tarafta yer alan özelleştirme formuna girdiğiniz Şirket Adı, Şirket Açıklaması ve Ürün/Fiyat bilgileri ile sohbet kutusuna yazdığınız mesajlar, yapay zeka modelinin size yanıt üretebilmesi için güvenli proxy tünelimiz (Galaverse AI Proxy) üzerinden Google Gemini API servisine gönderilir. Bu veriler üçüncü şahıslarla paylaşılmaz, reklam amaçlı kullanılmaz ve sadece anlık yanıt oluşturmak amacıyla işlenir.</p>
+            
+            <h3>3. Yerel Depolama (LocalStorage)</h3>
+            <p>Kullanıcı deneyimini iyileştirmek adına tarayıcınızda sadece şu tercihler saklanır:</p>
+            <ul>
+                <li><strong>Dil Tercihi (galaverse-lang):</strong> Sitemizi en son hangi dilde (Türkçe/İngilizce) ziyaret ettiğiniz bilgisi.</li>
+                <li><strong>Tema Tercihi (galaverse-theme):</strong> Sitenin karanlık veya açık tema ayarı.</li>
+            </ul>
+            <p>Bu veriler hiçbir şekilde kişisel kimlik tespiti amacıyla kullanılmaz.</p>
+
+            <h3>4. Güvenlik ve Spam Koruması</h3>
+            <p>Sistemlerimizin güvenliğini korumak ve API servisimizin kötüye kullanımını engellemek amacıyla, sohbet kutusuna girilebilecek maksimum karakter sınırı 500 olarak sınırlandırılmıştır. Ayrıca ardışık ve spam istekleri engellemek adına asistan yanıt verme aşamasındayken yeni mesaj gönderimi geçici olarak kilitlenir.</p>
+            
+            <h3>5. İletişim</h3>
+            <p>Gizlilik Politikamız ile ilgili her türlü soru, görüş ve önerileriniz için bizimle <a href="mailto:galaversecreations@gmail.com" style="color: var(--accent);">galaversecreations@gmail.com</a> adresi üzerinden iletişime geçebilirsiniz.</p>
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div data-lang-content="en" class="privacy-content">
+            <h1 class="privacy-title">Privacy Policy</h1>
+            <span class="privacy-subtitle">// Last Updated: July 6, 2026</span>
+            
+            <p>At Galaverse Creations, we attach great importance to your privacy and data security. This policy document has been prepared to provide transparent information on how data is processed when using our website and the integrated Enterprise Smart Assistant (Chat UI) test module.</p>
+            
+            <h3>1. Data Storage and Retention</h3>
+            <p>Your conversations and chat history with the Smart Assistant are <strong>not stored permanently</strong> in any database or server. All chat history is kept strictly in your browser's temporary memory (session) and is fully cleared when you close or refresh the page.</p>
+            
+            <h3>2. Assistant Configurator and API Usage</h3>
+            <p>The Company Name, Company Description, and Product/Price information you enter in the customizer form, along with the messages you write in the chat box, are transmitted to the Google Gemini API service via our secure proxy tunnel (Galaverse AI Proxy) solely to generate AI responses. This data is never shared with third parties, never used for advertising, and is processed only to return real-time replies.</p>
+            
+            <h3>3. Local Storage Usage</h3>
+            <p>To optimize your browsing experience, only the following preferences are stored locally in your browser's local storage:</p>
+            <ul>
+                <li><strong>Language Preference (galaverse-lang):</strong> Information on whether you last visited our site in Turkish or English.</li>
+                <li><strong>Theme Preference (galaverse-theme):</strong> Your preferred theme (Dark or Light mode).</li>
+            </ul>
+            <p>This data is never linked to personal identities.</p>
+
+            <h3>4. Security and Anti-Spam Measures</h3>
+            <p>To protect our systems from abuse and ensure secure API operations, character inputs inside the chat box are limited to 500 characters. Furthermore, sending consecutive spam requests is prevented by locking UI controls while the AI assistant is processing a response.</p>
+            
+            <h3>5. Contact Us</h3>
+            <p>If you have any questions, feedback, or concerns regarding this Privacy Policy, please reach out to us at <a href="mailto:galaversecreations@gmail.com" style="color: var(--accent);">galaversecreations@gmail.com</a>.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p class="footer-copy">
+                <span data-tr="© 2026 Galaverse Creations. Tüm hakları saklıdır." data-en="© 2026 Galaverse Creations. All rights reserved.">© 2026 Galaverse Creations. Tüm hakları saklıdır.</span> | 
+                <a href="privacy.html" class="privacy-link" data-tr="Gizlilik Politikası" data-en="Privacy Policy">Gizlilik Politikası</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Dedicated Script for Privacy Page -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme Toggle Setup
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('galaverse-theme', newTheme);
+            });
+
+            // Language Switcher Setup
+            let currentLang = localStorage.getItem('galaverse-lang') || 'tr';
+            
+            function setLanguage(lang) {
+                currentLang = lang;
+                localStorage.setItem('galaverse-lang', lang);
+                
+                // Toggle body language classes
+                document.body.className = `lang-${lang}`;
+                document.documentElement.setAttribute('lang', lang);
+                
+                // Update language switcher buttons active class
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    if (btn.getAttribute('data-lang') === lang) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+
+                // Update text content with data attributes
+                document.querySelectorAll('[data-tr], [data-en]').forEach(element => {
+                    const text = element.getAttribute(`data-${lang}`);
+                    if (text) {
+                        element.textContent = text;
+                    }
+                });
+            }
+
+            // Language button event listeners
+            document.querySelectorAll('.lang-switch .lang-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const selectedLang = e.currentTarget.getAttribute('data-lang');
+                    setLanguage(selectedLang);
+                });
+            });
+
+            // Set initial state
+            setLanguage(currentLang);
+        });
+    </script>
+</body>
+</html>
