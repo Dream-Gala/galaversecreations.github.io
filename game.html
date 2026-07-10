@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Oyun Demo — Galaverse Creations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0f1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow: hidden;
+            color: #e8f4f0;
+        }
+        .game-header {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .game-header .label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #5db89a;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        .game-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #e8f4f0;
+        }
+        .game-header h1 span { color: #5db89a; }
+        #gameCanvas {
+            border: 1px solid rgba(93,184,154,0.3);
+            border-radius: 8px;
+            cursor: crosshair;
+            display: block;
+            box-shadow: 0 0 40px rgba(93,184,154,0.1), inset 0 0 60px rgba(0,0,0,0.4);
+        }
+        .hud {
+            display: flex;
+            gap: 32px;
+            margin-top: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+        .hud-item { text-align: center; }
+        .hud-item .val {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #5db89a;
+        }
+        .hud-item .lbl {
+            font-size: 0.7rem;
+            color: #8899aa;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .back-link {
+            margin-top: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: #5db89a;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .back-link:hover { opacity: 1; }
+    </style>
+</head>
+<body>
+<div class="game-header">
+    <div class="label">// Galaverse · HTML5 Web Oyun Demosu</div>
+    <h1>WEB <span>HUNTER</span></h1>
+    <div style="font-size:0.75rem;color:#8899aa;font-family:'JetBrains Mono',monospace;margin-top:4px;letter-spacing:0.05em;">Vanilla JS · Canvas API · Web Audio · Sıfırdan Kodlandı</div>
+</div>
+
+<canvas id="gameCanvas" width="760" height="420"></canvas>
+
+<div class="hud">
+    <div class="hud-item">
+        <div class="val" id="scoreEl">0</div>
+        <div class="lbl">Skor</div>
+    </div>
+    <div class="hud-item">
+        <div class="val" id="comboEl">x1</div>
+        <div class="lbl">Kombo</div>
+    </div>
+    <div class="hud-item">
+        <div class="val" id="livesEl">♦♦♦</div>
+        <div class="lbl">Can</div>
+    </div>
+    <div class="hud-item">
+        <div class="val" id="levelEl">1</div>
+        <div class="lbl">Seviye</div>
+    </div>
+</div>
+
+<a href="index.html" class="back-link">← Ana Sayfaya Dön</a>
+
+<script>
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+// --- STATE ---
+let score = 0, combo = 1, lives = 3, level = 1, gameState = 'playing'; // idle|playing|dead
+let targets = [], spears = [], particles = [];
+let missTimer = 0;
+let spawnInterval = 90, spawnTimer = 0;
+let frameCount = 0;
+let mouse = { x: 380, y: 210 };
+
+// --- SOUNDS (AudioContext beeps) ---
+const AC = new (window.AudioContext || window.webkitAudioContext)();
+function beep(freq, dur, type='sine', vol=0.15) {
+    const o = AC.createOscillator(), g = AC.createGain();
+    o.connect(g); g.connect(AC.destination);
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, AC.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, AC.currentTime + dur);
+    o.start(); o.stop(AC.currentTime + dur);
+}
+
+// --- TARGET ---
+class Target {
+    constructor() {
+        this.size = 18 + Math.random() * 18;
+        const side = Math.random() < 0.5 ? 'left' : 'right';
+        this.x = side === 'left' ? -this.size : canvas.width + this.size;
+        this.y = 60 + Math.random() * (canvas.height - 120);
+        const speed = (1.2 + level * 0.25 + Math.random() * 0.8) * (side === 'left' ? 1 : -1);
+        this.vx = speed;
+        this.vy = (Math.random() - 0.5) * 1.2;
+        this.color = this.size < 25 ? '#ff6b6b' : this.size < 30 ? '#f5a623' : '#5db89a';
+        this.points = this.size < 25 ? 30 : this.size < 30 ? 20 : 10;
+        this.alive = true;
+        this.alpha = 1;
+        this.wobble = Math.random() * Math.PI * 2;
+        this.wobbleSpeed = 0.05 + Math.random() * 0.05;
+    }
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.wobble += this.wobbleSpeed;
+        this.y += Math.sin(this.wobble) * 0.4;
+        if (this.x < -80 || this.x > canvas.width + 80) this.alive = false;
+    }
+    draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.translate(this.x, this.y);
+        // glow
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 12;
+        // body — bird silhouette
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, this.size * 0.7, this.size * 0.35, 0, 0, Math.PI * 2);
+        ctx.fill();
+        // wings
+        ctx.beginPath();
+        const wFlap = Math.sin(this.wobble * 3) * 8;
+        ctx.moveTo(-this.size * 0.5, 0);
+        ctx.quadraticCurveTo(-this.size * 0.8, -10 + wFlap, -this.size, wFlap * 0.5);
+        ctx.quadraticCurveTo(-this.size * 0.8, 5, -this.size * 0.5, 0);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(this.size * 0.5, 0);
+        ctx.quadraticCurveTo(this.size * 0.8, -10 + wFlap, this.size, wFlap * 0.5);
+        ctx.quadraticCurveTo(this.size * 0.8, 5, this.size * 0.5, 0);
+        ctx.fill();
+        // eye
+        ctx.fillStyle = '#0a0f1a';
+        ctx.beginPath();
+        ctx.arc(this.size * 0.4 * Math.sign(this.vx), -2, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+}
+
+// --- SPEAR ---
+class Spear {
+    constructor(x, y, tx, ty) {
+        this.x = canvas.width / 2;
+        this.y = canvas.height - 30;
+        const angle = Math.atan2(ty - this.y, tx - this.x);
+        const speed = 14;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.angle = angle;
+        this.alive = true;
+        this.trail = [];
+    }
+    update() {
+        this.trail.push({ x: this.x, y: this.y });
+        if (this.trail.length > 8) this.trail.shift();
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy += 0.18; // gravity
+        this.angle = Math.atan2(this.vy, this.vx);
+        if (this.x < 0 || this.x > canvas.width || this.y > canvas.height + 20 || this.y < -20) this.alive = false;
+    }
+    draw() {
+        // trail
+        for (let i = 0; i < this.trail.length; i++) {
+            const a = (i / this.trail.length) * 0.3;
+            ctx.save();
+            ctx.globalAlpha = a;
+            ctx.fillStyle = '#5db89a';
+            ctx.beginPath();
+            ctx.arc(this.trail[i].x, this.trail[i].y, 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.shadowColor = '#5db89a';
+        ctx.shadowBlur = 8;
+        // shaft
+        ctx.fillStyle = '#c8a97a';
+        ctx.fillRect(-18, -2, 36, 4);
+        // tip
+        ctx.fillStyle = '#e8f4f0';
+        ctx.beginPath();
+        ctx.moveTo(18, 0);
+        ctx.lineTo(10, -4);
+        ctx.lineTo(10, 4);
+        ctx.closePath();
+        ctx.fill();
+        // feather
+        ctx.fillStyle = '#5db89a';
+        ctx.beginPath();
+        ctx.moveTo(-18, 0);
+        ctx.lineTo(-12, -5);
+        ctx.lineTo(-10, 0);
+        ctx.lineTo(-12, 5);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    }
+}
+
+// --- PARTICLES ---
+function spawnParticles(x, y, color, count = 12) {
+    for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 / count) * i + Math.random() * 0.5;
+        const speed = 2 + Math.random() * 4;
+        particles.push({
+            x, y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - 2,
+            alpha: 1,
+            color,
+            size: 2 + Math.random() * 4,
+            life: 1
+        });
+    }
+}
+
+// --- BACKGROUND ---
+const stars = Array.from({ length: 80 }, () => ({
+    x: Math.random() * 760, y: Math.random() * 420,
+    r: Math.random() * 1.5, a: Math.random()
+}));
+const mountains = [];
+for (let i = 0; i < 6; i++) {
+    mountains.push({
+        x: i * 140 + Math.random() * 60,
+        h: 80 + Math.random() * 120,
+        w: 100 + Math.random() * 80,
+        dark: Math.random() > 0.5
+    });
+}
+
+function drawBackground() {
+    // sky gradient
+    const g = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    g.addColorStop(0, '#05080f');
+    g.addColorStop(0.6, '#0a1225');
+    g.addColorStop(1, '#0f1f18');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // stars
+    stars.forEach(s => {
+        s.a += 0.01;
+        const a = 0.3 + Math.abs(Math.sin(s.a)) * 0.5;
+        ctx.globalAlpha = a;
+        ctx.fillStyle = '#e8f4f0';
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+
+    // moon
+    ctx.save();
+    ctx.shadowColor = '#5db89a';
+    ctx.shadowBlur = 20;
+    ctx.fillStyle = '#c8e6dd';
+    ctx.beginPath();
+    ctx.arc(680, 60, 28, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#0a1225';
+    ctx.beginPath();
+    ctx.arc(673, 56, 22, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // mountains
+    mountains.forEach(m => {
+        ctx.fillStyle = m.dark ? '#0d1a24' : '#111f2e';
+        ctx.beginPath();
+        ctx.moveTo(m.x, canvas.height - 60);
+        ctx.lineTo(m.x + m.w / 2, canvas.height - 60 - m.h);
+        ctx.lineTo(m.x + m.w, canvas.height - 60);
+        ctx.closePath();
+        ctx.fill();
+    });
+
+    // ground
+    const gnd = ctx.createLinearGradient(0, canvas.height - 60, 0, canvas.height);
+    gnd.addColorStop(0, '#0d1f18');
+    gnd.addColorStop(1, '#081510');
+    ctx.fillStyle = gnd;
+    ctx.fillRect(0, canvas.height - 60, canvas.width, 60);
+
+    // player (archer silhouette)
+    ctx.save();
+    ctx.fillStyle = '#1a2e24';
+    ctx.shadowColor = '#5db89a';
+    ctx.shadowBlur = 6;
+    const px = canvas.width / 2;
+    // body
+    ctx.fillRect(px - 6, canvas.height - 90, 12, 35);
+    // head
+    ctx.beginPath();
+    ctx.arc(px, canvas.height - 95, 9, 0, Math.PI * 2);
+    ctx.fill();
+    // arm pointing toward mouse
+    const angle = Math.atan2(mouse.y - (canvas.height - 85), mouse.x - px);
+    ctx.strokeStyle = '#1a2e24';
+    ctx.lineWidth = 6;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(px, canvas.height - 85);
+    ctx.lineTo(px + Math.cos(angle) * 22, canvas.height - 85 + Math.sin(angle) * 22);
+    ctx.stroke();
+    // bow
+    ctx.strokeStyle = '#5db89a';
+    ctx.lineWidth = 2;
+    ctx.shadowBlur = 10;
+    ctx.beginPath();
+    ctx.arc(px + Math.cos(angle) * 22, canvas.height - 85 + Math.sin(angle) * 22, 10, angle - 1.2, angle + 1.2);
+    ctx.stroke();
+    ctx.restore();
+}
+
+// --- AIM LINE ---
+function drawAimLine() {
+    const px = canvas.width / 2, py = canvas.height - 85;
+    ctx.save();
+    ctx.setLineDash([4, 8]);
+    ctx.strokeStyle = 'rgba(93,184,154,0.25)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(px, py);
+    let sx = px, sy = py;
+    const angle = Math.atan2(mouse.y - sy, mouse.x - sx);
+    const speed = 14;
+    let vx = Math.cos(angle) * speed, vy = Math.sin(angle) * speed;
+    for (let i = 0; i < 25; i++) {
+        ctx.lineTo(sx, sy);
+        sx += vx; sy += vy; vy += 0.18;
+    }
+    ctx.stroke();
+    ctx.restore();
+}
+
+// --- OVERLAYS ---
+function drawHUD() {
+    // crosshair
+    ctx.save();
+    ctx.strokeStyle = 'rgba(93,184,154,0.6)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(mouse.x, mouse.y, 10, 0, Math.PI * 2);
+    ctx.moveTo(mouse.x - 16, mouse.y);
+    ctx.lineTo(mouse.x + 16, mouse.y);
+    ctx.moveTo(mouse.x, mouse.y - 16);
+    ctx.lineTo(mouse.x, mouse.y + 16);
+    ctx.stroke();
+    ctx.restore();
+}
+
+// --- OVERLAY (start/game over) ---
+function drawOverlay() {
+    ctx.save();
+    ctx.fillStyle = 'rgba(5,8,15,0.82)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    if (gameState === 'idle') {
+        ctx.fillStyle = '#5db89a';
+        ctx.font = 'bold 36px "Space Grotesk"';
+        ctx.textAlign = 'center';
+        ctx.fillText('WEB HUNTER', canvas.width / 2, canvas.height / 2 - 50);
+        ctx.fillStyle = '#8899aa';
+        ctx.font = '14px "JetBrains Mono"';
+        ctx.fillText('HTML5 Canvas · Web Audio API · Vanilla JS', canvas.width / 2, canvas.height / 2 - 14);
+        ctx.fillStyle = '#e8f4f0';
+        ctx.font = '15px "Space Grotesk"';
+        ctx.fillText('Fareyi hedefe yönelt ve tıklayarak mızrak fırlat', canvas.width / 2, canvas.height / 2 + 16);
+        ctx.fillStyle = '#5db89a';
+        ctx.font = 'bold 14px "Space Grotesk"';
+        ctx.fillText('[ BAŞLAMAK İÇİN TIKLAYINIZ ]', canvas.width / 2, canvas.height / 2 + 55);
+    }
+
+    if (gameState === 'dead') {
+        ctx.fillStyle = '#ff6b6b';
+        ctx.font = 'bold 36px "Space Grotesk"';
+        ctx.textAlign = 'center';
+        ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - 60);
+        ctx.fillStyle = '#e8f4f0';
+        ctx.font = '20px "Space Grotesk"';
+        ctx.fillText(`Skor: ${score}`, canvas.width / 2, canvas.height / 2 - 20);
+        ctx.fillStyle = '#8899aa';
+        ctx.font = '14px "JetBrains Mono"';
+        ctx.fillText(`Seviye ${level} • En yüksek kombonuz: x${combo}`, canvas.width / 2, canvas.height / 2 + 15);
+        ctx.fillStyle = '#5db89a';
+        ctx.font = 'bold 14px "Space Grotesk"';
+        ctx.fillText('[ YENİDEN OYNAMAK İÇİN TIKLAYINIZ ]', canvas.width / 2, canvas.height / 2 + 60);
+    }
+    ctx.restore();
+}
+
+// --- SCORE POPUPS ---
+let popups = [];
+function spawnPopup(x, y, text, color) {
+    popups.push({ x, y, text, color, alpha: 1, vy: -1.5 });
+}
+function updatePopups() {
+    popups = popups.filter(p => p.alpha > 0);
+    popups.forEach(p => {
+        p.y += p.vy; p.alpha -= 0.025;
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = p.color;
+        ctx.font = 'bold 18px "Space Grotesk"';
+        ctx.textAlign = 'center';
+        ctx.fillText(p.text, p.x, p.y);
+        ctx.restore();
+    });
+}
+
+// --- GAME LOOP ---
+function reset() {
+    score = 0; combo = 1; lives = 3; level = 1;
+    targets = []; spears = []; particles = []; popups = [];
+    spawnInterval = 90; spawnTimer = 0; frameCount = 0;
+    updateUI();
+}
+
+function updateUI() {
+    document.getElementById('scoreEl').textContent = score;
+    document.getElementById('comboEl').textContent = 'x' + combo;
+    document.getElementById('livesEl').textContent = '♦'.repeat(lives) + '◇'.repeat(Math.max(0, 3 - lives));
+    document.getElementById('levelEl').textContent = level;
+}
+
+function loop() {
+    requestAnimationFrame(loop);
+    frameCount++;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBackground();
+
+    if (gameState !== 'playing') { drawOverlay(); return; }
+
+    // spawn
+    spawnTimer++;
+    if (spawnTimer >= spawnInterval) {
+        spawnTimer = 0;
+        targets.push(new Target());
+        if (frameCount % 300 === 0) {
+            level++;
+            spawnInterval = Math.max(30, spawnInterval - 8);
+            updateUI();
+        }
+    }
+
+    // update/draw targets
+    targets = targets.filter(t => t.alive);
+    targets.forEach(t => {
+        t.update();
+        // missed target — off screen
+        if (!t.alive) {
+            combo = 1;
+            lives--;
+            missTimer = 20;
+            beep(120, 0.3, 'sawtooth', 0.12);
+            updateUI();
+            if (lives <= 0) gameState = 'dead';
+        }
+        t.draw();
+    });
+
+    // miss flash
+    if (missTimer > 0) {
+        missTimer--;
+        ctx.save();
+        ctx.fillStyle = `rgba(255,80,80,${missTimer / 20 * 0.18})`;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.restore();
+    }
+
+    // update/draw spears
+    spears = spears.filter(s => s.alive);
+    spears.forEach(s => {
+        s.update();
+        s.draw();
+        // collision
+        targets.forEach(t => {
+            if (!t.alive) return;
+            const dx = s.x - t.x, dy = s.y - t.y;
+            if (Math.sqrt(dx * dx + dy * dy) < t.size * 0.8) {
+                t.alive = false;
+                s.alive = false;
+                spawnParticles(t.x, t.y, t.color, 14);
+                const pts = t.points * combo;
+                score += pts;
+                combo = Math.min(combo + 1, 12);
+                spawnPopup(t.x, t.y - 20, `+${pts}`, t.color);
+                beep(440 + combo * 40, 0.15, 'sine', 0.12);
+                if (combo > 3) beep(660, 0.08, 'square', 0.06);
+                updateUI();
+            }
+        });
+    });
+
+    // particles
+    particles = particles.filter(p => p.alpha > 0);
+    particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy; p.vy += 0.1;
+        p.alpha -= 0.03;
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    });
+
+    drawAimLine();
+    updatePopups();
+    drawHUD();
+}
+
+// --- INPUT ---
+canvas.addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+});
+
+canvas.addEventListener('click', e => {
+    if (AC.state === 'suspended') AC.resume();
+    if (gameState === 'idle') { gameState = 'playing'; return; }
+    if (gameState === 'dead') { reset(); gameState = 'playing'; return; }
+    const r = canvas.getBoundingClientRect();
+    const mx = e.clientX - r.left, my = e.clientY - r.top;
+    spears.push(new Spear(canvas.width / 2, canvas.height - 30, mx, my));
+    beep(300, 0.08, 'triangle', 0.1);
+});
+
+// --- START ---
+loop();
+</script>
+</body>
+</html>

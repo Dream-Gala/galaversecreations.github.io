@@ -106,6 +106,56 @@ document.addEventListener('DOMContentLoaded', () => {
             "contact-val-hq": "Ankara, Türkiye",
             "contact-label-upwork": "UPWORK HİZMETLERİ",
             
+            // Game Section
+            "section-subtitle-game": "// HTML5 & WEB OYUN GELİŞTİRME",
+            "section-title-game": "Tarayıcı İçi Oyun Üretiyoruz",
+            "section-desc-game": "Sadece Unity değil — tarayıcıda çalışan HTML5 & WebGL oyunlar, kurumsal gamification çözümleri ve interaktif web deneyimleri de geliştiriyoruz. Aşağıda oynayabileceğiniz canlı bir demo.",
+            "btn-fullscreen-game": "Tam Ekran Oyna",
+
+            // Stats & Trust Section
+            "stat-label-1": "Steam Olumlu İnceleme",
+            "stat-label-2": "Dil Yerelştirmesi",
+            "stat-label-3": "Sıfırdan Lansman (Ay)",
+            "stat-label-4": "Yayınlanan Proje",
+            "stat-label-5": "Ort. Proje Bütçesi",
+            "section-subtitle-trust": "// NEDEN GALAVERSE?",
+            "section-title-trust": "Şirketlerin Bizi Tercih Ettiği 4 Neden",
+            "trust-title-1": "Hızlı & Şeffaf Teslimat",
+            "trust-desc-1": "Proje yönetimi, haftalık ilerleme raporları ve net milestone planlamayla sürpriz gecikmeler yaşamazsınız.",
+            "trust-title-2": "Çok Dilli Ürün Uzmanlığı",
+            "trust-desc-2": "12 dile yerelleştirme deneyimiyle ürününüzü küresel pazara taşıyoruz; Asya, Avrupa ve Türkiye'de kanıtlı erişim.",
+            "trust-title-3": "Tam Yığın Entegrasyon",
+            "trust-desc-3": "Unity'den web API'lerine, AI chatbot'lardan Steam altyapısına kadar tek çatı altında tam entegrasyon hizmeti sunuyoruz.",
+            "trust-title-4": "Upwork Güvencesi",
+            "trust-desc-4": "Upwork'ün ödeme koruması ve anlaşmazlık çözüm mekanizmasıyla tam güvenli. Her zaman anlaşma önce, iş sonra.",
+            // Contact Form
+            "section-subtitle-contact": "// PROJE TEKLİFİ",
+            "section-title-contact": "Projenizi Konuşalım",
+            "contact-form-desc": "Oyun geliştirme, AI entegrasyonu veya HTML5 web deneyimi için bir fikriniz mi var? Kısa bir brief yeterli — 24 saat içinde geri dönüyoruz.",
+            "contact-usp-title-1": "Unity Oyun Geliştirme",
+            "contact-usp-desc-1": "PC, mobil, co-op ağ altyapısı, Steam entegrasyonu",
+            "contact-usp-title-2": "AI & Otomasyon Çözümleri",
+            "contact-usp-desc-2": "Özel chatbot, yerelleştirme, işletme süreç otomasyonu",
+            "contact-usp-title-3": "HTML5 / Web Oyun & Deneyim",
+            "contact-usp-desc-3": "Kurumsal gamification, tarayıcı tabanlı interaktif demo",
+            "contact-response-time": "Ortalama yanıt süresi: <strong style='color:var(--accent)'>24 saat</strong>",
+            "cf-label-name": "Adınız",
+            "cf-label-company": "Şirket / Proje",
+            "cf-label-email": "E-posta *",
+            "cf-label-service": "Hizmet Türü",
+            "cf-label-budget": "Tahmini Bütçe",
+            "cf-label-message": "Proje Açıklaması *",
+            "cf-service-0": "Seçiniz...",
+            "cf-service-1": "Unity Oyun Geliştirme",
+            "cf-service-2": "AI / Chatbot Entegrasyonu",
+            "cf-service-3": "HTML5 Web Oyunu / Demo",
+            "cf-service-4": "Oyun Yerelleştirme (12+ Dil)",
+            "cf-service-5": "Steamworks Entegrasyonu",
+            "cf-service-6": "Diğer",
+            "cf-budget-0": "Seçiniz...",
+            "cf-budget-discuss": "Görüşelim",
+            "cf-btn-send": "Teklif Gönder",
+
             // Footer
             "footer-copy": "© 2026 Galaverse Creations. Tüm hakları saklıdır.",
             "footer-privacy": "Gizlilik Politikası"
@@ -212,7 +262,57 @@ document.addEventListener('DOMContentLoaded', () => {
             "contact-label-hq": "HEADQUARTERS",
             "contact-val-hq": "Ankara, Turkey",
             "contact-label-upwork": "UPWORK SERVICES",
+
+            // Game Section
+            "section-subtitle-game": "// HTML5 & WEB GAME DEVELOPMENT",
+            "section-title-game": "We Also Build Browser Games",
+            "section-desc-game": "Not just Unity — we develop HTML5 & WebGL games, corporate gamification tools, and interactive web experiences that run instantly in any browser. Try the live demo below.",
+            "btn-fullscreen-game": "Play Fullscreen",
             
+            // Stats & Trust Section
+            "stat-label-1": "Steam Positive Reviews",
+            "stat-label-2": "Languages Localized",
+            "stat-label-3": "Launch Time (Months)",
+            "stat-label-4": "Shipped Projects",
+            "stat-label-5": "Avg. Project Budget",
+            "section-subtitle-trust": "// WHY GALAVERSE?",
+            "section-title-trust": "4 Reasons Companies Choose Us",
+            "trust-title-1": "Fast & Transparent Delivery",
+            "trust-desc-1": "With project management, weekly progress reports and clear milestone planning, you'll never be caught off guard by delays.",
+            "trust-title-2": "Multi-Language Product Expertise",
+            "trust-desc-2": "We localize into 12+ languages and have a proven track record in Asian, European and Turkish markets.",
+            "trust-title-3": "Full-Stack Integration",
+            "trust-desc-3": "From Unity to web APIs, AI chatbots to Steam infrastructure — end-to-end integration under one roof.",
+            "trust-title-4": "Upwork Payment Protection",
+            "trust-desc-4": "Full security via Upwork's payment protection and dispute resolution. Contract first, work second — always.",
+            // Contact Form
+            "section-subtitle-contact": "// PROJECT INQUIRY",
+            "section-title-contact": "Let's Talk About Your Project",
+            "contact-form-desc": "Have an idea for a game, AI integration, or HTML5 web experience? A brief outline is all we need — we reply within 24 hours.",
+            "contact-usp-title-1": "Unity Game Development",
+            "contact-usp-desc-1": "PC, mobile, co-op networking, Steam integration",
+            "contact-usp-title-2": "AI & Automation Solutions",
+            "contact-usp-desc-2": "Custom chatbots, localization, business process automation",
+            "contact-usp-title-3": "HTML5 / Web Game & Experience",
+            "contact-usp-desc-3": "Corporate gamification, browser-based interactive demos",
+            "contact-response-time": "Average response time: <strong style='color:var(--accent)'>24 hours</strong>",
+            "cf-label-name": "Your Name",
+            "cf-label-company": "Company / Project",
+            "cf-label-email": "Email *",
+            "cf-label-service": "Service Type",
+            "cf-label-budget": "Estimated Budget",
+            "cf-label-message": "Project Description *",
+            "cf-service-0": "Select...",
+            "cf-service-1": "Unity Game Development",
+            "cf-service-2": "AI / Chatbot Integration",
+            "cf-service-3": "HTML5 Web Game / Demo",
+            "cf-service-4": "Game Localization (12+ Languages)",
+            "cf-service-5": "Steamworks Integration",
+            "cf-service-6": "Other",
+            "cf-budget-0": "Select...",
+            "cf-budget-discuss": "Let's Discuss",
+            "cf-btn-send": "Send Inquiry",
+
             // Footer
             "footer-copy": "© 2026 Galaverse Creations. All rights reserved.",
             "footer-privacy": "Privacy Policy"
@@ -671,4 +771,87 @@ User's question: ${messageText}`;
             localStorage.setItem('galaverse-theme', targetTheme);
         });
     }
+
+    // ==========================================
+    // Animated Stat Counters (Scroll Triggered)
+    // ==========================================
+    function animateCounter(el, target) {
+        const valEl = el.querySelector('.stat-val');
+        if (!valEl) return;
+        const duration = 1400;
+        const start = performance.now();
+        el.classList.add('counted');
+        function tick(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            // easeOutExpo
+            const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+            valEl.textContent = Math.floor(eased * target);
+            if (progress < 1) requestAnimationFrame(tick);
+            else valEl.textContent = target;
+        }
+        requestAnimationFrame(tick);
+    }
+
+    const statObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.dataset.animated) {
+                entry.target.dataset.animated = 'true';
+                const target = parseInt(entry.target.dataset.target, 10);
+                animateCounter(entry.target, target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.stat-number[data-target]').forEach(el => statObserver.observe(el));
+
+    // ==========================================
+    // Contact Form — AJAX Submit (Formspree)
+    // ==========================================
+    const contactForm = document.getElementById('contact-inquiry-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('cf-submit-btn');
+            const btnText = document.getElementById('cf-btn-text');
+            const feedback = document.getElementById('cf-feedback');
+            const lang = localStorage.getItem('galaverse-lang') || 'tr';
+
+            btn.disabled = true;
+            btnText.textContent = lang === 'tr' ? 'Gönderiliyor...' : 'Sending...';
+
+            try {
+                const res = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: new FormData(contactForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (res.ok) {
+                    contactForm.reset();
+                    feedback.style.display = 'block';
+                    feedback.style.background = 'rgba(93,184,154,0.12)';
+                    feedback.style.border = '1px solid rgba(93,184,154,0.4)';
+                    feedback.style.color = '#2c6e75';
+                    feedback.textContent = lang === 'tr'
+                        ? '✓ Mesajınız iletildi! 24 saat içinde geri döneceğiz.'
+                        : '✓ Message sent! We\'ll get back to you within 24 hours.';
+                } else {
+                    throw new Error('form error');
+                }
+            } catch {
+                feedback.style.display = 'block';
+                feedback.style.background = 'rgba(255,80,80,0.08)';
+                feedback.style.border = '1px solid rgba(255,80,80,0.3)';
+                feedback.style.color = '#c0392b';
+                feedback.textContent = lang === 'tr'
+                    ? '✗ Bir hata oluştu. Lütfen doğrudan e-posta gönderin.'
+                    : '✗ An error occurred. Please email us directly.';
+            } finally {
+                btn.disabled = false;
+                btnText.textContent = lang === 'tr' ? 'Teklif Gönder' : 'Send Inquiry';
+            }
+        });
+    }
 });
+
