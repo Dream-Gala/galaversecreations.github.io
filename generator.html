@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam & Epic Kapsül Oluşturucu | Galaverse Creations</title>
+    <meta name="description" content="Oyun geliştiricileri için Steam ve Epic Games Store mağaza görseli ve kapsül şablonu hazırlama aracı.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Theme Initialization Script to prevent FOUC -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('galaverse-theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+    <style>
+        .generator-container {
+            max-width: 1400px;
+            margin: 120px auto 60px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        @media (max-width: 1024px) {
+            .generator-container {
+                grid-template-columns: 1fr;
+                margin-top: 100px;
+            }
+            .control-panel {
+                position: static !important;
+            }
+        }
+
+        /* Sidebar Control Panel */
+        .control-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px 24px;
+            position: sticky;
+            top: 100px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            transition: var(--transition-smooth);
+        }
+        [data-theme="dark"] .control-panel {
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .panel-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-title svg {
+            color: var(--accent);
+        }
+
+        .control-group {
+            margin-bottom: 24px;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            color: var(--accent);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        /* Upload Zone */
+        .upload-zone {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 20px 16px;
+            text-align: center;
+            background: var(--bg-main);
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition-fast);
+        }
+        .upload-zone:hover {
+            border-color: var(--accent);
+            background: var(--bg-card-hover);
+        }
+        .upload-zone input[type="file"] {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .upload-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .upload-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .upload-desc {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .upload-preview-indicator {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #2c6e75;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            margin-top: 6px;
+        }
+        .upload-zone.has-file .upload-preview-indicator {
+            display: flex;
+        }
+        .upload-zone.has-file .upload-icon,
+        .upload-zone.has-file .upload-text,
+        .upload-zone.has-file .upload-desc {
+            display: none;
+        }
+
+        /* Sliders */
+        .slider-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .slider-wrapper input[type="range"] {
+            flex: 1;
+            accent-color: var(--accent);
+            height: 6px;
+            border-radius: 3px;
+            background: var(--border-color);
+            outline: none;
+        }
+        .slider-val {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* Preset select buttons */
+        .presets-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .preset-btn {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition-fast);
+        }
+        .preset-btn:hover {
+            border-color: var(--border-color-hover);
+            color: var(--text-primary);
+        }
+        .preset-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #ffffff;
+        }
+
+        /* Right Side: Showcase Dashboard */
+        .showcase-dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .showcase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+        }
+
+        .showcase-title-area h1 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .showcase-title-area p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 4px;
+            border-radius: 8px;
+            gap: 4px;
+        }
+        .tab-btn {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: var(--transition-fast);
+        }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        /* Grid of previews */
+        .previews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .preview-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-smooth);
+        }
+        .preview-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            border-color: var(--border-color-hover);
+        }
+
+        .canvas-container {
+            background: #0f1416;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Checkerboard pattern for transparent canvases like the library logo */
+        .preview-card[data-preset="steam-library-logo"] .canvas-container {
+            background-image: linear-gradient(45deg, var(--border-color) 25%, transparent 25%), 
+                              linear-gradient(-45deg, var(--border-color) 25%, transparent 25%), 
+                              linear-gradient(45deg, transparent 75%, var(--border-color) 75%), 
+                              linear-gradient(-45deg, transparent 75%, var(--border-color) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            background-color: var(--bg-main);
+        }
+
+        /* Render responsive representation of high res canvas */
+        .canvas-container canvas {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .card-body {
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-name {
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-size {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            background: var(--accent-glow);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .card-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .download-btn {
+            background: var(--bg-main);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition-fast);
+        }
+        .download-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #ffffff;
+        }
+
+        /* Quick helper warning for blank states */
+        .placeholder-indicator {
+            position: absolute;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            z-index: 2;
+            pointer-events: none;
+            padding: 10px;
+        }
+
+        /* Back button styling */
+        .back-btn-wrapper {
+            margin-bottom: 24px;
+        }
+        .back-home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            transition: var(--transition-fast);
+        }
+        .back-home-btn:hover {
+            color: var(--accent-hover);
+            transform: translateX(-4px);
+        }
+
+        /* Hide tabs based on tab selection */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        .bulk-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #ffffff;
+            border: 1px solid var(--accent);
+        }
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
+        }
+
+        /* Steam Mockups Styles */
+        .mockup-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .mockup-section-title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            margin-top: 16px;
+        }
+
+        /* Steam Store Page Sidebar Mockup */
+        .steam-store-mockup {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            background: #1b2838;
+            color: #c7d5e0;
+            border-radius: 8px;
+            overflow: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .steam-store-mockup {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .steam-store-left {
+            background: #162231;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .steam-store-right {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: radial-gradient(circle at top right, rgba(102, 192, 244, 0.05) 0%, transparent 60%), #1b2838;
+        }
+
+        .steam-store-image-container {
+            width: 100%;
+            aspect-ratio: 460/215;
+            background: #000;
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.4);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .steam-store-image-container canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .steam-store-info-row {
+            display: flex;
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        .steam-store-info-label {
+            width: 110px;
+            color: #556772;
+            text-transform: uppercase;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .steam-store-info-value {
+            color: #66c0f4;
+            cursor: pointer;
+        }
+        .steam-store-info-value:hover {
+            color: #fff;
+        }
+
+        .steam-store-info-value.date {
+            color: #8f98a0;
+            cursor: default;
+        }
+
+        .steam-store-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 10px;
+        }
+
+        .steam-store-tag {
+            background: rgba(103, 193, 245, 0.1);
+            color: #67c1f5;
+            padding: 4px 8px;
+            border-radius: 2px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .steam-store-tag:hover {
+            background: rgba(103, 193, 245, 0.2);
+            color: #fff;
+        }
+
+        /* Steam Purchase Mockup Area */
+        .steam-purchase-box {
+            background: linear-gradient(135deg, #182637 0%, #14202e 100%);
+            border-radius: 4px;
+            padding: 16px;
+            margin-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .steam-purchase-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .steam-purchase-action {
+            display: flex;
+            background: #000;
+            padding: 2px;
+            border-radius: 3px;
+            align-items: center;
+        }
+
+        .steam-purchase-price {
+            padding: 0 12px;
+            color: #c7d5e0;
+            font-size: 13px;
+        }
+
+        .steam-purchase-btn {
+            background: linear-gradient( to bottom, #75b022 5%, #588a1b 95%);
+            color: #d2efa9;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 2px;
+            font-weight: bold;
+            cursor: pointer;
+            text-shadow: 0px 1px 0px rgba( 0, 0, 0, 0.3 );
+        }
+        .steam-purchase-btn:hover {
+            background: linear-gradient( to bottom, #8ed629 5%, #69a520 95%);
+            color: #fff;
+        }
+
+        /* Steam Search Mockup */
+        .steam-search-mockup {
+            display: flex;
+            flex-direction: column;
+            background: #17202d;
+            border-radius: 6px;
+            overflow: hidden;
+            padding: 8px;
+            gap: 4px;
+        }
+
+        .steam-search-row {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            height: 48px;
+            padding: 0 12px 0 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #c7d5e0;
+            cursor: pointer;
+            transition: background 0.1s;
+            border-left: 4px solid transparent;
+        }
+        .steam-search-row:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: #66c0f4;
+        }
+
+        .steam-search-img {
+            width: 120px;
+            height: 100%;
+            background: #000;
+        }
+        .steam-search-img canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .steam-search-title-col {
+            flex: 1;
+            padding-left: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #c7d5e0;
+        }
+
+        .steam-search-released {
+            width: 120px;
+            color: #4c6c8c;
+            text-align: right;
+        }
+
+        .steam-search-reviews {
+            width: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .steam-review-icon {
+            width: 16px;
+            height: 16px;
+            background: #66c0f4;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #17202d;
+            font-weight: bold;
+            font-size: 9px;
+        }
+
+        .steam-search-price-col {
+            width: 120px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .steam-discount-tag {
+            background: #4c6b22;
+            color: #a4d007;
+            padding: 3px 6px;
+            font-weight: bold;
+            font-size: 11px;
+            border-radius: 2px;
+        }
+
+        .steam-price-strike {
+            text-decoration: line-through;
+            color: #56687a;
+            font-size: 11px;
+        }
+
+        .steam-price-final {
+            color: #a4d007;
+            font-weight: bold;
+        }
+
+        /* Steam Library Hero Layout */
+        .steam-library-hero-mockup {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3840/1240;
+            background: #0b0e0f;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .steam-library-hero-mockup canvas.bg-canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .steam-library-logo-overlay {
+            position: absolute;
+            bottom: 12%;
+            left: 6%;
+            width: 26%;
+            aspect-ratio: 16/9;
+            z-index: 5;
+            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
+        }
+
+        .steam-library-logo-overlay canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Library Play Bar Mockup */
+        .steam-library-playbar {
+            background: #282e38;
+            height: 64px;
+            border-radius: 0 0 8px 8px;
+            margin-top: -4px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            justify-content: space-between;
+        }
+
+        .steam-library-play-btn {
+            background: linear-gradient( to right, #a4d007 0%, #75b022 100%);
+            color: #fff;
+            font-family: sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            padding: 10px 48px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(117,176,34,0.3);
+        }
+        .steam-library-play-btn:hover {
+            background: linear-gradient( to right, #bbf009 0%, #8ed629 100%);
+        }
+
+        .steam-library-stats {
+            display: flex;
+            gap: 32px;
+            color: #8f98a0;
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+
+        .steam-library-stat-label {
+            text-transform: uppercase;
+            font-size: 9px;
+            letter-spacing: 0.05em;
+            margin-bottom: 2px;
+        }
+
+        .steam-library-stat-val {
+            color: #c7d5e0;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Steam Library Grid mockup */
+        .steam-library-grid-mockup {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            background: #1c2633;
+            padding: 24px;
+            border-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .steam-library-grid-mockup {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .library-grid-item {
+            aspect-ratio: 600/900;
+            background: #0f1416;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            cursor: pointer;
+        }
+        .library-grid-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            border-color: #66c0f4;
+        }
+
+        .library-grid-item canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .library-grid-item.dummy {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .library-grid-item-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: #fff;
+            padding: 20px 10px 10px 10px;
+            font-size: 12px;
+            font-family: sans-serif;
+            font-weight: 600;
+        }
+
+        .mockup-columns-container {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 24px;
+        }
+        @media (max-width: 992px) {
+            .mockup-columns-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-symbol">//</span> GALAVERSE <span class="accent-text">CREATIONS</span>
+            </a>
+            
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link" data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a></li>
+                </ul>
+
+                <!-- Language Switcher -->
+                <div class="lang-switch">
+                    <button class="lang-btn" data-lang="tr">TR</button>
+                    <span class="lang-separator">|</span>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+
+                <!-- Theme Switcher -->
+                <button class="theme-toggle" id="theme-toggle" aria-label="Tema Değiştir">
+                    <svg class="theme-icon sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                    </svg>
+                    <svg class="theme-icon moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Workspace -->
+    <main class="generator-container">
+        
+        <!-- Left: Upload & Config Controls -->
+        <div class="control-panel">
+            <div class="back-btn-wrapper">
+                <a href="index.html" class="back-home-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span data-tr="Ana Sayfaya Dön" data-en="Back to Home">Ana Sayfaya Dön</span>
+                </a>
+            </div>
+
+            <div class="panel-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+                <span data-tr="Medya & Kontroller" data-en="Media & Controls">Medya & Kontroller</span>
+            </div>
+
+            <!-- Demo Load Button -->
+            <div class="control-group" style="margin-bottom: 24px;">
+                <button type="button" class="download-btn" id="btn-load-demo" style="width: 100%; border-color: var(--accent); color: var(--accent); background: var(--accent-glow); display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    ✨ <span data-tr="Örnek Oyun Yükle" data-en="Load Sample Game">Örnek Oyun Yükle</span>
+                </button>
+            </div>
+
+            <!-- Upload 1: Widescreen Background -->
+            <div class="control-group">
+                <label data-tr="Yatay Arka Plan (16:9 / 3.1:1)" data-en="Horizontal BG (16:9 / 3.1:1)">Yatay Arka Plan (16:9 / 3.1:1)</label>
+                <div class="upload-zone" id="zone-horizontal">
+                    <span class="upload-icon">🖼️</span>
+                    <span class="upload-text" data-tr="Görsel Sürükle veya Seç" data-en="Drag & Drop or Click">Görsel Sürükle veya Seç</span>
+                    <span class="upload-desc" data-tr="Steam Kahramanı / Epic için önerilen 3840x1240" data-en="Recommended 3840x1240 for Steam Hero / Epic Widescreen">Önerilen: 3840x1240</span>
+                    <div class="upload-preview-indicator">
+                        <span>✓</span> <span class="file-name-span">yatay_bg.jpg</span>
+                    </div>
+                    <input type="file" id="input-horizontal" accept="image/*">
+                </div>
+            </div>
+
+            <!-- Upload 2: Vertical Background -->
+            <div class="control-group">
+                <label data-tr="Dikey Arka Plan (2:3 / 3:4)" data-en="Vertical BG (2:3 / 3:4)">Dikey Arka Plan (2:3 / 3:4)</label>
+                <div class="upload-zone" id="zone-vertical">
+                    <span class="upload-icon">📱</span>
+                    <span class="upload-text" data-tr="Görsel Sürükle veya Seç" data-en="Drag & Drop or Click">Görsel Sürükle veya Seç</span>
+                    <span class="upload-desc" data-tr="Steam Kütüphane / Epic Dikey için önerilen 1200x1600" data-en="Recommended 1200x1600 for Steam Library / Epic Key Art">Önerilen: 1200x1600</span>
+                    <div class="upload-preview-indicator">
+                        <span>✓</span> <span class="file-name-span">dikey_bg.jpg</span>
+                    </div>
+                    <input type="file" id="input-vertical" accept="image/*">
+                </div>
+            </div>
+
+            <!-- Upload 3: Logo -->
+            <div class="control-group">
+                <label data-tr="Şeffaf Logo (PNG)" data-en="Transparent Logo (PNG)">Şeffaf Logo (PNG)</label>
+                <div class="upload-zone" id="zone-logo">
+                    <span class="upload-icon">✨</span>
+                    <span class="upload-text" data-tr="Logoyu Sürükle veya Seç" data-en="Drag & Drop or Click">Logoyu Sürükle veya Seç</span>
+                    <span class="upload-desc" data-tr="Şeffaf arka planlı PNG formatı" data-en="Transparent background PNG format">Şeffaf arka planlı PNG</span>
+                    <div class="upload-preview-indicator">
+                        <span>✓</span> <span class="file-name-span">logo.png</span>
+                    </div>
+                    <input type="file" id="input-logo" accept="image/*">
+                </div>
+            </div>
+
+            <!-- Customizer Controls -->
+            <div class="control-group">
+                <label data-tr="Logo Boyutu" data-en="Logo Scale">Logo Boyutu</label>
+                <div class="slider-wrapper">
+                    <input type="range" id="logo-scale" min="20" max="100" value="60">
+                    <span class="slider-val" id="scale-val">60%</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label data-tr="Dikey Hizalama (Y-Ekseni)" data-en="Vertical Shift (Y-Axis)">Dikey Hizalama (Y-Ekseni)</label>
+                <div class="slider-wrapper">
+                    <input type="range" id="logo-y-offset" min="-50" max="50" value="20">
+                    <span class="slider-val" id="offset-val">20%</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label data-tr="Yatay Hizalama (X-Ekseni)" data-en="Horizontal Shift (X-Axis)">Yatay Hizalama (X-Ekseni)</label>
+                <div class="slider-wrapper">
+                    <input type="range" id="logo-x-offset" min="-50" max="50" value="0">
+                    <span class="slider-val" id="x-offset-val">0%</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label data-tr="Yatay Konumlandırma Şablonu" data-en="Horizontal Snap Presets">Yatay Konumlandırma Şablonu</label>
+                <div class="presets-grid">
+                    <button class="preset-btn" data-align="left" data-tr="Sol" data-en="Left">Sol</button>
+                    <button class="preset-btn active" data-align="center" data-tr="Orta" data-en="Center">Orta</button>
+                    <button class="preset-btn" data-align="right" data-tr="Sağ" data-en="Right">Sağ</button>
+                </div>
+            </div>
+
+            <!-- Bulk Downloader -->
+            <div class="bulk-actions">
+                <button type="button" class="download-btn btn-primary" id="btn-download-all" style="width: 100%;" disabled>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span data-tr="Tümünü İndir (PNG)" data-en="Download All (PNG)">Tümünü İndir (PNG)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right: Real-time Previews -->
+        <div class="showcase-dashboard">
+            <div class="showcase-header">
+                <div class="showcase-title-area">
+                    <h1 data-tr="Mağaza Kapsül Oluşturucu" data-en="Store Capsule Generator">Mağaza Kapsül Oluşturucu</h1>
+                    <p data-tr="Görsellerinizi yükleyin, logo pozisyonunu ayarlayın ve saniyeler içinde tüm Steam/Epic mağaza paketlerini indirin." data-en="Upload assets, customize logo placement, and download all Steam/Epic packages in seconds.">Görsellerinizi yükleyin, logo pozisyonunu ayarlayın ve paketleri indirin.</p>
+                </div>
+
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-target="steam-tab">Steam</button>
+                    <button class="tab-btn" data-target="epic-tab">Epic Games</button>
+                    <button class="tab-btn" data-target="preview-tab" data-tr="Canlı Önizleme" data-en="Live Preview">Canlı Önizleme</button>
+                </div>
+            </div>
+
+            <!-- STEAM TAB CONTENT -->
+            <div id="steam-tab" class="tab-content active">
+                <div class="previews-grid">
+                    
+                    <!-- Preset 1: Başlık Kapsülü (Header Capsule) -->
+                    <div class="preview-card" data-preset="steam-header">
+                        <div class="canvas-container">
+                            <span class="placeholder-indicator" data-tr="Arka Plan Yükleyin" data-en="Upload Background">Arka Plan Yükleyin</span>
+                            <canvas width="920" height="430"></canvas>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="card-name" data-tr="Başlık Kapsülü" data-en="Header Capsule">Başlık Kapsülü</span>
+                                <span class="card-size">920 x 430</span>
+                            </div>
+                            <p class="card-desc" data-tr="Steam istemcisi tablo görünümü, mağaza tavsiyeleri ve günlük indirimler kısımlarında kullanılan popüler yatay görsel." data-en="Appears in Steam client grid view, store recommendations, and daily deal sections. Focus on branding."></p>
+                            <button type="button" class="download-btn" disabled>
+                                <span data-tr="İndir" data-en="Download">İndir</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preset 2: Küçük Kapsül (Small Capsule) -->
+                    <div class="preview-card" data-preset="steam-small">
+                        <div class="canvas-container">
+                            <span class="placeholder-indicator" data-tr="Arka Plan Yükleyin" data-en="Upload Background">Arka Plan Yükleyin</span>
+                            <canvas width="462" height="174"></canvas>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="card-name" data-tr="Küçük Kapsül" data-en="Small Capsule">Küçük Kapsül</span>
+                                <span class="card-size">462 x 174</span>
+                            </div>
+                            <p class="card-desc" data-tr="Arama sonuçları, en çok satanlar ve yeni çıkanlar listelerinde kullanılan küçük ama en çok görünen kapsül. Logo net olmalıdır." data-en="Used for search results, top sellers, and new releases. Logo must remain highly readable at small scale."></p>
+                            <button type="button" class="download-btn" disabled>
+                                <span data-tr="İndir" data-en="Download">İndir</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preset 3: Ana Kapsül (Main Capsule) -->
+                    <div class="preview-card" data-preset="steam-main">
+                        <div class="canvas-container">
+                            <span class="placeholder-indicator" data-tr="Arka Plan Yükleyin" data-en="Upload Background">Arka Plan Yükleyin</span>
+                            <canvas width="1232" height="706"></canvas>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="card-name" data-tr="Ana Kapsül" data-en="Main Capsule">Ana Kapsül</span>
+                                <span class="card-size">1232 x 706</span>
+                            </div>
+                            <p class="card-desc" data-tr="Steam ana sayfasının en üstündeki öne çıkanlar karuselinde ve oyun sayfasının en üstünde yer alan ana vitrin görseli." data-en="Featured at the top of the store page and in the main recommended carousel. Key for store impressions."></p>
+                            <button type="button" class="download-btn" disabled>
+                                <span data-tr="İndir" data-en="Download">İndir</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preset 4: Dikey Kapsül (Vertical Capsule) -->
+                    <div class="preview-card" data-preset="steam-vertical-capsule">
+                        <div class="canvas-container">
+                            <span class="placeholder-indicator" data-tr="Arka Plan Yükleyin" data-en="Upload Background">Arka Plan Yükleyin</span>
+                            <canvas width="748" height="896"></canvas>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="card-name" data-tr="Dikey Kapsül" data-en="Vertical Capsule">Dikey Kapsül</span>
+                                <span class="card-size">748 x 896</span>
+                            </div>
+                            <p class="card-desc" data-tr="Mevsimsel indirimler, ana sayfanın en üstü ve yeni indirim sayfalarında gösterilen dikey tanıtım görseli." data-en="Portrait-style marketing capsule featured during seasonal sales, custom landing pages, and special events."></p>
+                            <button type="button" class="download-btn" disabled>
+                                <span data-tr="İndir" data-en="Download">İndir</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preset 5: Kütüphane Kapsülü (Library Capsule) -->
+                    <div class="preview-card" data-preset="steam-library-capsule">
+                        <div class="canvas-container">
+                            <span class="placeholder-indicator" data-tr="Arka Plan Yükleyin" data-en="Upload Background">Arka Plan Yükleyin</span>
+                            <canvas width="600" height="900"></canvas>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="card-name" data-tr="Kütüphane Kapsülü" data-en="Library Capsule">Kütüphane Kapsülü</span>
+                                <span class="card-size">600 x 900</span>
+                            </div>
+                            <p class="card-desc" data-tr="Oyuncuların kütüphanesinde sergilenen dikey 2:3 kapak görseli. Logo, arka plan üzerinde kolayca okunmalıdır." data-en="Displayed inside user libraries and collection views. Rich vertical artwork with legible game logo."></p>
+                            <button type="button" class="download-btn" disabled>
+                                <span data-tr="İndir" data-en="Download">İndir</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preset 6: Kütüphane Başlığı (Library Header) -->
+                    <div class="preview-card" data-preset="steam-library-header">
+                        <div class="canvas-container">
+                            <span class="placeholder-indicator" data-tr="Arka Plan Yükleyin" data-en="Upload Background">Arka Plan Yükleyin</span>
+                            <canvas width="920" height="430"></canvas>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="card-name" data-tr="Kütüphane Başlığı" data-en="Library Header">Kütüphane Başlığı</span>
+                                <span class="card-size">920 x 430</span>
+                            </div>
+                            <p class="card-desc" data-tr="Kütüphanedeki 'Son Oyunlar' rafı ve çeşitli yerlerde gösterilen yatay görsel. Belirlenmezse başlık kapsülü kullanılır." data-en="Appears in the 'Recent Games' library shelf and list layouts. Defaults to the Header Capsule if not provided."></p>
+                            <button type="button" class="download-btn" disabled>
+                                <span data-tr="İndir" data-en="Download">İndir</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preset 7: Kütüphane Kahraman Görseli (Library Hero) -->
+                    <div class="preview-card" data-preset="steam-library-hero">
+                        <div class="canvas-container">
+                            <span class="placeholder-indicator" data-tr="Arka Plan Yükleyin" data-en="Upload Background">Arka Plan Yükleyin</span>
+                            <canvas width="3840" height="1240"></canvas>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="card-name" data-tr="Kütüphane Kahramanı" data-en="Library Hero Banner">Kütüphane Kahramanı</span>
+                                <span class="card-size">3840 x 1240</span>
+                            </div>
+                            <p class="card-desc" data-tr="Oyunun kütüphane detay sayfasının üstündeki geniş afiş. Üzerine logo bindirileceği için metin/logo içermemelidir." data-en="Wide banner displayed at the top of game detail pages. Must contain only artwork without text or logos."></p>
+                            <button type="button" class="download-btn" disabled>
+                                <span data-tr="İndir" data-en="Download">İndir</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preset 8: Kütüphane Logosu (Library Logo) -->
+                    <div class="preview-card" data-preset="steam-library-logo">
+                        <div class="canvas-container">
+                            <span class="placeholder-indicator" data-tr="Logo Yükleyin" data-en="Upload Logo">Logo Yükleyin</span>
+                            <canvas width="1280" height="720"></canvas>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="card-name" data-tr="Kütüphane Logosu" data-en="Library Logo">Kütüphane Logosu</span>
+                                <span class="card-size">1280 x 720</span>
+                            </div>
+                            <p class="card-desc" data-tr="Şeffaf arka planlı PNG logo. Kütüphane kahraman görselinin üzerine yerleştirilerek paralaks etkisi yaratır." data-en="Legible logo on a transparent background. Overlaid on the Library Hero banner to form a parallax effect."></p>
+                            <button type="button" class="download-btn" disabled>
+                                <span data-tr="İndir" data-en="Download">İndir</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- EPIC GAMES TAB CONTENT -->
+            <div id="epic-tab" class="tab-content">
+                <div class="previews-grid">
+                    
+                    <!-- Preset 6: Epic Landscape Art -->
+                    <div class="preview-card" data-preset="epic-landscape">
+                        <div class="canvas-container">
+                            <span class="placeholder-indicator" data-tr="Arka Plan Yükleyin" data-en="Upload Background">Arka Plan Yükleyin</span>
+                            <canvas width="1920" height="1080"></canvas>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="card-name">Offer Landscape Art</span>
+                                <span class="card-size">1920 x 1080</span>
+                            </div>
+                            <p class="card-desc" data-tr="Epic Store vitrininde ve geniş lansman bannerlarında kullanılan standart 16:9 görsel." data-en="The standard 16:9 visual format for product offers, storefront layouts, and hero promotions."></p>
+                            <button type="button" class="download-btn" disabled>
+                                <span data-tr="İndir" data-en="Download">İndir</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preset 7: Epic Key Art (3:4) -->
+                    <div class="preview-card" data-preset="epic-keyart">
+                        <div class="canvas-container">
+                            <span class="placeholder-indicator" data-tr="Arka Plan Yükleyin" data-en="Upload Background">Arka Plan Yükleyin</span>
+                            <canvas width="1200" height="1600"></canvas>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="card-name">Store Key Art</span>
+                                <span class="card-size">1200 x 1600</span>
+                            </div>
+                            <p class="card-desc" data-tr="Epic Store'daki ana mağaza listelerinde gösterilen dikey 3:4 oranlı kapak resmi." data-en="Primary vertical 3:4 key art used inside Epic Games Store listings and library layouts."></p>
+                            <button type="button" class="download-btn" disabled>
+                                <span data-tr="İndir" data-en="Download">İndir</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PREVIEW TAB CONTENT -->
+            <div id="preview-tab" class="tab-content">
+                <div class="mockup-grid">
+                    
+                    <!-- 1. Steam Store Page Sidebar Mockup -->
+                    <div>
+                        <div class="mockup-section-title" data-tr="Steam Mağaza Sayfası Önizlemesi" data-en="Steam Store Page Preview">Steam Mağaza Sayfası Önizlemesi</div>
+                        <div class="steam-store-mockup">
+                            <div class="steam-store-right">
+                                <div class="steam-store-image-container">
+                                    <canvas width="920" height="430" class="mockup-canvas" data-source="steam-header"></canvas>
+                                </div>
+                                
+                                <div style="margin-top: 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                                    <div>
+                                        <p style="color: #acb2b8; line-height: 1.4; margin-bottom: 12px; font-size: 11.5px;" data-tr="Gizemli ve tekinsiz bir dünyada ipuçlarını takip edin, gerçeği ortaya çıkarın. Galaverse stüdyosunun en yeni atmosferik yapımı." data-en="Follow the clues in a mysterious and uncanny world to uncover the truth. The latest atmospheric production from Galaverse Creations.">Gizemli ve tekinsiz bir dünyada ipuçlarını takip edin, gerçeği ortaya çıkarın.</p>
+                                        
+                                        <div class="steam-store-info-row">
+                                            <div class="steam-store-info-label" data-tr="Tüm İncelemeler:" data-en="All Reviews:">Tüm İncelemeler:</div>
+                                            <div class="steam-store-info-value" data-tr="Çok Olumlu (1,240)" data-en="Very Positive (1,240)">Çok Olumlu (1,240)</div>
+                                        </div>
+                                        
+                                        <div class="steam-store-info-row">
+                                            <div class="steam-store-info-label" data-tr="Yayın Tarihi:" data-en="Release Date:">Yayın Tarihi:</div>
+                                            <div class="steam-store-info-value date" data-tr="Yakında" data-en="Coming Soon">Yakında</div>
+                                        </div>
+                                        
+                                        <div class="steam-store-info-row">
+                                            <div class="steam-store-info-label" data-tr="Geliştirici:" data-en="Developer:">Geliştirici:</div>
+                                            <div class="steam-store-info-value">
+                                                <a href="https://store.steampowered.com/curator/45745379" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Galaverse Creations</a>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="steam-store-info-row">
+                                            <div class="steam-store-info-label" data-tr="Yayıncı:" data-en="Publisher:">Yayıncı:</div>
+                                            <div class="steam-store-info-value">
+                                                <a href="https://store.steampowered.com/curator/45745379" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Galaverse Creations</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="steam-store-tags">
+                                            <span class="steam-store-tag" data-tr="Macera" data-en="Adventure">Macera</span>
+                                            <span class="steam-store-tag" data-tr="Bağımsız" data-en="Indie">Bağımsız</span>
+                                            <span class="steam-store-tag" data-tr="Atmosferik" data-en="Atmospheric">Atmosferik</span>
+                                            <span class="steam-store-tag" data-tr="Gizem" data-en="Mystery">Gizem</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="steam-store-left">
+                                <h2 style="color: #fff; font-size: 22px; font-weight: normal; margin-bottom: 12px; font-family: sans-serif;" data-tr="GALAVERSE OYUNU" data-en="GALAVERSE GAME">GALAVERSE OYUNU</h2>
+                                <p style="font-size: 11px; color: #56687a;" data-tr="Bu oyun için popüler kullanıcı etiketleri:" data-en="Popular user-defined tags for this product:">Bu oyun için popüler kullanıcı etiketleri:</p>
+                                <div class="steam-store-tags" style="flex-direction: column; gap: 6px;">
+                                    <span class="steam-store-tag" style="text-align: left; background: rgba(255,255,255,0.05); color: #67c1f5;">Puzzle</span>
+                                    <span class="steam-store-tag" style="text-align: left; background: rgba(255,255,255,0.05); color: #67c1f5;">Psychological Horror</span>
+                                    <span class="steam-store-tag" style="text-align: left; background: rgba(255,255,255,0.05); color: #67c1f5;">Detective</span>
+                                    <span class="steam-store-tag" style="text-align: left; background: rgba(255,255,255,0.05); color: #67c1f5;">Singleplayer</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="steam-purchase-box">
+                            <div class="steam-purchase-title" data-tr="Galaverse Oyunu Satın Alın" data-en="Buy Galaverse Game">Galaverse Oyunu Satın Alın</div>
+                            <div class="steam-purchase-action">
+                                <div class="steam-purchase-price">$3.99</div>
+                                <a href="https://store.steampowered.com/app/4181340/The_Anomaly_Detective/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
+                                    <button type="button" class="steam-purchase-btn" data-tr="Sepete Ekle" data-en="Add to Cart">Sepete Ekle</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2. Steam Library Hero Banner & Logo Overlay -->
+                    <div>
+                        <div class="mockup-section-title" data-tr="Steam Kütüphane Detay Sayfası Önizlemesi (Kahraman Görsel + Logo)" data-en="Steam Library Game Page Preview (Hero Banner + Logo Overlay)">Steam Kütüphane Detay Sayfası Önizlemesi (Kahraman Görsel + Logo)</div>
+                        <div class="steam-library-hero-mockup">
+                            <canvas width="3840" height="1240" class="bg-canvas mockup-canvas" data-source="steam-library-hero"></canvas>
+                            <div class="steam-library-logo-overlay">
+                                <canvas width="1280" height="720" class="mockup-canvas" data-source="steam-library-logo"></canvas>
+                            </div>
+                        </div>
+                        <div class="steam-library-playbar">
+                            <button type="button" class="steam-library-play-btn" data-tr="Oyna" data-en="Play">Oyna</button>
+                            <div class="steam-library-stats">
+                                <div>
+                                    <div class="steam-library-stat-label" data-tr="Son Oynama" data-en="Last Played">Son Oynama</div>
+                                    <div class="steam-library-stat-val" data-tr="Bugün" data-en="Today">Bugün</div>
+                                </div>
+                                <div>
+                                    <div class="steam-library-stat-label" data-tr="Oynama Süresi" data-en="Play Time">Oynama Süresi</div>
+                                    <div class="steam-library-stat-val" data-tr="42 saat" data-en="42 hours">42 saat</div>
+                                </div>
+                                <div>
+                                    <div class="steam-library-stat-label" data-tr="Başarımlar" data-en="Achievements">Başarımlar</div>
+                                    <div class="steam-library-stat-val">18 / 32</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 3. Steam Search Results Mockup & Library Grid Mockup (Side-by-Side) -->
+                    <div class="mockup-columns-container">
+                        <div>
+                            <div class="mockup-section-title" data-tr="Steam Arama Sonucu Görünümü" data-en="Steam Search Result View">Steam Arama Sonucu Görünümü</div>
+                            <div class="steam-search-mockup">
+                                <div class="steam-search-row">
+                                    <div class="steam-search-img">
+                                        <canvas width="462" height="174" class="mockup-canvas" data-source="steam-small"></canvas>
+                                    </div>
+                                    <div class="steam-search-title-col">Galaverse Game</div>
+                                    <div class="steam-search-reviews">
+                                        <span class="steam-review-icon">👍</span>
+                                    </div>
+                                    <div class="steam-search-released">12 Oca 2026</div>
+                                    <div class="steam-search-price-col">
+                                        <span>$3.99</span>
+                                    </div>
+                                </div>
+                                <!-- Some dummy search rows to make it look realistic -->
+                                <div class="steam-search-row" style="opacity: 0.6;">
+                                    <div class="steam-search-img" style="background-image: url('images/anomaly_detective.jpg'); background-size: cover; background-position: center;"></div>
+                                    <div class="steam-search-title-col">The Anomaly Detective</div>
+                                    <div class="steam-search-reviews">
+                                        <span class="steam-review-icon">👍</span>
+                                    </div>
+                                    <div class="steam-search-released">2024</div>
+                                    <div class="steam-search-price-col">
+                                        <span>$3.99</span>
+                                    </div>
+                                </div>
+                                <div class="steam-search-row" style="opacity: 0.6;">
+                                    <div class="steam-search-img" style="background-image: url('images/spear_of_the_sky.jpg'); background-size: cover; background-position: center;"></div>
+                                    <div class="steam-search-title-col">Spear of the Sky</div>
+                                    <div class="steam-search-reviews">
+                                        <span class="steam-review-icon">👍</span>
+                                    </div>
+                                    <div class="steam-search-released">2025</div>
+                                    <div class="steam-search-price-col">
+                                        <span data-tr="Ücretsiz" data-en="Free">Ücretsiz</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="mockup-section-title" data-tr="Kütüphane Grid Görünümü" data-en="Library Grid View">Kütüphane Grid Görünümü</div>
+                            <div class="steam-library-grid-mockup">
+                                <div class="library-grid-item">
+                                    <canvas width="600" height="900" class="mockup-canvas" data-source="steam-library-capsule"></canvas>
+                                </div>
+                                <div class="library-grid-item dummy" style="background-image: url('images/anomaly_detective.jpg'); opacity: 0.6;">
+                                    <div class="library-grid-item-name">The Anomaly Detective</div>
+                                </div>
+                                <div class="library-grid-item dummy" style="background-image: url('images/lunhowl.jpg'); opacity: 0.6;">
+                                    <div class="library-grid-item-name">Lunhowl</div>
+                                </div>
+                                <div class="library-grid-item dummy" style="background-image: url('images/spear_of_the_sky.jpg'); opacity: 0.6;">
+                                    <div class="library-grid-item-name">Spear of the Sky</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p class="footer-copy">
+                <span data-tr="© 2026 Galaverse Creations. Tüm hakları saklıdır." data-en="© 2026 Galaverse Creations. All rights reserved.">© 2026 Galaverse Creations. Tüm hakları saklıdır.</span> | 
+                <a href="privacy.html" class="privacy-link" data-tr="Gizlilik Politikası" data-en="Privacy Policy">Gizlilik Politikası</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- App Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme toggle handler
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('galaverse-theme', newTheme);
+            });
+
+            // Language Switcher Logic
+            let currentLang = localStorage.getItem('galaverse-lang') || 'tr';
+            function setLanguage(lang) {
+                currentLang = lang;
+                localStorage.setItem('galaverse-lang', lang);
+                document.documentElement.setAttribute('lang', lang);
+                
+                // Update language switcher buttons active class
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    if (btn.getAttribute('data-lang') === lang) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+
+                // Update text content with data attributes
+                document.querySelectorAll('[data-tr], [data-en]').forEach(element => {
+                    const text = element.getAttribute(`data-${lang}`);
+                    if (text) {
+                        element.textContent = text;
+                    }
+                });
+            }
+            document.querySelectorAll('.lang-switch .lang-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const selectedLang = e.currentTarget.getAttribute('data-lang');
+                    setLanguage(selectedLang);
+                });
+            });
+            setLanguage(currentLang);
+
+            // Tab Buttons Logic
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    e.currentTarget.classList.add('active');
+                    const target = e.currentTarget.getAttribute('data-target');
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+
+            // Image variables
+            let horizontalImg = null;
+            let verticalImg = null;
+            let logoImg = null;
+
+            // Positioning & Customization parameters
+            let logoScale = 60; // percentage
+            let logoYOffset = 20; // percentage offset from center
+            let logoXOffset = 0; // percentage offset from center
+
+            // Cache canvas contexts & card download buttons
+            const cards = document.querySelectorAll('.preview-card');
+            const downloadAllBtn = document.getElementById('btn-download-all');
+
+            // Set up inputs listeners
+            setupUploadZone('zone-horizontal', 'input-horizontal', (img) => {
+                horizontalImg = img;
+                renderAll();
+            });
+            setupUploadZone('zone-vertical', 'input-vertical', (img) => {
+                verticalImg = img;
+                renderAll();
+            });
+            setupUploadZone('zone-logo', 'input-logo', (img) => {
+                logoImg = img;
+                renderAll();
+            });
+
+            // Sliders configuration
+            const scaleSlider = document.getElementById('logo-scale');
+            const scaleValSpan = document.getElementById('scale-val');
+            scaleSlider.addEventListener('input', (e) => {
+                logoScale = parseInt(e.target.value, 10);
+                scaleValSpan.textContent = logoScale + '%';
+                renderAll();
+            });
+
+            const offsetSlider = document.getElementById('logo-y-offset');
+            const offsetValSpan = document.getElementById('offset-val');
+            offsetSlider.addEventListener('input', (e) => {
+                logoYOffset = parseInt(e.target.value, 10);
+                offsetValSpan.textContent = (logoYOffset > 0 ? '+' : '') + logoYOffset + '%';
+                renderAll();
+            });
+
+            const xOffsetSlider = document.getElementById('logo-x-offset');
+            const xOffsetValSpan = document.getElementById('x-offset-val');
+            xOffsetSlider.addEventListener('input', (e) => {
+                logoXOffset = parseInt(e.target.value, 10);
+                xOffsetValSpan.textContent = (logoXOffset > 0 ? '+' : '') + logoXOffset + '%';
+                
+                // Sync preset buttons active state
+                document.querySelectorAll('.presets-grid .preset-btn').forEach(btn => {
+                    const align = btn.getAttribute('data-align');
+                    if (align === 'left' && logoXOffset === -35) {
+                        btn.classList.add('active');
+                    } else if (align === 'center' && logoXOffset === 0) {
+                        btn.classList.add('active');
+                    } else if (align === 'right' && logoXOffset === 35) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+                renderAll();
+            });
+
+            // Alignment presets
+            document.querySelectorAll('.presets-grid .preset-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.presets-grid .preset-btn').forEach(b => b.classList.remove('active'));
+                    e.currentTarget.classList.add('active');
+                    const align = e.currentTarget.getAttribute('data-align');
+                    if (align === 'left') {
+                        logoXOffset = -35;
+                    } else if (align === 'right') {
+                        logoXOffset = 35;
+                    } else {
+                        logoXOffset = 0;
+                    }
+                    xOffsetSlider.value = logoXOffset;
+                    xOffsetValSpan.textContent = (logoXOffset > 0 ? '+' : '') + logoXOffset + '%';
+                    renderAll();
+                });
+            });
+
+            // Setup single drag-and-drop zone
+            function setupUploadZone(zoneId, inputId, onLoadCallback) {
+                const zone = document.getElementById(zoneId);
+                const input = document.getElementById(inputId);
+                const nameSpan = zone.querySelector('.file-name-span');
+
+                zone.addEventListener('click', () => input.click());
+                input.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.style.borderColor = 'var(--accent)';
+                });
+                zone.addEventListener('dragleave', () => {
+                    zone.style.borderColor = 'var(--border-color)';
+                });
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.style.borderColor = 'var(--border-color)';
+                    handleFile(e.dataTransfer.files[0]);
+                });
+
+                function handleFile(file) {
+                    if (!file || !file.type.startsWith('image/')) return;
+                    
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            zone.classList.add('has-file');
+                            if (nameSpan) nameSpan.textContent = file.name;
+                            onLoadCallback(img);
+                        };
+                        img.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            // Draw a specific preview card
+            function renderCard(card) {
+                const canvas = card.querySelector('canvas');
+                const ctx = canvas.getContext('2d');
+                const preset = card.getAttribute('data-preset');
+                const isVerticalPreset = preset === 'steam-vertical-capsule' || preset === 'steam-library-capsule' || preset === 'epic-keyart';
+                
+                // Choose base background
+                let bgSource = isVerticalPreset ? verticalImg : horizontalImg;
+                
+                // Fallback cropping if one background is missing but the other is present
+                if (!bgSource) {
+                    bgSource = isVerticalPreset ? horizontalImg : verticalImg;
+                }
+
+                // Clear / Draw background
+                if (preset === 'steam-library-logo') {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    if (logoImg) {
+                        card.querySelector('.placeholder-indicator').style.display = 'none';
+                    } else {
+                        card.querySelector('.placeholder-indicator').style.display = 'block';
+                    }
+                } else {
+                    ctx.fillStyle = '#0f1416';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    if (bgSource) {
+                        // Hide placeholder message
+                        card.querySelector('.placeholder-indicator').style.display = 'none';
+
+                        // Draw cover background image preserving aspect ratio (Object-fit: cover implementation on canvas)
+                        const canvasRatio = canvas.width / canvas.height;
+                        const imgRatio = bgSource.width / bgSource.height;
+                        let drawWidth, drawHeight, drawX, drawY;
+
+                        if (imgRatio > canvasRatio) {
+                            // Image is wider than canvas
+                            drawHeight = bgSource.height;
+                            drawWidth = bgSource.height * canvasRatio;
+                            drawX = (bgSource.width - drawWidth) / 2;
+                            drawY = 0;
+                        } else {
+                            // Image is taller than canvas
+                            drawWidth = bgSource.width;
+                            drawHeight = bgSource.width / canvasRatio;
+                            drawX = 0;
+                            drawY = (bgSource.height - drawHeight) / 2;
+                        }
+
+                        ctx.drawImage(bgSource, drawX, drawY, drawWidth, drawHeight, 0, 0, canvas.width, canvas.height);
+                    } else {
+                        card.querySelector('.placeholder-indicator').style.display = 'block';
+                    }
+                }
+
+                // Draw Overlay Logo if loaded and NOT the library hero
+                if (logoImg && preset !== 'steam-library-hero') {
+                    // Decide logo size based on target scale slider
+                    const maxLogoWidth = canvas.width * (logoScale / 100);
+                    const maxLogoHeight = canvas.height * (logoScale / 100);
+                    
+                    const logoRatio = logoImg.width / logoImg.height;
+                    let targetWidth = maxLogoWidth;
+                    let targetHeight = maxLogoWidth / logoRatio;
+
+                    if (targetHeight > maxLogoHeight) {
+                        targetHeight = maxLogoHeight;
+                        targetWidth = maxLogoHeight * logoRatio;
+                    }
+
+                    // Calculate Y offset from center (logoYOffset ranges from -50 to +50)
+                    const centerY = canvas.height / 2;
+                    const shiftY = (logoYOffset / 100) * canvas.height;
+                    const targetY = centerY - (targetHeight / 2) + shiftY;
+
+                    // Calculate X offset from center (logoXOffset ranges from -50 to +50)
+                    const centerX = canvas.width / 2;
+                    const shiftX = (logoXOffset / 100) * canvas.width;
+                    const targetX = centerX - (targetWidth / 2) + shiftX;
+
+                    ctx.drawImage(logoImg, targetX, targetY, targetWidth, targetHeight);
+                }
+
+                // Enable/disable download button
+                const btn = card.querySelector('.download-btn');
+                let canDownload = false;
+                if (preset === 'steam-library-logo') {
+                    canDownload = !!logoImg;
+                } else {
+                    canDownload = !!bgSource;
+                }
+
+                if (canDownload) {
+                    btn.removeAttribute('disabled');
+                } else {
+                    btn.setAttribute('disabled', 'true');
+                }
+            }
+
+            // Render mockup canvases by copying from main canvases
+            function renderMockups() {
+                const mockupCanvases = document.querySelectorAll('.mockup-canvas');
+                mockupCanvases.forEach(mockCanvas => {
+                    const sourcePreset = mockCanvas.getAttribute('data-source');
+                    const sourceCard = document.querySelector(`.preview-card[data-preset="${sourcePreset}"]`);
+                    if (sourceCard) {
+                        const sourceCanvas = sourceCard.querySelector('canvas');
+                        const destCtx = mockCanvas.getContext('2d');
+                        
+                        // Set mockup canvas internal dimensions to match source resolution (prevent blurriness)
+                        if (mockCanvas.width !== sourceCanvas.width || mockCanvas.height !== sourceCanvas.height) {
+                            mockCanvas.width = sourceCanvas.width;
+                            mockCanvas.height = sourceCanvas.height;
+                        }
+                        
+                        destCtx.clearRect(0, 0, mockCanvas.width, mockCanvas.height);
+                        destCtx.drawImage(sourceCanvas, 0, 0);
+                    }
+                });
+            }
+
+            // Loop to redraw all cards
+            function renderAll() {
+                cards.forEach(card => renderCard(card));
+                renderMockups();
+                
+                // Enable bulk download if at least one background is uploaded OR logo is uploaded
+                if (horizontalImg || verticalImg || logoImg) {
+                    downloadAllBtn.removeAttribute('disabled');
+                } else {
+                    downloadAllBtn.setAttribute('disabled', 'true');
+                }
+            }
+
+            // Bind Load Demo Button click
+            const loadDemoBtn = document.getElementById('btn-load-demo');
+            if (loadDemoBtn) {
+                loadDemoBtn.addEventListener('click', () => {
+                    loadDemoBtn.setAttribute('disabled', 'true');
+                    const prevText = loadDemoBtn.innerHTML;
+                    loadDemoBtn.innerHTML = '⚡ <span data-tr="Yükleniyor..." data-en="Loading...">Yükleniyor...</span>';
+                    setLanguage(currentLang);
+                    
+                    let loadedCount = 0;
+                    const totalToLoad = 3;
+                    
+                    function checkAllLoaded() {
+                        loadedCount++;
+                        if (loadedCount === totalToLoad) {
+                            loadDemoBtn.removeAttribute('disabled');
+                            loadDemoBtn.innerHTML = '✨ <span data-tr="Örnek Oyun Yüklendi" data-en="Sample Game Loaded">Örnek Oyun Yüklendi</span>';
+                            setLanguage(currentLang);
+                            
+                            setTimeout(() => {
+                                loadDemoBtn.innerHTML = '✨ <span data-tr="Örnek Oyun Yükle" data-en="Load Sample Game">Örnek Oyun Yükle</span>';
+                                setLanguage(currentLang);
+                            }, 2000);
+                            
+                            renderAll();
+                        }
+                    }
+
+                    // Load horizontal BG
+                    const hImg = new Image();
+                    hImg.onload = () => {
+                        horizontalImg = hImg;
+                        const zone = document.getElementById('zone-horizontal');
+                        zone.classList.add('has-file');
+                        zone.querySelector('.file-name-span').textContent = 'horizontal.png';
+                        checkAllLoaded();
+                    };
+                    hImg.onerror = () => {
+                        console.error('Horizontal image could not be loaded.');
+                        checkAllLoaded(); // Still count it to prevent hang
+                    };
+                    hImg.src = 'images/horizontal.png';
+
+                    // Load vertical BG
+                    const vImg = new Image();
+                    vImg.onload = () => {
+                        verticalImg = vImg;
+                        const zone = document.getElementById('zone-vertical');
+                        zone.classList.add('has-file');
+                        zone.querySelector('.file-name-span').textContent = 'vertical.png';
+                        checkAllLoaded();
+                    };
+                    vImg.onerror = () => {
+                        console.error('Vertical image could not be loaded.');
+                        checkAllLoaded();
+                    };
+                    vImg.src = 'images/vertical.png';
+
+                    // Load logo
+                    const lImg = new Image();
+                    lImg.onload = () => {
+                        logoImg = lImg;
+                        const zone = document.getElementById('zone-logo');
+                        zone.classList.add('has-file');
+                        zone.querySelector('.file-name-span').textContent = 'logo.png';
+                        checkAllLoaded();
+                    };
+                    lImg.onerror = () => {
+                        console.error('Logo image could not be loaded.');
+                        checkAllLoaded();
+                    };
+                    lImg.src = 'images/logo.png';
+                });
+            }
+
+            // Bind single download buttons clicks
+            cards.forEach(card => {
+                const btn = card.querySelector('.download-btn');
+                const canvas = card.querySelector('canvas');
+                const preset = card.getAttribute('data-preset');
+
+                btn.addEventListener('click', () => {
+                    const link = document.createElement('a');
+                    link.download = `galaverse-${preset}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            });
+
+            // Bind Bulk Download All click
+            downloadAllBtn.addEventListener('click', () => {
+                let downloadIndex = 0;
+                cards.forEach(card => {
+                    const canvas = card.querySelector('canvas');
+                    const preset = card.getAttribute('data-preset');
+                    const btn = card.querySelector('.download-btn');
+                    
+                    if (!btn.disabled) {
+                        const currentIdx = downloadIndex++;
+                        const link = document.createElement('a');
+                        link.download = `galaverse-${preset}.png`;
+                        link.href = canvas.toDataURL('image/png');
+                        // Staggered delay to prevent browser block on multiple downloads
+                        setTimeout(() => {
+                            link.click();
+                        }, currentIdx * 150);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
