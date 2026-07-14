@@ -1741,3 +1741,24 @@ html:not([data-theme="dark"]) .theme-icon.moon {
         gap: 12px;
     }
 }
+
+/* Mobile responsive fixes for Navbar */
+@media (max-width: 768px) {
+    .logo {
+        font-size: 15px;
+    }
+    .nav-container {
+        padding: 10px 12px;
+        height: 60px;
+    }
+    .nav-right {
+        gap: 8px;
+    }
+    .lang-switch {
+        gap: 2px;
+        font-size: 11px;
+    }
+    .theme-toggle {
+        padding: 6px;
+    }
+}
