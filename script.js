@@ -139,21 +139,21 @@ document.addEventListener('DOMContentLoaded', () => {
             "nav-assistant": "Smart Assistant",
             "nav-about": "About Us",
             "nav-generator": "Capsule Generator",
-            "hero-badge": "SYSTEM STATUS: OPERATIONAL",
-            "hero-title": "Dark Atmospheres,<br><span class=\"gradient-text\">Cozy Touches</span>",
-            "hero-subtitle": "We design exceptional adventure, horror, and cozy hunting games alongside next-generation enterprise AI automation solutions. Warm, atmospheric, and fluid digital experiences.",
-            "hero-btn-projects": "Explore Projects",
-            "hero-btn-assistant": "Try Assistant",
+            "hero-badge": "● INDIE GAME & AI STUDIO",
+            "hero-title": "Atmospheric Indie Games <br><span class=\"gradient-text\">& Practical AI Systems</span>",
+            "hero-subtitle": "Crafted by solo indie developer Mert K. based in Ankara. Building immersive anomaly detection, horror, and cozy hunting PC games — alongside customized AI automation tools for modern workflows.",
+            "hero-btn-projects": "Explore Games",
+            "hero-btn-assistant": "Test AI Assistant",
             "hero-scroll": "SCROLL DOWN",
             
             // Section Headers
-            "section-subtitle-projects": "// OUR PORTFOLIO",
-            "section-title-projects": "Developed Projects",
-            "section-desc-projects": "In addition to the PC projects we develop, we also designed mobile games in the past; however, they were removed from the Play Store as we haven't updated them.",
+            "section-subtitle-projects": "// FEATURED GAMES",
+            "section-title-projects": "Steam & PC Titles",
+            "section-desc-projects": "Explore my PC titles developed solo from scratch, featuring deep gameplay mechanics, unique atmospheric concepts, and native Steamworks integration.",
             
-            "section-subtitle-services": "// FREELANCE SERVICES",
-            "section-title-services": "Upwork Catalog",
-            "section-desc-services": "You can hire us directly on Upwork for rapid prototyping, core gameplay mechanics, mobile/HTML5 setups, or advanced game localization integrations.",
+            "section-subtitle-services": "// FREELANCE WORK",
+            "section-title-services": "Game Dev & AI Services",
+            "section-desc-services": "Need custom Unity gameplay mechanics, Steam API setup, playable HTML5 prototypes, or AI translation pipelines? Available for contract work on Upwork.",
             
             // Game Roles & Info
             "project-role-label": "Role:",
@@ -161,8 +161,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Game 1
             "game1-status": "RELEASED",
             "game1-genre": "ANOMALY DETECTION / HORROR",
-            "game1-role": "Solo Developer",
-            "game1-desc": "Developed and published in 4 months on a $0 budget through strict planning. I focused on interconnected systems, building a dynamic controller, functional elevators, an interactive detective board, and a responsive radio system with dialogue choices. Achieved a 100% positive rating on Steam, finding strong traction in the Asian market. Fully localized into 12 languages. This project demonstrates my ability to design engaging, high-quality gameplay and ship a polished product fast.",
+            "game1-role": "Solo Developer (Mert K.)",
+            "game1-desc": "Built and published solo in 4 months on a $0 budget. Focused on tight interconnected systems: dynamic controller, working elevators, interactive deduction board, and dialogue radio systems. Achieved a 100% positive rating on Steam with strong Asian market traction. Fully localized in 12 languages.",
             "game1-tag1": "Hallucination Mechanic",
             "game1-tag2": "Deduction Board",
             "game1-tag3": "Multiple Endings",
@@ -170,8 +170,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Game 2
             "game2-status": "EARLY ACCESS",
             "game2-genre": "CO-OP SURVIVAL HORROR",
-            "game2-role": "Solo Developer",
-            "game2-desc": "My debut title on Steam, developed entirely solo. I designed the architecture for a 1-4 player co-op game utilizing Mirror networking and Steamworks P2P (requiring zero server maintenance costs). Integrated Steam Cloud Saves, Achievements, and Steam Lobby Matchmaking. Authored high-retention gameplay loops, modular character customization, enemy AI behaviors, dynamic lighting, and DLC delivery pipelines. Fully localized into 12 languages.",
+            "game2-role": "Solo Developer (Mert K.)",
+            "game2-desc": "My debut co-op horror title on Steam. Engineered 1-4 player architecture with Mirror & Steamworks P2P (zero server maintenance costs). Integrated Steam Cloud Saves, Achievements, Lobby Matchmaking, dynamic lighting, and enemy AI.",
             "game2-tag1": "Mirror Networking",
             "game2-tag2": "Steamworks P2P",
             "game2-tag3": "Enemy AI Mascots",
@@ -179,8 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Game 3
             "game3-status": "IN DEVELOPMENT",
             "game3-genre": "COZY HUNTING / FIRST-PERSON",
-            "game3-role": "Solo Developer",
-            "game3-desc": "Upcoming PC game showcasing my ability to design scalable systems for high player retention. Engineered three distinct gameplay loops: Classic, Survivor, and Boss Rush, wrapped around a Prestige progression system with online leaderboards and basic in-game shop monetization. Set up the entire Steamworks backend (matchmaking, leaderboards, stats, achievements). Optimized assets and performance to support hundreds of active physics-driven entities simultaneously.",
+            "game3-role": "Solo Developer (Mert K.)",
+            "game3-desc": "Upcoming PC game showcasing scalable gameplay loops (Classic, Survivor, Boss Rush) wrapped around a Prestige scoring system with online Steam leaderboards and physics-driven entities.",
             "game3-tag1": "Returning Spear",
             "game3-tag2": "Prestige Scoring",
             "game3-tag3": "Steam Leaderboards",
@@ -189,11 +189,11 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Freelance Services
             "service1-title": "AI Localization & Translation Setup",
-            "service1-desc": "Translate and integrate your game into 12+ languages quickly using AI-powered translation workflows and Unity's official Localization package.",
+            "service1-desc": "Translate and integrate your game into 12+ languages quickly using AI-assisted translation tools and Unity's official Localization package.",
             "service1-price": "From $30",
             
             "service2-title": "Playable Game Prototype (Unity / HTML5)",
-            "service2-desc": "Turn your ideas into playable prototypes with smooth mechanics, whether for Steam features, mobile games, or browser-based HTML5 platforms.",
+            "service2-desc": "Turn your ideas into playable prototypes with fluid mechanics, whether for Steam features, mobile games, or browser-based HTML5 platforms.",
             "service2-price": "From $45",
             
             "service3-title": "Steamworks Integration for Unity",
@@ -205,12 +205,12 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Assistant
             "section-subtitle-assistant": "// AI LABS",
-            "section-title-assistant": "Enterprise Smart Assistant",
-            "section-desc-assistant": "Galaverse AI is a customizable artificial intelligence tool designed to optimize your business databases, customer relations, and logistics processes.",
-            "chat-status": "Active & Learning",
+            "section-title-assistant": "Interactive AI Assistant",
+            "section-desc-assistant": "A live demonstration showcasing a customizable AI assistant built for workflow automation and structured client inquiries.",
+            "chat-status": "Live & Operational",
             "chat-latency": "LATENCY: 42ms",
-            "chat-initial": "Hello. I am the Galaverse Enterprise Smart Assistant. I can answer your questions about our system integration capabilities, machine learning models, or automation solutions.",
-            "chat-placeholder": "Talk to the assistant...",
+            "chat-initial": "Hello! I am the Galaverse Assistant. Feel free to ask about our indie game projects, Unity engineering, or custom AI automation tools.",
+            "chat-placeholder": "Ask the assistant a question...",
             "chat-send": "SEND",
             "chat-system": "System",
             "chat-user": "User",
@@ -218,44 +218,44 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Configurator Labels
             "cfg-title": "Customize Assistant",
-            "cfg-subtitle": "Enter your own company details to instantly test how the smart assistant responds.",
-            "cfg-label-name": "Company Name (Max 30 Chars)",
-            "cfg-label-desc": "Company Description (Max 120 Chars)",
+            "cfg-subtitle": "Enter your company or project info to test live response simulations instantly.",
+            "cfg-label-name": "Company/Project Name (Max 30 Chars)",
+            "cfg-label-desc": "Description (Max 120 Chars)",
             "cfg-label-product": "Service/Product & Price (Max 50 Chars)",
             "cfg-btn-apply": "Update System",
             "cfg-btn-demo": "Load Template",
             
             // About
-            "section-subtitle-about": "// MISSION & VISION",
-            "section-title-about": "Dark Side of Reality, Codes of the Future",
-            "about-text-1": "Established in 2024, Galaverse Creations merges atmospheric storytelling with state-of-the-art data processing under one studio. While our teams create high-tension, story-driven games, they also develop tailored AI layers used in industrial automation workflows.",
-            "about-text-2": "Our philosophy is simple: high-performance digital products shaped by clean, optimized, and warm design principles, free from visual noise.",
-            "about-text-3": "We also provide global freelance game development and AI integration services on Upwork. We bring your projects to life with custom Unity gameplay mechanics, physics simulations, AI-driven bots/assistants, and expert optimization.",
+            "section-subtitle-about": "// ABOUT US",
+            "section-title-about": "Indie Spirit, Robust Engineering",
+            "about-text-1": "Founded in 2024 in Ankara, Galaverse Creations is an independent game & AI technology studio led by solo developer Mert K.",
+            "about-text-2": "From crafting horror games with a 100% Steam positive rating to building streamlined AI automation layers, our core ethos is simple: authentic storytelling, clean architecture, and high-performance digital products.",
+            "about-text-3": "Additionally, I provide global freelance services on Upwork specializing in Unity C# mechanics, Steamworks API integration, and customized AI tools.",
             "contact-label-email": "CONTACT / EMAIL",
             "contact-label-hq": "HEADQUARTERS",
             "contact-val-hq": "Ankara, Turkey",
-            "contact-label-upwork": "UPWORK SERVICES",
-            "contact-label-fiverr": "FIVERR SERVICES",
+            "contact-label-upwork": "UPWORK PROFILE",
+            "contact-label-fiverr": "FIVERR PROFILE",
 
             // Game Section
-            "section-subtitle-game": "// HTML5 & WEB GAME DEVELOPMENT",
-            "section-title-game": "We Also Build Browser Games",
-            "section-desc-game": "Not just Unity — we develop HTML5 & WebGL games, corporate gamification tools, and interactive web experiences that run instantly in any browser. Try the live demo below.",
+            "section-subtitle-game": "// WEB GAME DEMO",
+            "section-title-game": "Browser Game Showcase",
+            "section-desc-game": "Beyond PC games, I build fluid HTML5 & Canvas games that run natively in any browser. You can play the live demo right below.",
             "btn-fullscreen-game": "Play Fullscreen",
             
             // Stats & CTA Section
-            "stat-label-1": "Steam Positive Reviews",
+            "stat-label-1": "Steam Positive Rating",
             "stat-label-2": "Languages Localized",
-            "stat-label-3": "Launch Time (Months)",
-            "stat-label-4": "Shipped Projects",
+            "stat-label-3": "Solo Launch (Months)",
+            "stat-label-4": "Shipped Games",
             "stat-label-5": "Avg. Project Budget",
             
             // Freelance CTA
-            "cta-subtitle": "// COLLABORATE WITH US",
-            "cta-title": "Let's Bring Your Project to Life",
-            "cta-desc": "Order custom Unity game development, Steamworks integration, rapid prototyping, or AI solutions directly through our professional freelance profiles.",
-            "cta-btn-upwork": "Hire on Upwork",
-            "cta-btn-fiverr": "Hire on Fiverr",
+            "cta-subtitle": "// WORK WITH US",
+            "cta-title": "Let's Build Your Game or AI Tool",
+            "cta-desc": "Need Unity development, Steamworks integration, prototyping, or AI tools? Get in touch directly via my professional Upwork profile.",
+            "cta-btn-upwork": "View Upwork Profile",
+            "cta-btn-fiverr": "View Fiverr Profile",
 
             // Footer
             "footer-copy": "© 2026 Galaverse Creations. All rights reserved.",
@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    let currentLang = localStorage.getItem('galaverse-lang') || 'tr';
+    let currentLang = localStorage.getItem('galaverse-lang') || 'en';
 
     // Populate the configurator inputs with current values
     function syncConfigInputs() {
@@ -717,41 +717,175 @@ User's question: ${messageText}`;
     }
 
     // ==========================================
-    // Animated Stat Counters (Scroll Triggered)
+    // 6. Animated Stat Counters (Scroll Triggered)
     // ==========================================
-    function animateCounter(el, target) {
-        const valEl = el.querySelector('.stat-val');
-        if (!valEl) return;
-        const duration = 1400;
+    function animateCounter(el) {
+        const target = parseInt(el.dataset.target, 10);
+        const suffix = el.dataset.suffix || '';
+        if (isNaN(target)) return;
+
+        const duration = 1600;
         const start = performance.now();
-        el.classList.add('counted');
+        el.dataset.animated = 'true';
+
         function tick(now) {
             const elapsed = now - start;
             const progress = Math.min(elapsed / duration, 1);
-            // easeOutExpo
-            const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-            valEl.textContent = Math.floor(eased * target);
-            if (progress < 1) requestAnimationFrame(tick);
-            else valEl.textContent = target;
+            // Ease out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.floor(eased * target);
+            el.textContent = current + suffix;
+
+            if (progress < 1) {
+                requestAnimationFrame(tick);
+            } else {
+                el.textContent = target + suffix;
+            }
         }
         requestAnimationFrame(tick);
     }
 
     const statObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting && !entry.target.dataset.animated) {
-                entry.target.dataset.animated = 'true';
-                const target = parseInt(entry.target.dataset.target, 10);
-                animateCounter(entry.target, target);
+            if (entry.isIntersecting && entry.target.dataset.animated !== 'true') {
+                animateCounter(entry.target);
             }
         });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.3 });
 
     document.querySelectorAll('.stat-number[data-target]').forEach(el => statObserver.observe(el));
 
     // ==========================================
-    // Freelance Marketplace Redirection Banners
+    // 7. 3D Card Parallax Tilt & Mouse Spotlight
     // ==========================================
-    // Contact form removed - redirected to freelance marketplace CTAs.
+    const tiltCards = document.querySelectorAll('.project-card, .service-card, .assistant-container');
+    tiltCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            // Calculate tilt angle (-6 to +6 deg)
+            const rotateX = ((y - centerY) / centerY) * -6;
+            const rotateY = ((x - centerX) / centerX) * 6;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+            card.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
+            card.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+        });
+    });
+
+    // ==========================================
+    // 8. Lightbox Image Modal
+    // ==========================================
+    const lightboxModal = document.getElementById('lightbox-modal');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxClose = document.getElementById('lightbox-close');
+    const lightboxOverlay = document.getElementById('lightbox-overlay');
+
+    document.querySelectorAll('.project-img-wrapper').forEach(wrapper => {
+        wrapper.addEventListener('click', () => {
+            const img = wrapper.querySelector('.project-img');
+            const card = wrapper.closest('.project-card');
+            const title = card ? card.querySelector('.project-title')?.textContent : '';
+
+            if (img && lightboxModal) {
+                lightboxImg.src = img.src;
+                lightboxImg.alt = img.alt || title;
+                if (lightboxCaption) lightboxCaption.textContent = title;
+                lightboxModal.classList.add('active');
+                lightboxModal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+
+    function closeLightbox() {
+        if (!lightboxModal) return;
+        lightboxModal.classList.remove('active');
+        lightboxModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+    if (lightboxOverlay) lightboxOverlay.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightboxModal && lightboxModal.classList.contains('active')) {
+            closeLightbox();
+        }
+    });
+
+    // ==========================================
+    // 9. Web Audio API Subtle UI Sound FX
+    // ==========================================
+    let audioCtx = null;
+    let soundEnabled = localStorage.getItem('galaverse-sound') === 'enabled';
+
+    const soundToggle = document.getElementById('sound-toggle');
+    const soundOnIcon = soundToggle?.querySelector('.sound-on');
+    const soundOffIcon = soundToggle?.querySelector('.sound-off');
+
+    function updateSoundUI() {
+        if (!soundToggle) return;
+        if (soundEnabled) {
+            if (soundOnIcon) soundOnIcon.style.display = 'block';
+            if (soundOffIcon) soundOffIcon.style.display = 'none';
+            soundToggle.classList.add('active');
+        } else {
+            if (soundOnIcon) soundOnIcon.style.display = 'none';
+            if (soundOffIcon) soundOffIcon.style.display = 'block';
+            soundToggle.classList.remove('active');
+        }
+    }
+    updateSoundUI();
+
+    if (soundToggle) {
+        soundToggle.addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            localStorage.setItem('galaverse-sound', soundEnabled ? 'enabled' : 'disabled');
+            updateSoundUI();
+            if (soundEnabled) playClickSound(600, 0.05);
+        });
+    }
+
+    function playClickSound(freq = 480, duration = 0.04) {
+        if (!soundEnabled) return;
+        try {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(freq * 0.4, audioCtx.currentTime + duration);
+
+            gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        } catch (e) {
+            // AudioContext fallback
+        }
+    }
+
+    // Attach subtle sound FX to interactive buttons & links
+    document.querySelectorAll('.btn, .nav-link, .lang-btn, .theme-toggle, .btn-card, .btn-steam').forEach(btn => {
+        btn.addEventListener('mouseenter', () => playClickSound(520, 0.02));
+        btn.addEventListener('click', () => playClickSound(380, 0.05));
+    });
 });
+
 
