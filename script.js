@@ -47,14 +47,23 @@ document.addEventListener('DOMContentLoaded', () => {
             "game2-tag2": "Steamworks P2P",
             "game2-tag3": "Yapay Zeka Maskotlar",
             
-            // Game 3
-            "game3-status": "GELİŞTİRİLME AŞAMASINDA",
+            // Game 3 - Spear of the Sky
+            "game3-status": "ÜCRETSİZ YAYINLANDI",
             "game3-genre": "COZY AVCI / BİRİNCİ ŞAHIS",
-            "game3-role": "Solo Geliştirici",
-            "game3-desc": "Oyuncuyu elde tutma oranını artırmaya yönelik ölçeklenebilir sistemler tasarlama becerimi sergileyen, geliştirme aşamasındaki bir PC oyunu. Prestige ilerleme sistemi, çevrimiçi liderlik tabloları ve oyun içi mağaza ekonomisi etrafında şekillenen üç farklı oynanış döngüsü (Klasik, Hayatta Kalma ve Boss Savaşı) geliştirdim. Steamworks arka planının tamamını (eşleştirme, liderlik tabloları, istatistikler ve başarımlar) entegre ettim. Aynı anda yüzlerce aktif, fizik tabanlı nesneyi desteklemek amacıyla performans ve varlık optimizasyonları gerçekleştirdim.",
+            "game3-role": "Solo Geliştirici (Mert K.)",
+            "game3-desc": "Steam'de tamamen ücretsiz olarak yayınlanan dinamik PC aksiyon oyunu. Geri dönen mızrak fırlatma mekaniği, Prestige ilerleme sistemi, çevrimiçi liderlik tabloları ve üç farklı oynanış döngüsü (Klasik, Hayatta Kalma ve Boss Savaşı) içerir. Yüzlerce aktif nesne ve fizik simülasyonu için yüksek performans optimizasyonları yapıldı.",
             "game3-tag1": "Geri Dönen Mızrak",
             "game3-tag2": "Prestige İlerlemesi",
             "game3-tag3": "Liderlik Tabloları",
+            
+            // Game 4 - NextBot PANIC!
+            "game4-status": "YAKINDA · DEMO YAYINDA",
+            "game4-genre": "1-8 KİŞİLİK CO-OP SURVIVAL / PARTY",
+            "game4-role": "Solo Geliştirici (Mert K.)",
+            "game4-desc": "1-8 oyunculu, prosedürel olarak oluşturulan labirentlerde Nextbot'lardan kaçtığınız kaotik bir co-op hayatta kalma partisi oyunu. Oyuncuların kendi karakterlerini çizip boyayabildiği ve Steam Atölyesi (Workshop) üzerinden özel Nextbot'lar oluşturup indirebildiği eğlenceli ve dinamik bir oyun mimarisi inşa edildi. Steam'de sayfası ve ücretsiz oynanabilir demosu yayında!",
+            "game4-tag1": "1-8 Kişilik Co-Op",
+            "game4-tag2": "Steam Atölyesi (Workshop)",
+            "game4-tag3": "Özel Karakter Çizimi",
             
             "btn-steam": "Steam'de İncele",
             
@@ -176,14 +185,23 @@ document.addEventListener('DOMContentLoaded', () => {
             "game2-tag2": "Steamworks P2P",
             "game2-tag3": "Enemy AI Mascots",
             
-            // Game 3
-            "game3-status": "IN DEVELOPMENT",
+            // Game 3 - Spear of the Sky
+            "game3-status": "RELEASED · FREE TO PLAY",
             "game3-genre": "COZY HUNTING / FIRST-PERSON",
             "game3-role": "Solo Developer (Mert K.)",
-            "game3-desc": "Upcoming PC game showcasing scalable gameplay loops (Classic, Survivor, Boss Rush) wrapped around a Prestige scoring system with online Steam leaderboards and physics-driven entities.",
+            "game3-desc": "Released completely Free-to-Play on Steam. A fast-paced aerial combat & hunting game featuring a returning spear mechanic, Prestige progression, online Steam leaderboards, and three distinct game loops (Classic, Survival, Boss Rush) optimized for massive physics entity counts.",
             "game3-tag1": "Returning Spear",
             "game3-tag2": "Prestige Scoring",
             "game3-tag3": "Steam Leaderboards",
+            
+            // Game 4 - NextBot PANIC!
+            "game4-status": "COMING 2026 · DEMO OUT",
+            "game4-genre": "1-8 PLAYER CO-OP SURVIVAL PARTY",
+            "game4-role": "Solo Developer (Mert K.)",
+            "game4-desc": "A chaotic 1-8 player co-op survival party game where players must escape endless procedurally generated mazes while outsmarting relentless Nextbots. Features full custom character drawing tools and Steam Workshop integration to create, share, and download custom Nextbots. Steam page and free playable demo are live now!",
+            "game4-tag1": "1-8 Player Co-Op",
+            "game4-tag2": "Steam Workshop",
+            "game4-tag3": "Custom Paint Tools",
             
             "btn-steam": "View on Steam",
             
