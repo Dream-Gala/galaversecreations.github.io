@@ -150,8 +150,9 @@ a {
 
 .btn-primary {
     background-color: var(--accent);
-    color: #ffffff;
+    color: #071518;
     border: 1px solid var(--accent);
+    font-weight: 700;
 }
 
 .btn-primary:hover {
@@ -159,6 +160,7 @@ a {
     border-color: var(--accent-hover);
     box-shadow: 0 0 20px var(--accent-glow);
     transform: translateY(-2px);
+    color: #040e10;
 }
 
 .btn-outline {
@@ -1329,12 +1331,12 @@ a.contact-value:hover {
 /* Animations */
 @keyframes pulseGlow {
     0%, 100% {
-        opacity: 0.8;
-        box-shadow: 0 0 4px var(--accent-glow);
+        opacity: 0.7;
+        transform: scale(0.98);
     }
     50% {
         opacity: 1;
-        box-shadow: 0 0 15px var(--accent-glow);
+        transform: scale(1.02);
     }
 }
 
@@ -1371,8 +1373,8 @@ a.contact-value:hover {
 }
 
 @keyframes cursorBlink {
-    from, to { color: transparent }
-    50% { color: var(--accent) }
+    from, to { opacity: 0; }
+    50% { opacity: 1; }
 }
 
 /* Services Section */
@@ -2021,7 +2023,7 @@ html:not([data-theme="dark"]) .theme-icon.moon {
     font-family: var(--font-mono);
     font-size: 12px;
     letter-spacing: 0.05em;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     text-transform: uppercase;
 }
 
@@ -2081,7 +2083,7 @@ html:not([data-theme="dark"]) .theme-icon.moon {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     opacity: 0;
@@ -2090,6 +2092,7 @@ html:not([data-theme="dark"]) .theme-icon.moon {
 }
 
 .lightbox-modal.active {
+    display: flex;
     opacity: 1;
     pointer-events: auto;
 }

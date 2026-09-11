@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /discord
+Disallow: /discord/
 
 Sitemap: https://galaversecreations.studio/sitemap.xml

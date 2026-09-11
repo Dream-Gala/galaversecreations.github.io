@@ -824,6 +824,7 @@ User's question: ${messageText}`;
                 if (lightboxCaption) lightboxCaption.textContent = title;
                 lightboxModal.classList.add('active');
                 lightboxModal.setAttribute('aria-hidden', 'false');
+                lightboxModal.removeAttribute('inert');
                 document.body.style.overflow = 'hidden';
             }
         });
@@ -833,6 +834,7 @@ User's question: ${messageText}`;
         if (!lightboxModal) return;
         lightboxModal.classList.remove('active');
         lightboxModal.setAttribute('aria-hidden', 'true');
+        lightboxModal.setAttribute('inert', '');
         document.body.style.overflow = '';
     }
 
