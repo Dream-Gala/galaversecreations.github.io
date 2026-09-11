@@ -1,10 +1,60 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steam & Epic Kapsül Oluşturucu | Galaverse Creations</title>
-    <meta name="description" content="Oyun geliştiricileri için Steam ve Epic Games Store mağaza görseli ve kapsül şablonu hazırlama aracı.">
+    <title>SteamCapsuleArt | Steam Capsule Generator & Marketing Tool - Galaverse Creations</title>
+    <meta name="description" content="SteamCapsuleArt: Free Steam and Epic Games capsule art generator, banner maker, and store mockup tool by Galaverse Creations. Position, scale, rotate your logo, and export all capsule assets.">
+    <meta name="keywords" content="steam capsule art, steamcapsuleart, steam capsule generator, steam capsule maker, epic games capsule generator, epic games store key art, egs capsule maker, epic games store assets, epic store banner, steam library hero, steam small capsule, steam store assets, game marketing tool, indie game key art generator, store mockup tool, galaverse creations">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://galaversecreations.studio/generator.html">
+    <meta property="og:title" content="SteamCapsuleArt | Free Steam & Epic Games Capsule Generator">
+    <meta property="og:description" content="Free tool to generate, scale, rotate and preview Steam and Epic Games Store capsules, library assets, and mockups in seconds.">
+    <meta property="og:image" content="https://galaversecreations.studio/images/horizontal.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="SteamCapsuleArt | Free Steam & Epic Games Capsule Generator">
+    <meta property="twitter:description" content="Free Steam & Epic Games capsule maker with rotation, scaling, and live store mockups.">
+    <meta property="twitter:image" content="https://galaversecreations.studio/images/horizontal.png">
+
+    <!-- Structured Data (Schema.org) JSON-LD for WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SteamCapsuleArt",
+      "alternateName": ["Steam & Epic Games Capsule Art Generator", "SteamCapsuleArt Maker"],
+      "url": "https://galaversecreations.studio/generator.html",
+      "description": "Free web tool for indie game developers to generate, position, scale, rotate logos, and export complete store capsule sets for Steam and Epic Games Store.",
+      "applicationCategory": "DesignApplication",
+      "operatingSystem": "All modern browsers",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "Galaverse Creations",
+        "url": "https://galaversecreations.studio/"
+      },
+      "featureList": [
+        "Steam Main Capsule 460x215 generator",
+        "Steam Vertical Library Capsule 600x900 generator",
+        "Steam Header Capsule 920x430 generator",
+        "Steam Small Capsule 231x87 generator",
+        "Steam Library Hero 3840x1240 generator",
+        "Epic Games Store key art and portrait/landscape capsule layout previews",
+        "360-degree free logo rotation and 250% scaling",
+        "Interactive Steam Store & Library live mockup previews",
+        "Single-click batch ZIP export"
+      ]
+    }
+    </script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +64,7 @@
     <!-- Theme Initialization Script to prevent FOUC -->
     <script>
         (function() {
-            const savedTheme = localStorage.getItem('galaverse-theme') || 'light';
+            const savedTheme = localStorage.getItem('galaverse-theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
     </script>
@@ -926,6 +976,7 @@
             <div class="nav-right">
                 <ul class="nav-links" id="nav-links">
                     <li><a href="index.html" class="nav-link" data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a></li>
+                    <li><a href="resizer.html" class="nav-link" data-tr="Boyutlandırıcı" data-en="Resizer">Boyutlandırıcı</a></li>
                 </ul>
 
                 <!-- Language Switcher -->
@@ -1028,8 +1079,19 @@
             <div class="control-group">
                 <label data-tr="Logo Boyutu" data-en="Logo Scale">Logo Boyutu</label>
                 <div class="slider-wrapper">
-                    <input type="range" id="logo-scale" min="20" max="100" value="60">
+                    <input type="range" id="logo-scale" min="10" max="250" value="60">
                     <span class="slider-val" id="scale-val">60%</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <label data-tr="Logo Döndürme (Açı)" data-en="Logo Rotation (Angle)" style="margin-bottom: 0;">Logo Döndürme (Açı)</label>
+                    <button type="button" id="btn-reset-rotation" style="background: none; border: none; color: var(--accent); font-size: 0.75rem; cursor: pointer; font-family: var(--font-mono); padding: 2px 4px;" title="0° Sıfırla">↺ 0°</button>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" id="logo-rotation" min="-180" max="180" value="0" step="1">
+                    <span class="slider-val" id="rotation-val">0°</span>
                 </div>
             </div>
 
@@ -1071,8 +1133,8 @@
         <div class="showcase-dashboard">
             <div class="showcase-header">
                 <div class="showcase-title-area">
-                    <h1 data-tr="Mağaza Kapsül Oluşturucu" data-en="Store Capsule Generator">Mağaza Kapsül Oluşturucu</h1>
-                    <p data-tr="Görsellerinizi yükleyin, logo pozisyonunu ayarlayın ve saniyeler içinde tüm Steam/Epic mağaza paketlerini indirin." data-en="Upload assets, customize logo placement, and download all Steam/Epic packages in seconds.">Görsellerinizi yükleyin, logo pozisyonunu ayarlayın ve paketleri indirin.</p>
+                    <h1 data-tr="SteamCapsuleArt | Kapsül Oluşturucu" data-en="SteamCapsuleArt | Capsule Generator">SteamCapsuleArt | Kapsül Oluşturucu</h1>
+                    <p data-tr="Görsellerinizi yükleyin, logo boyutunu, açısını ve pozisyonunu ayarlayın; saniyeler içinde tüm Steam/Epic mağaza paketlerini indirin." data-en="Upload assets, adjust logo scale, angle and placement, and download all Steam/Epic packages in seconds.">Görsellerinizi yükleyin, logo boyutunu, açısını ve pozisyonunu ayarlayın.</p>
                 </div>
 
                 <div class="tab-buttons">
@@ -1542,6 +1604,7 @@
 
             // Positioning & Customization parameters
             let logoScale = 60; // percentage
+            let logoRotation = 0; // degrees (-180 to +180)
             let logoYOffset = 20; // percentage offset from center
             let logoXOffset = 0; // percentage offset from center
 
@@ -1571,6 +1634,25 @@
                 scaleValSpan.textContent = logoScale + '%';
                 renderAll();
             });
+
+            const rotationSlider = document.getElementById('logo-rotation');
+            const rotationValSpan = document.getElementById('rotation-val');
+            const resetRotationBtn = document.getElementById('btn-reset-rotation');
+            if (rotationSlider) {
+                rotationSlider.addEventListener('input', (e) => {
+                    logoRotation = parseInt(e.target.value, 10) || 0;
+                    rotationValSpan.textContent = (logoRotation > 0 ? '+' : '') + logoRotation + '°';
+                    renderAll();
+                });
+            }
+            if (resetRotationBtn) {
+                resetRotationBtn.addEventListener('click', () => {
+                    logoRotation = 0;
+                    if (rotationSlider) rotationSlider.value = 0;
+                    if (rotationValSpan) rotationValSpan.textContent = '0°';
+                    renderAll();
+                });
+            }
 
             const offsetSlider = document.getElementById('logo-y-offset');
             const offsetValSpan = document.getElementById('offset-val');
@@ -1731,17 +1813,22 @@
                         targetWidth = maxLogoHeight * logoRatio;
                     }
 
-                    // Calculate Y offset from center (logoYOffset ranges from -50 to +50)
+                    // Calculate center position with offsets
                     const centerY = canvas.height / 2;
                     const shiftY = (logoYOffset / 100) * canvas.height;
-                    const targetY = centerY - (targetHeight / 2) + shiftY;
+                    const targetCenterY = centerY + shiftY;
 
-                    // Calculate X offset from center (logoXOffset ranges from -50 to +50)
                     const centerX = canvas.width / 2;
                     const shiftX = (logoXOffset / 100) * canvas.width;
-                    const targetX = centerX - (targetWidth / 2) + shiftX;
+                    const targetCenterX = centerX + shiftX;
 
-                    ctx.drawImage(logoImg, targetX, targetY, targetWidth, targetHeight);
+                    ctx.save();
+                    ctx.translate(targetCenterX, targetCenterY);
+                    if (logoRotation !== 0) {
+                        ctx.rotate((logoRotation * Math.PI) / 180);
+                    }
+                    ctx.drawImage(logoImg, -targetWidth / 2, -targetHeight / 2, targetWidth, targetHeight);
+                    ctx.restore();
                 }
 
                 // Enable/disable download button

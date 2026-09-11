@@ -1,0 +1,1965 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaverse Image Resizer | Free Client-Side Image Resizer & Converter</title>
+    <meta name="description" content="Galaverse Image Resizer: Free, secure, client-side image resizer and aspect ratio converter. Resize to 16:9, 1920x1080, Steam capsules, and social presets with interactive framing, no server uploads, and instant PNG/JPG/WEBP export.">
+    <meta name="keywords" content="image resizer, resizer tool, 16:9 resizer, 1920x1080 resizer, steam capsule resizer, epic games image resizer, aspect ratio lock, convert to webp, crop and resize, photo resizer, client-side resizer, galaverse creations">
+    <meta name="author" content="Galaverse Creations">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://galaversecreations.studio/resizer.html">
+    <meta property="og:title" content="Galaverse Image Resizer | Free Client-Side Image Resizer">
+    <meta property="og:description" content="Resize, crop, and convert images to exact pixels or aspect ratios directly in your browser. 100% private, instant, and free.">
+    <meta property="og:image" content="https://galaversecreations.studio/images/anomaly_detective.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Galaverse Image Resizer | Free Client-Side Image Resizer">
+    <meta property="twitter:description" content="Resize and convert images directly in your browser with interactive framing. 100% private.">
+    <meta property="twitter:image" content="https://galaversecreations.studio/images/anomaly_detective.jpg">
+
+    <!-- Structured Data (Schema.org) JSON-LD for WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Galaverse Image Resizer",
+      "alternateName": ["PixelCraft Resizer", "Galaverse Client-Side Image Resizer & Converter"],
+      "url": "https://galaversecreations.studio/resizer.html",
+      "description": "Fast, privacy-friendly in-browser image resizer, aspect ratio converter, and crop tool with presets for Steam, Epic Games, YouTube, and screens.",
+      "applicationCategory": "DesignApplication",
+      "operatingSystem": "All modern browsers",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "Galaverse Creations",
+        "url": "https://galaversecreations.studio/"
+      },
+      "featureList": [
+        "100% client-side in-browser processing with zero server uploads",
+        "Proportional aspect ratio lock (Width/Height synchronization)",
+        "Interactive pan and frame positioning directly on the preview canvas",
+        "Cover, Contain, and Stretch resize modes with custom background color",
+        "Presets for 16:9, 1920x1080, Steam Capsules, Epic Games, YouTube, Instagram, and 4K",
+        "Instant export to PNG, JPEG, and WEBP with quality compression",
+        "Real-time file size estimation and clipboard copy"
+      ]
+    }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Theme Initialization Script to prevent FOUC -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('galaverse-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+
+    <style>
+        /* Standalone Resizer Page Styles */
+        .resizer-layout {
+            max-width: 1560px;
+            margin: 100px auto 60px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        @media (max-width: 1120px) {
+            .resizer-layout {
+                grid-template-columns: 1fr;
+                margin-top: 90px;
+                gap: 24px;
+            }
+        }
+
+        /* Sidebar Control Panel */
+        .resizer-sidebar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: sticky;
+            top: 90px;
+            max-height: calc(100vh - 110px);
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-color) transparent;
+        }
+
+        [data-theme="dark"] .resizer-sidebar {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+        }
+
+        .back-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            transition: var(--transition-fast);
+            font-weight: 500;
+        }
+        .back-nav-link:hover {
+            color: var(--accent-hover);
+            transform: translateX(-3px);
+        }
+
+        .tool-header-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+        }
+        .tool-title {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tool-subtitle {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .privacy-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(34, 197, 94, 0.12);
+            color: #22c55e;
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-weight: 600;
+            border: 1px solid rgba(34, 197, 94, 0.25);
+        }
+
+        /* Control Card Sections */
+        .resizer-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .resizer-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: var(--font-mono);
+        }
+        .resizer-label-badge {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: normal;
+            text-transform: none;
+        }
+
+        /* Upload Area */
+        .resizer-dropzone {
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 20px 16px;
+            text-align: center;
+            background: var(--bg-main);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .resizer-dropzone:hover, .resizer-dropzone.dragover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            transform: translateY(-1px);
+        }
+        .resizer-dropzone input[type="file"] {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .dropzone-icon {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+        .dropzone-text {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .dropzone-hint {
+            font-size: 0.74rem;
+            color: var(--text-muted);
+        }
+        .file-info-badge {
+            display: none;
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--accent-glow);
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-primary);
+            align-items: center;
+            justify-content: space-between;
+        }
+        .file-info-badge.active {
+            display: flex;
+        }
+
+        /* Dimension Inputs Row with Link Lock */
+        .dims-wrapper {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 8px;
+        }
+        .dim-input-box {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .dim-input-box span {
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+        }
+        .dim-input-field {
+            width: 100%;
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            font-weight: 600;
+            outline: none;
+            transition: var(--transition-fast);
+        }
+        .dim-input-field:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .dim-lock-btn {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            margin-top: 18px;
+        }
+        .dim-lock-btn:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+        .dim-lock-btn.locked {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #ffffff;
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        .dim-quick-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+        }
+        .ratio-badge-text {
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            color: var(--accent);
+        }
+        .dim-swap-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-family: var(--font-mono);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition-fast);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .dim-swap-btn:hover {
+            color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        /* Scale Percentage Chips & Slider */
+        .scale-chips {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 6px;
+        }
+        .chip-btn {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 6px 0;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition-fast);
+        }
+        .chip-btn:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+        .chip-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #ffffff;
+        }
+
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 4px;
+        }
+        .slider-row input[type="range"] {
+            flex: 1;
+            accent-color: var(--accent);
+            height: 6px;
+            border-radius: 3px;
+            background: var(--border-color);
+            outline: none;
+            cursor: pointer;
+        }
+        .slider-row-val {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            min-width: 44px;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        /* Presets Section */
+        .preset-tabs {
+            display: flex;
+            gap: 6px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .preset-tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.76rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            white-space: nowrap;
+            transition: var(--transition-fast);
+        }
+        .preset-tab-btn:hover {
+            color: var(--text-primary);
+        }
+        .preset-tab-btn.active {
+            background: var(--accent-glow);
+            color: var(--accent);
+        }
+
+        .preset-pill-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            max-height: 180px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .preset-pill {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 8px;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            transition: var(--transition-fast);
+        }
+        .preset-pill:hover {
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+        .preset-pill-title {
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+        }
+        .preset-pill-dim {
+            font-size: 0.7rem;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+        }
+
+        /* Mode Selector (Cover, Contain, Stretch) */
+        .mode-selector-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+        .mode-card {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .mode-card:hover {
+            border-color: var(--border-color-hover);
+        }
+        .mode-card.active {
+            background: var(--accent-glow);
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+        .mode-card-icon {
+            font-size: 1.1rem;
+        }
+        .mode-card-name {
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .mode-card-desc {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            line-height: 1.2;
+        }
+
+        /* Background Color (Contain mode) */
+        .contain-bg-config {
+            display: none;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            background: var(--bg-main);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .contain-bg-config.active {
+            display: flex;
+        }
+        .contain-bg-config input[type="color"] {
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            background: none;
+        }
+        .contain-bg-config label {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Export Format & Quality */
+        .format-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+        .format-btn {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition-fast);
+        }
+        .format-btn:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+        .format-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #ffffff;
+        }
+
+        .size-estimate-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+        }
+        .size-val {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Right Preview Workspace */
+        .preview-workspace {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Top Action Bar */
+        .workspace-actionbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 18px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+        }
+        [data-theme="dark"] .workspace-actionbar {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .resolution-pill-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .res-pill {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+        .res-pill strong {
+            color: var(--text-primary);
+        }
+        .res-arrow {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        .res-diff-badge {
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+        .res-diff-badge.down {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+        .res-diff-badge.up {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        .workspace-tools {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tool-icon-btn {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        .tool-icon-btn:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .action-btns-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-download-main {
+            background: var(--accent);
+            color: #ffffff;
+            border: 1px solid var(--accent);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-fast);
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+        .btn-download-main:hover {
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: var(--bg-main);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-fast);
+        }
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Canvas Stage / Viewport */
+        .stage-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            min-height: 540px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.02);
+            user-select: none;
+        }
+        [data-theme="dark"] .stage-container {
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        /* Checkerboard pattern for transparency */
+        .checkerboard-wrap {
+            position: relative;
+            background-image: 
+                linear-gradient(45deg, rgba(128, 128, 128, 0.15) 25%, transparent 25%), 
+                linear-gradient(-45deg, rgba(128, 128, 128, 0.15) 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, rgba(128, 128, 128, 0.15) 75%), 
+                linear-gradient(-45deg, transparent 75%, rgba(128, 128, 128, 0.15) 75%);
+            background-size: 16px 16px;
+            background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+            border-radius: 8px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.15s ease-out;
+            cursor: default;
+        }
+        .checkerboard-wrap.can-drag {
+            cursor: grab;
+        }
+        .checkerboard-wrap.is-dragging {
+            cursor: grabbing;
+        }
+
+        #preview-canvas {
+            display: block;
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 6px;
+            image-rendering: auto;
+        }
+
+        /* Interactive Framing Helper Notice */
+        .framing-hint-pill {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            font-size: 0.78rem;
+            font-family: var(--font-mono);
+            padding: 6px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            pointer-events: none;
+            display: none;
+            align-items: center;
+            gap: 6px;
+            z-index: 10;
+        }
+        .framing-hint-pill.active {
+            display: inline-flex;
+        }
+
+        /* Empty State */
+        .stage-empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 360px;
+            padding: 40px 20px;
+            cursor: pointer;
+        }
+        .stage-empty-icon {
+            font-size: 3.2rem;
+            opacity: 0.8;
+            animation: floatSlow 4s ease-in-out infinite;
+        }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .stage-empty-title {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .stage-empty-desc {
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        /* Toast notifications */
+        .toast-notify {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #10b981;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+        .toast-notify.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-symbol">//</span> GALAVERSE <span class="accent-text">CREATIONS</span>
+            </a>
+            
+            <div class="nav-right">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="index.html" class="nav-link" data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a></li>
+                    <li><a href="generator.html" class="nav-link" data-tr="SteamCapsuleArt" data-en="SteamCapsuleArt">SteamCapsuleArt</a></li>
+                    <li><a href="resizer.html" class="nav-link active" data-tr="Boyutlandırıcı" data-en="Resizer">Boyutlandırıcı</a></li>
+                </ul>
+
+                <!-- Language Switcher -->
+                <div class="lang-switch">
+                    <button class="lang-btn" data-lang="tr">TR</button>
+                    <span class="lang-separator">|</span>
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                </div>
+
+                <!-- Theme Switcher -->
+                <button class="theme-toggle" id="theme-toggle" aria-label="Tema Değiştir">
+                    <svg class="theme-icon sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                    </svg>
+                    <svg class="theme-icon moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+
+                <button class="menu-toggle" id="menu-toggle" aria-label="Menüyü Aç">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Resizer Layout -->
+    <main class="resizer-layout">
+        
+        <!-- Left Side: Controls & Configuration -->
+        <aside class="resizer-sidebar">
+            
+            <a href="index.html" class="back-nav-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span data-tr="Ana Sayfaya Dön" data-en="Back to Home">Ana Sayfaya Dön</span>
+            </a>
+
+            <div class="tool-header-block">
+                <h1 class="tool-title">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+                    <span data-tr="Görsel Boyutlandırıcı" data-en="Image Resizer">Görsel Boyutlandırıcı</span>
+                </h1>
+                <div class="tool-subtitle">
+                    <span class="privacy-pill">🔒 100% Client-Side</span>
+                    <span data-tr="Sunucusuz • Gizlilik Odaklı" data-en="Zero Upload • Private">Sunucusuz • Gizlilik Odaklı</span>
+                </div>
+            </div>
+
+            <!-- Demo Load Button -->
+            <button type="button" class="btn-secondary" id="btn-load-sample" style="width: 100%; justify-content: center; border-color: var(--accent); color: var(--accent);">
+                ✨ <span data-tr="Örnek Görsel Yükle" data-en="Load Sample Image">Örnek Görsel Yükle</span>
+            </button>
+
+            <!-- Upload Area -->
+            <div class="resizer-group">
+                <label class="resizer-label" data-tr="Görsel Yükle" data-en="Upload Image">Görsel Yükle</label>
+                <div class="resizer-dropzone" id="dropzone">
+                    <input type="file" id="file-input" accept="image/*">
+                    <span class="dropzone-icon">🖼️</span>
+                    <span class="dropzone-text" data-tr="Görseli Buraya Sürükleyin" data-en="Drag & Drop Image Here">Görseli Buraya Sürükleyin</span>
+                    <span class="dropzone-hint" data-tr="veya Tıklayıp Seçin / Panodan Yapıştırın (Ctrl+V)" data-en="or Browse File / Paste from Clipboard (Ctrl+V)">veya Tıklayıp Seçin / Panodan Yapıştırın (Ctrl+V)</span>
+                </div>
+                <div class="file-info-badge" id="file-info-badge">
+                    <span id="file-name-text">image.png</span>
+                    <span id="file-orig-dims" style="color: var(--accent);">1920×1080</span>
+                </div>
+            </div>
+
+            <!-- Dimension Controls -->
+            <div class="resizer-group">
+                <div class="resizer-label">
+                    <span data-tr="Hedef Boyutlar" data-en="Target Dimensions">Hedef Boyutlar</span>
+                    <span class="resizer-label-badge" id="aspect-ratio-display">16:9</span>
+                </div>
+                <div class="dims-wrapper">
+                    <div class="dim-input-box">
+                        <span data-tr="Genişlik (px)" data-en="Width (px)">Genişlik (px)</span>
+                        <input type="number" id="input-width" class="dim-input-field" value="1920" min="1" max="16384">
+                    </div>
+                    <button type="button" id="btn-lock-ratio" class="dim-lock-btn locked" title="En-Boy Oranını Kilitle">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                    </button>
+                    <div class="dim-input-box">
+                        <span data-tr="Yükseklik (px)" data-en="Height (px)">Yükseklik (px)</span>
+                        <input type="number" id="input-height" class="dim-input-field" value="1080" min="1" max="16384">
+                    </div>
+                </div>
+                <div class="dim-quick-actions">
+                    <span class="ratio-badge-text" id="lock-status-text" data-tr="Oran Korunuyor (Bozmadan)" data-en="Aspect Ratio Locked">Oran Korunuyor (Bozmadan)</span>
+                    <button type="button" id="btn-swap-dims" class="dim-swap-btn" title="Genişlik ve Yüksekliği Değiştir">
+                        ⇄ <span data-tr="Yönü Değiştir" data-en="Swap">Yönü Değiştir</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scale % Slider & Chips -->
+            <div class="resizer-group">
+                <div class="resizer-label">
+                    <span data-tr="Yüzde Ölçekleme" data-en="Scale Percentage">Yüzde Ölçekleme</span>
+                    <span class="slider-row-val" id="scale-val-indicator">100%</span>
+                </div>
+                <div class="scale-chips">
+                    <button type="button" class="chip-btn" data-scale="25">25%</button>
+                    <button type="button" class="chip-btn" data-scale="50">50%</button>
+                    <button type="button" class="chip-btn" data-scale="75">75%</button>
+                    <button type="button" class="chip-btn active" data-scale="100">100%</button>
+                    <button type="button" class="chip-btn" data-scale="150">150%</button>
+                    <button type="button" class="chip-btn" data-scale="200">200%</button>
+                </div>
+                <div class="slider-row">
+                    <input type="range" id="scale-slider" min="10" max="400" value="100">
+                </div>
+            </div>
+
+            <!-- Ready Presets (Screens, Steam, Social, Ratios) -->
+            <div class="resizer-group">
+                <label class="resizer-label" data-tr="Hazır Şablonlar & Standartlar" data-en="Preset Templates">Hazır Şablonlar & Standartlar</label>
+                <div class="preset-tabs">
+                    <button type="button" class="preset-tab-btn active" data-category="screens" data-tr="Ekran & 4K" data-en="Screens & 4K">Ekran & 4K</button>
+                    <button type="button" class="preset-tab-btn" data-category="ratios" data-tr="En-Boy" data-en="Ratios">En-Boy</button>
+                    <button type="button" class="preset-tab-btn" data-category="social" data-tr="Sosyal Medya" data-en="Social Media">Sosyal Medya</button>
+                </div>
+
+                <!-- Presets Grid Container -->
+                <div class="preset-pill-grid" id="preset-container">
+                    <!-- Loaded dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- Resize Mode (Cover, Contain, Stretch) -->
+            <div class="resizer-group">
+                <label class="resizer-label" data-tr="Uydurma Modu" data-en="Fit Mode">Uydurma Modu</label>
+                <div class="mode-selector-grid">
+                    <div class="mode-card active" data-mode="cover">
+                        <span class="mode-card-icon">✂️</span>
+                        <span class="mode-card-name" data-tr="Kırp (Cover)" data-en="Crop (Cover)">Kırp (Cover)</span>
+                        <span class="mode-card-desc" data-tr="Alanı doldurur, fazlalığı keser (Sürüklenebilir)" data-en="Fills box, crops excess (Draggable)">Alanı doldurur, fazlalığı keser</span>
+                    </div>
+                    <div class="mode-card" data-mode="contain">
+                        <span class="mode-card-icon">🔳</span>
+                        <span class="mode-card-name" data-tr="Sığdır (Fit)" data-en="Fit (Contain)">Sığdır (Fit)</span>
+                        <span class="mode-card-desc" data-tr="Resmi bozmaz, kenarlara dolgu ekler" data-en="Pads borders, keeps full image">Kenarlara dolgu ekler</span>
+                    </div>
+                    <div class="mode-card" data-mode="stretch">
+                        <span class="mode-card-icon">📐</span>
+                        <span class="mode-card-name" data-tr="Esnet" data-en="Stretch">Esnet</span>
+                        <span class="mode-card-desc" data-tr="Tam ölçülere çeker" data-en="Forces exact pixels">Tam ölçülere çeker</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contain Background Color Picker (Conditional) -->
+            <div class="contain-bg-config" id="contain-bg-box">
+                <input type="color" id="contain-color-picker" value="#000000">
+                <label>
+                    <input type="checkbox" id="contain-transparent-toggle" checked>
+                    <span data-tr="Şeffaf Dolgu (PNG/WEBP için)" data-en="Transparent Padding (PNG/WEBP)">Şeffaf Dolgu</span>
+                </label>
+            </div>
+
+            <!-- Export Format & Quality -->
+            <div class="resizer-group">
+                <div class="resizer-label">
+                    <span data-tr="Çıktı Formatı" data-en="Export Format">Çıktı Formatı</span>
+                    <span class="resizer-label-badge" id="format-badge">PNG</span>
+                </div>
+                <div class="format-row">
+                    <button type="button" class="format-btn active" data-format="png">PNG</button>
+                    <button type="button" class="format-btn" data-format="jpeg">JPEG</button>
+                    <button type="button" class="format-btn" data-format="webp">WEBP</button>
+                </div>
+
+                <div class="dim-input-box" id="quality-control-box" style="display: none; margin-top: 6px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.76rem; color: var(--text-muted);">
+                        <span data-tr="Sıkıştırma Kalitesi" data-en="Compression Quality">Sıkıştırma Kalitesi</span>
+                        <span id="quality-val" style="font-family: var(--font-mono); color: var(--accent); font-weight: 600;">92%</span>
+                    </div>
+                    <input type="range" id="quality-slider" min="10" max="100" value="92" style="accent-color: var(--accent); width: 100%;">
+                </div>
+
+                <div class="size-estimate-box">
+                    <span data-tr="Tahmini Çıktı Boyutu:" data-en="Estimated Output:">Tahmini Çıktı Boyutu:</span>
+                    <span class="size-val" id="size-estimate-val">~0 KB</span>
+                </div>
+            </div>
+
+            <!-- Reset Button -->
+            <button type="button" class="btn-secondary" id="btn-reset-all" style="width: 100%; justify-content: center;">
+                ↺ <span data-tr="Orijinal Boyuta Sıfırla" data-en="Reset to Original">Orijinal Boyuta Sıfırla</span>
+            </button>
+
+        </aside>
+
+        <!-- Right Side: Interactive Preview Workspace -->
+        <section class="preview-workspace">
+            
+            <!-- Top Workspace Action Bar -->
+            <div class="workspace-actionbar">
+                <div class="resolution-pill-group">
+                    <div class="res-pill">
+                        <span data-tr="Orijinal:" data-en="Orig:">Orijinal:</span> <strong id="bar-orig-res">—</strong>
+                    </div>
+                    <span class="res-arrow">➔</span>
+                    <div class="res-pill">
+                        <span data-tr="Hedef:" data-en="Target:">Hedef:</span> <strong id="bar-target-res">1920 × 1080</strong>
+                    </div>
+                    <span class="res-diff-badge down" id="bar-diff-badge">100%</span>
+                </div>
+
+                <div class="workspace-tools">
+                    <button type="button" class="tool-icon-btn" id="btn-zoom-out" title="Uzaklaştır">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <span id="zoom-level-text" style="font-family: var(--font-mono); font-size: 0.78rem; min-width: 40px; text-align: center;">100%</span>
+                    <button type="button" class="tool-icon-btn" id="btn-zoom-in" title="Yakınlaştır">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <button type="button" class="tool-icon-btn" id="btn-zoom-fit" title="Ekrana Sığdır">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+                    </button>
+                </div>
+
+                <div class="action-btns-group">
+                    <button type="button" class="btn-secondary" id="btn-copy-clip" title="Panoya Kopyala">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <span data-tr="Kopyala" data-en="Copy">Kopyala</span>
+                    </button>
+                    <button type="button" class="btn-download-main" id="btn-download-image">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        <span data-tr="Görseli İndir" data-en="Download Image">Görseli İndir</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stage Container with Checkerboard & Interactive Canvas -->
+            <div class="stage-container" id="stage-container">
+                
+                <div class="checkerboard-wrap can-drag" id="checkerboard-wrap" style="display: none;">
+                    <canvas id="preview-canvas"></canvas>
+                </div>
+
+                <!-- Framing Hint Tooltip (shown on Cover mode) -->
+                <div class="framing-hint-pill" id="framing-hint">
+                    ✋ <span data-tr="Kadrajı ayarlamak için resmi sürükleyebilirsiniz" data-en="Click and drag image to reposition framing">Kadrajı ayarlamak için resmi sürükleyebilirsiniz</span>
+                </div>
+
+                <!-- Empty State (Shown before upload) -->
+                <div class="stage-empty-state" id="empty-state">
+                    <span class="stage-empty-icon">🎨</span>
+                    <h3 class="stage-empty-title" data-tr="Görsel Bekleniyor" data-en="Awaiting Image">Görsel Bekleniyor</h3>
+                    <p class="stage-empty-desc" data-tr="Sol panelden dosya seçin, panodan yapıştırın veya 'Örnek Görsel Yükle' butonuna tıklayarak anında başlayın." data-en="Select an image from the sidebar, paste from clipboard, or click 'Load Sample Image' to start immediately.">Sol panelden dosya seçin, panodan yapıştırın veya 'Örnek Görsel Yükle' butonuna tıklayarak anında başlayın.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Toast Notification Element -->
+    <div class="toast-notify" id="toast-notify">Görsel panoya kopyalandı!</div>
+
+    <!-- Core Resizer Application Logic -->
+    <script>
+        (function() {
+            // ==========================================
+            // Preset Data Configuration
+            // ==========================================
+            const PRESETS = {
+                screens: [
+                    { name: "Full HD (1080p)", w: 1920, h: 1080, ratio: "16:9" },
+                    { name: "2K Quad HD", w: 2560, h: 1440, ratio: "16:9" },
+                    { name: "4K Ultra HD", w: 3840, h: 2160, ratio: "16:9" },
+                    { name: "HD Ready (720p)", w: 1280, h: 720, ratio: "16:9" },
+                    { name: "Kare FHD (Square)", w: 1080, h: 1080, ratio: "1:1" },
+                    { name: "Ultrawide (21:9)", w: 2560, h: 1080, ratio: "21:9" }
+                ],
+                ratios: [
+                    { name: "16:9 Geniş Ekran", w: 1920, h: 1080, ratio: "16:9" },
+                    { name: "4:3 Klasik", w: 1440, h: 1080, ratio: "4:3" },
+                    { name: "1:1 Kare", w: 1080, h: 1080, ratio: "1:1" },
+                    { name: "9:16 Dikey Mobil", w: 1080, h: 1920, ratio: "9:16" },
+                    { name: "21:9 Sinematik", w: 2560, h: 1080, ratio: "21:9" },
+                    { name: "3:2 Fotoğraf", w: 1620, h: 1080, ratio: "3:2" }
+                ],
+                social: [
+                    { name: "YouTube Thumbnail", w: 1280, h: 720, ratio: "16:9" },
+                    { name: "X / Twitter Post", w: 1200, h: 675, ratio: "16:9" },
+                    { name: "Instagram Gönderi", w: 1080, h: 1080, ratio: "1:1" },
+                    { name: "Instagram Hikaye / Reel", w: 1080, h: 1920, ratio: "9:16" },
+                    { name: "Discord Sunucu İkonu", w: 512, h: 512, ratio: "1:1" },
+                    { name: "Discord Banner", w: 960, h: 540, ratio: "16:9" }
+                ]
+            };
+
+            // ==========================================
+            // Application State
+            // ==========================================
+            const state = {
+                image: null,
+                fileName: "resized-image",
+                originalWidth: 1920,
+                originalHeight: 1080,
+                originalSizeKB: 0,
+                targetWidth: 1920,
+                targetHeight: 1080,
+                aspectRatioLocked: true,
+                scalePercent: 100,
+                fitMode: "cover", // cover, contain, stretch
+                containBgColor: "#000000",
+                containTransparent: true,
+                exportFormat: "png", // png, jpeg, webp
+                exportQuality: 0.92,
+                zoom: 1,
+                // Drag & Pan state in Cover mode
+                offsetX: 0,
+                offsetY: 0,
+                isDragging: false,
+                dragStartX: 0,
+                dragStartY: 0,
+                dragOrigOffsetX: 0,
+                dragOrigOffsetY: 0
+            };
+
+            // DOM Elements
+            const dropzone = document.getElementById('dropzone');
+            const fileInput = document.getElementById('file-input');
+            const fileInfoBadge = document.getElementById('file-info-badge');
+            const fileNameText = document.getElementById('file-name-text');
+            const fileOrigDims = document.getElementById('file-orig-dims');
+            const btnLoadSample = document.getElementById('btn-load-sample');
+
+            const inputWidth = document.getElementById('input-width');
+            const inputHeight = document.getElementById('input-height');
+            const btnLockRatio = document.getElementById('btn-lock-ratio');
+            const lockStatusText = document.getElementById('lock-status-text');
+            const aspectRatioDisplay = document.getElementById('aspect-ratio-display');
+            const btnSwapDims = document.getElementById('btn-swap-dims');
+
+            const scaleChips = document.querySelectorAll('.chip-btn');
+            const scaleSlider = document.getElementById('scale-slider');
+            const scaleValIndicator = document.getElementById('scale-val-indicator');
+
+            const presetTabs = document.querySelectorAll('.preset-tab-btn');
+            const presetContainer = document.getElementById('preset-container');
+
+            const modeCards = document.querySelectorAll('.mode-card');
+            const containBgBox = document.getElementById('contain-bg-box');
+            const containColorPicker = document.getElementById('contain-color-picker');
+            const containTransparentToggle = document.getElementById('contain-transparent-toggle');
+
+            const formatBtns = document.querySelectorAll('.format-btn');
+            const formatBadge = document.getElementById('format-badge');
+            const qualityControlBox = document.getElementById('quality-control-box');
+            const qualitySlider = document.getElementById('quality-slider');
+            const qualityVal = document.getElementById('quality-val');
+            const sizeEstimateVal = document.getElementById('size-estimate-val');
+            const btnResetAll = document.getElementById('btn-reset-all');
+
+            const barOrigRes = document.getElementById('bar-orig-res');
+            const barTargetRes = document.getElementById('bar-target-res');
+            const barDiffBadge = document.getElementById('bar-diff-badge');
+
+            const btnZoomIn = document.getElementById('btn-zoom-in');
+            const btnZoomOut = document.getElementById('btn-zoom-out');
+            const btnZoomFit = document.getElementById('btn-zoom-fit');
+            const zoomLevelText = document.getElementById('zoom-level-text');
+
+            const btnDownload = document.getElementById('btn-download-image');
+            const btnCopyClip = document.getElementById('btn-copy-clip');
+
+            const stageContainer = document.getElementById('stage-container');
+            const checkerboardWrap = document.getElementById('checkerboard-wrap');
+            const previewCanvas = document.getElementById('preview-canvas');
+            const emptyState = document.getElementById('empty-state');
+            const framingHint = document.getElementById('framing-hint');
+            const toastNotify = document.getElementById('toast-notify');
+
+            const ctx = previewCanvas.getContext('2d');
+
+            // ==========================================
+            // Initialization
+            // ==========================================
+            function init() {
+                renderPresets('screens');
+                bindEvents();
+                updateAspectDisplay();
+                updateBarBadges();
+            }
+
+            // ==========================================
+            // Preset Rendering
+            // ==========================================
+            function renderPresets(category) {
+                const list = PRESETS[category] || [];
+                presetContainer.innerHTML = '';
+                list.forEach(p => {
+                    const btn = document.createElement('div');
+                    btn.className = 'preset-pill';
+                    btn.innerHTML = `
+                        <div class="preset-pill-title">
+                            <span>${p.name}</span>
+                            <span style="color: var(--accent); font-family: var(--font-mono); font-size: 0.68rem;">${p.ratio}</span>
+                        </div>
+                        <div class="preset-pill-dim">${p.w} × ${p.h} px</div>
+                    `;
+                    btn.addEventListener('click', () => {
+                        applyPreset(p.w, p.h);
+                    });
+                    presetContainer.appendChild(btn);
+                });
+            }
+
+            function applyPreset(w, h) {
+                state.targetWidth = w;
+                state.targetHeight = h;
+                inputWidth.value = w;
+                inputHeight.value = h;
+                
+                // Recalculate scale percent relative to original if available
+                if (state.image) {
+                    const pct = Math.round((w / state.originalWidth) * 100);
+                    updateScale(pct, false);
+                }
+
+                state.offsetX = 0;
+                state.offsetY = 0;
+                updateAspectDisplay();
+                updateBarBadges();
+                renderPreview();
+            }
+
+            // ==========================================
+            // Event Bindings
+            // ==========================================
+            function bindEvents() {
+                // Preset tab switching
+                presetTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        presetTabs.forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        renderPresets(tab.getAttribute('data-category'));
+                    });
+                });
+
+                // File Upload
+                fileInput.addEventListener('change', (e) => {
+                    if (e.target.files && e.target.files[0]) {
+                        loadFile(e.target.files[0]);
+                    }
+                });
+
+                // Drag & drop dropzone
+                dropzone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    dropzone.classList.add('dragover');
+                });
+                dropzone.addEventListener('dragleave', () => {
+                    dropzone.classList.remove('dragover');
+                });
+                dropzone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    dropzone.classList.remove('dragover');
+                    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                        loadFile(e.dataTransfer.files[0]);
+                    }
+                });
+
+                // Stage container drop support
+                stageContainer.addEventListener('dragover', (e) => e.preventDefault());
+                stageContainer.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                        loadFile(e.dataTransfer.files[0]);
+                    }
+                });
+
+                // Empty state click
+                emptyState.addEventListener('click', () => fileInput.click());
+
+                // Clipboard paste (Ctrl+V) anywhere on page
+                window.addEventListener('paste', (e) => {
+                    const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+                    for (let item of items) {
+                        if (item.kind === 'file' && item.type.startsWith('image/')) {
+                            const blob = item.getAsFile();
+                            loadFile(blob, 'pasted-image');
+                            showToast(currentLang === 'tr' ? 'Görsel panodan yapıştırıldı!' : 'Image pasted from clipboard!');
+                            break;
+                        }
+                    }
+                });
+
+                // Sample image button
+                btnLoadSample.addEventListener('click', () => {
+                    loadSampleImage();
+                });
+
+                // Width / Height input listeners
+                inputWidth.addEventListener('input', () => {
+                    let w = parseInt(inputWidth.value, 10);
+                    if (isNaN(w) || w <= 0) return;
+                    state.targetWidth = w;
+                    if (state.aspectRatioLocked && state.image) {
+                        const ratio = state.originalWidth / state.originalHeight;
+                        const h = Math.round(w / ratio);
+                        state.targetHeight = h;
+                        inputHeight.value = h;
+                    }
+                    updateScaleFromDims();
+                    updateAspectDisplay();
+                    updateBarBadges();
+                    renderPreview();
+                });
+
+                inputHeight.addEventListener('input', () => {
+                    let h = parseInt(inputHeight.value, 10);
+                    if (isNaN(h) || h <= 0) return;
+                    state.targetHeight = h;
+                    if (state.aspectRatioLocked && state.image) {
+                        const ratio = state.originalWidth / state.originalHeight;
+                        const w = Math.round(h * ratio);
+                        state.targetWidth = w;
+                        inputWidth.value = w;
+                    }
+                    updateScaleFromDims();
+                    updateAspectDisplay();
+                    updateBarBadges();
+                    renderPreview();
+                });
+
+                // Aspect Ratio Lock Button
+                btnLockRatio.addEventListener('click', () => {
+                    state.aspectRatioLocked = !state.aspectRatioLocked;
+                    btnLockRatio.classList.toggle('locked', state.aspectRatioLocked);
+                    updateLockText();
+                });
+
+                // Swap Dimensions Button
+                btnSwapDims.addEventListener('click', () => {
+                    const temp = state.targetWidth;
+                    state.targetWidth = state.targetHeight;
+                    state.targetHeight = temp;
+                    inputWidth.value = state.targetWidth;
+                    inputHeight.value = state.targetHeight;
+                    updateAspectDisplay();
+                    updateBarBadges();
+                    renderPreview();
+                });
+
+                // Scale percentage chips
+                scaleChips.forEach(chip => {
+                    chip.addEventListener('click', () => {
+                        const scale = parseInt(chip.getAttribute('data-scale'), 10);
+                        updateScale(scale, true);
+                    });
+                });
+
+                // Scale Slider
+                scaleSlider.addEventListener('input', (e) => {
+                    const scale = parseInt(e.target.value, 10);
+                    updateScale(scale, true);
+                });
+
+                // Fit Mode Selector
+                modeCards.forEach(card => {
+                    card.addEventListener('click', () => {
+                        modeCards.forEach(c => c.classList.remove('active'));
+                        card.classList.add('active');
+                        state.fitMode = card.getAttribute('data-mode');
+                        
+                        // Toggle contain bg options
+                        if (state.fitMode === 'contain') {
+                            containBgBox.classList.add('active');
+                        } else {
+                            containBgBox.classList.remove('active');
+                        }
+
+                        // Toggle framing hint
+                        updateFramingHint();
+                        renderPreview();
+                    });
+                });
+
+                // Contain Background options
+                containColorPicker.addEventListener('input', (e) => {
+                    state.containBgColor = e.target.value;
+                    renderPreview();
+                });
+                containTransparentToggle.addEventListener('change', (e) => {
+                    state.containTransparent = e.target.checked;
+                    renderPreview();
+                });
+
+                // Export Format
+                formatBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        formatBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        state.exportFormat = btn.getAttribute('data-format');
+                        formatBadge.textContent = state.exportFormat.toUpperCase();
+
+                        if (state.exportFormat === 'png') {
+                            qualityControlBox.style.display = 'none';
+                        } else {
+                            qualityControlBox.style.display = 'flex';
+                        }
+                        updateSizeEstimate();
+                    });
+                });
+
+                // Quality Slider
+                qualitySlider.addEventListener('input', (e) => {
+                    state.exportQuality = parseInt(e.target.value, 10) / 100;
+                    qualityVal.textContent = e.target.value + '%';
+                    updateSizeEstimate();
+                });
+
+                // Reset All
+                btnResetAll.addEventListener('click', () => {
+                    if (!state.image) return;
+                    state.targetWidth = state.originalWidth;
+                    state.targetHeight = state.originalHeight;
+                    inputWidth.value = state.originalWidth;
+                    inputHeight.value = state.originalHeight;
+                    state.offsetX = 0;
+                    state.offsetY = 0;
+                    updateScale(100, true);
+                    updateAspectDisplay();
+                    updateBarBadges();
+                    renderPreview();
+                });
+
+                // Zoom controls
+                btnZoomIn.addEventListener('click', () => {
+                    state.zoom = Math.min(3, +(state.zoom + 0.15).toFixed(2));
+                    applyZoom();
+                });
+                btnZoomOut.addEventListener('click', () => {
+                    state.zoom = Math.max(0.2, +(state.zoom - 0.15).toFixed(2));
+                    applyZoom();
+                });
+                btnZoomFit.addEventListener('click', () => {
+                    state.zoom = 1;
+                    applyZoom();
+                });
+
+                // Download Button
+                btnDownload.addEventListener('click', () => {
+                    downloadResult();
+                });
+
+                // Copy to Clipboard Button
+                btnCopyClip.addEventListener('click', () => {
+                    copyToClipboard();
+                });
+
+                // ==========================================
+                // Interactive Drag / Pan in Cover mode
+                // ==========================================
+                checkerboardWrap.addEventListener('mousedown', (e) => {
+                    if (state.fitMode !== 'cover' || !state.image) return;
+                    state.isDragging = true;
+                    checkerboardWrap.classList.add('is-dragging');
+                    state.dragStartX = e.clientX;
+                    state.dragStartY = e.clientY;
+                    state.dragOrigOffsetX = state.offsetX;
+                    state.dragOrigOffsetY = state.offsetY;
+                });
+
+                window.addEventListener('mousemove', (e) => {
+                    if (!state.isDragging) return;
+                    const dx = e.clientX - state.dragStartX;
+                    const dy = e.clientY - state.dragStartY;
+                    
+                    // Adjust sensitivity based on canvas CSS scale
+                    const rect = previewCanvas.getBoundingClientRect();
+                    const scaleFactor = state.targetWidth / rect.width;
+
+                    state.offsetX = state.dragOrigOffsetX + (dx * scaleFactor);
+                    state.offsetY = state.dragOrigOffsetY + (dy * scaleFactor);
+                    renderPreview();
+                });
+
+                window.addEventListener('mouseup', () => {
+                    if (state.isDragging) {
+                        state.isDragging = false;
+                        checkerboardWrap.classList.remove('is-dragging');
+                    }
+                });
+
+                // Touch support for mobile dragging
+                checkerboardWrap.addEventListener('touchstart', (e) => {
+                    if (state.fitMode !== 'cover' || !state.image || e.touches.length !== 1) return;
+                    state.isDragging = true;
+                    state.dragStartX = e.touches[0].clientX;
+                    state.dragStartY = e.touches[0].clientY;
+                    state.dragOrigOffsetX = state.offsetX;
+                    state.dragOrigOffsetY = state.offsetY;
+                });
+
+                window.addEventListener('touchmove', (e) => {
+                    if (!state.isDragging || e.touches.length !== 1) return;
+                    const dx = e.touches[0].clientX - state.dragStartX;
+                    const dy = e.touches[0].clientY - state.dragStartY;
+                    const rect = previewCanvas.getBoundingClientRect();
+                    const scaleFactor = state.targetWidth / rect.width;
+                    state.offsetX = state.dragOrigOffsetX + (dx * scaleFactor);
+                    state.offsetY = state.dragOrigOffsetY + (dy * scaleFactor);
+                    renderPreview();
+                });
+
+                window.addEventListener('touchend', () => {
+                    state.isDragging = false;
+                });
+            }
+
+            // ==========================================
+            // Image Loading Logic
+            // ==========================================
+            function loadFile(file, customName) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        state.image = img;
+                        state.fileName = (customName || file.name || 'image').replace(/\.[^/.]+$/, "");
+                        state.originalWidth = img.naturalWidth;
+                        state.originalHeight = img.naturalHeight;
+                        state.originalSizeKB = Math.round((file.size || 0) / 1024);
+                        
+                        state.targetWidth = img.naturalWidth;
+                        state.targetHeight = img.naturalHeight;
+                        state.offsetX = 0;
+                        state.offsetY = 0;
+
+                        inputWidth.value = state.targetWidth;
+                        inputHeight.value = state.targetHeight;
+                        
+                        fileNameText.textContent = file.name || 'image.png';
+                        fileOrigDims.textContent = `${img.naturalWidth}×${img.naturalHeight} px`;
+                        fileInfoBadge.classList.add('active');
+
+                        emptyState.style.display = 'none';
+                        checkerboardWrap.style.display = 'block';
+
+                        updateScale(100, true);
+                        updateAspectDisplay();
+                        updateBarBadges();
+                        updateFramingHint();
+                        renderPreview();
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+
+            function loadSampleImage() {
+                const img = new Image();
+                img.onload = () => {
+                    state.image = img;
+                    state.fileName = "anomaly_detective_sample";
+                    state.originalWidth = img.naturalWidth || 1920;
+                    state.originalHeight = img.naturalHeight || 1080;
+                    state.originalSizeKB = 450;
+
+                    state.targetWidth = state.originalWidth;
+                    state.targetHeight = state.originalHeight;
+                    state.offsetX = 0;
+                    state.offsetY = 0;
+
+                    inputWidth.value = state.targetWidth;
+                    inputHeight.value = state.targetHeight;
+
+                    fileNameText.textContent = "anomaly_detective.jpg";
+                    fileOrigDims.textContent = `${state.originalWidth}×${state.originalHeight} px`;
+                    fileInfoBadge.classList.add('active');
+
+                    emptyState.style.display = 'none';
+                    checkerboardWrap.style.display = 'block';
+
+                    updateScale(100, true);
+                    updateAspectDisplay();
+                    updateBarBadges();
+                    updateFramingHint();
+                    renderPreview();
+                };
+                img.src = "images/anomaly_detective.jpg";
+            }
+
+            // ==========================================
+            // Scale Calculation
+            // ==========================================
+            function updateScale(pct, syncInputs) {
+                state.scalePercent = pct;
+                scaleValIndicator.textContent = pct + '%';
+                scaleSlider.value = pct;
+
+                scaleChips.forEach(c => {
+                    c.classList.toggle('active', parseInt(c.getAttribute('data-scale'), 10) === pct);
+                });
+
+                if (syncInputs && state.image) {
+                    const factor = pct / 100;
+                    const w = Math.round(state.originalWidth * factor);
+                    const h = Math.round(state.originalHeight * factor);
+                    state.targetWidth = w;
+                    state.targetHeight = h;
+                    inputWidth.value = w;
+                    inputHeight.value = h;
+                    updateAspectDisplay();
+                    updateBarBadges();
+                    renderPreview();
+                }
+            }
+
+            function updateScaleFromDims() {
+                if (!state.image) return;
+                const pct = Math.round((state.targetWidth / state.originalWidth) * 100);
+                state.scalePercent = pct;
+                scaleValIndicator.textContent = pct + '%';
+                scaleSlider.value = Math.min(400, Math.max(10, pct));
+                scaleChips.forEach(c => {
+                    c.classList.toggle('active', parseInt(c.getAttribute('data-scale'), 10) === pct);
+                });
+            }
+
+            function updateLockText() {
+                if (state.aspectRatioLocked) {
+                    lockStatusText.textContent = currentLang === 'tr' ? "Oran Korunuyor (Bozmadan)" : "Aspect Ratio Locked";
+                } else {
+                    lockStatusText.textContent = currentLang === 'tr' ? "Serbest Boyutlandırma" : "Free Transform";
+                }
+            }
+
+            function updateAspectDisplay() {
+                const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+                const w = state.targetWidth || 1920;
+                const h = state.targetHeight || 1080;
+                const d = gcd(w, h);
+                const rw = w / d;
+                const rh = h / d;
+                
+                // Standard readable ratios
+                const dec = +(w / h).toFixed(2);
+                if (dec === 1.78) {
+                    aspectRatioDisplay.textContent = "16:9";
+                } else if (dec === 1.33) {
+                    aspectRatioDisplay.textContent = "4:3";
+                } else if (dec === 1) {
+                    aspectRatioDisplay.textContent = "1:1";
+                } else if (dec === 0.56) {
+                    aspectRatioDisplay.textContent = "9:16";
+                } else if (dec === 2.33 || dec === 2.37) {
+                    aspectRatioDisplay.textContent = "21:9";
+                } else {
+                    aspectRatioDisplay.textContent = `${rw}:${rh} (${dec})`;
+                }
+            }
+
+            function updateBarBadges() {
+                barOrigRes.textContent = state.image ? `${state.originalWidth} × ${state.originalHeight}` : '—';
+                barTargetRes.textContent = `${state.targetWidth} × ${state.targetHeight}`;
+
+                if (state.image) {
+                    const origPixels = state.originalWidth * state.originalHeight;
+                    const targetPixels = state.targetWidth * state.targetHeight;
+                    const pctDiff = Math.round(((targetPixels - origPixels) / origPixels) * 100);
+                    
+                    if (pctDiff > 0) {
+                        barDiffBadge.className = 'res-diff-badge up';
+                        barDiffBadge.textContent = `+${pctDiff}%`;
+                    } else if (pctDiff < 0) {
+                        barDiffBadge.className = 'res-diff-badge down';
+                        barDiffBadge.textContent = `${pctDiff}%`;
+                    } else {
+                        barDiffBadge.className = 'res-diff-badge down';
+                        barDiffBadge.textContent = `0%`;
+                    }
+                } else {
+                    barDiffBadge.textContent = '100%';
+                }
+            }
+
+            function updateFramingHint() {
+                if (state.fitMode === 'cover' && state.image) {
+                    framingHint.classList.add('active');
+                    checkerboardWrap.classList.add('can-drag');
+                } else {
+                    framingHint.classList.remove('active');
+                    checkerboardWrap.classList.remove('can-drag');
+                }
+            }
+
+            function applyZoom() {
+                zoomLevelText.textContent = Math.round(state.zoom * 100) + '%';
+                checkerboardWrap.style.transform = `scale(${state.zoom})`;
+            }
+
+            // ==========================================
+            // Canvas Rendering Engine
+            // ==========================================
+            function renderPreview() {
+                if (!state.image) return;
+
+                const tw = Math.max(1, state.targetWidth);
+                const th = Math.max(1, state.targetHeight);
+
+                previewCanvas.width = tw;
+                previewCanvas.height = th;
+
+                ctx.clearRect(0, 0, tw, th);
+
+                const iw = state.originalWidth;
+                const ih = state.originalHeight;
+
+                if (state.fitMode === 'stretch') {
+                    // Direct stretch to dimensions
+                    ctx.drawImage(state.image, 0, 0, tw, th);
+                } 
+                else if (state.fitMode === 'contain') {
+                    // Fill background if not transparent
+                    if (!state.containTransparent) {
+                        ctx.fillStyle = state.containBgColor;
+                        ctx.fillRect(0, 0, tw, th);
+                    }
+
+                    const imgRatio = iw / ih;
+                    const boxRatio = tw / th;
+
+                    let dw, dh, dx, dy;
+                    if (imgRatio > boxRatio) {
+                        dw = tw;
+                        dh = tw / imgRatio;
+                        dx = 0;
+                        dy = (th - dh) / 2;
+                    } else {
+                        dh = th;
+                        dw = th * imgRatio;
+                        dx = (tw - dw) / 2;
+                        dy = 0;
+                    }
+                    ctx.drawImage(state.image, dx, dy, dw, dh);
+                } 
+                else if (state.fitMode === 'cover') {
+                    // Scale image so it covers the entire target canvas
+                    const scale = Math.max(tw / iw, th / ih);
+                    const dw = iw * scale;
+                    const dh = ih * scale;
+
+                    // Base centered offset plus user drag offset
+                    const baseX = (tw - dw) / 2;
+                    const baseY = (th - dh) / 2;
+
+                    // Constrain user drag offsets so image doesn't expose blank gaps
+                    const minX = tw - dw;
+                    const maxX = 0;
+                    const minY = th - dh;
+                    const maxY = 0;
+
+                    let targetX = baseX + state.offsetX;
+                    let targetY = baseY + state.offsetY;
+
+                    // Clamp
+                    if (dw >= tw) {
+                        targetX = Math.min(maxX, Math.max(minX, targetX));
+                    }
+                    if (dh >= th) {
+                        targetY = Math.min(maxY, Math.max(minY, targetY));
+                    }
+
+                    ctx.drawImage(state.image, targetX, targetY, dw, dh);
+                }
+
+                updateSizeEstimate();
+            }
+
+            // ==========================================
+            // Output Size Estimator
+            // ==========================================
+            let estimateDebounce = null;
+            function updateSizeEstimate() {
+                if (!state.image) {
+                    sizeEstimateVal.textContent = "~0 KB";
+                    return;
+                }
+                clearTimeout(estimateDebounce);
+                estimateDebounce = setTimeout(() => {
+                    const mime = state.exportFormat === 'png' ? 'image/png' : 
+                                 (state.exportFormat === 'webp' ? 'image/webp' : 'image/jpeg');
+                    previewCanvas.toBlob((blob) => {
+                        if (!blob) return;
+                        const kb = Math.round(blob.size / 1024);
+                        if (kb > 1024) {
+                            sizeEstimateVal.textContent = `~${(kb / 1024).toFixed(2)} MB`;
+                        } else {
+                            sizeEstimateVal.textContent = `~${kb} KB`;
+                        }
+                    }, mime, state.exportQuality);
+                }, 150);
+            }
+
+            // ==========================================
+            // Export & Download
+            // ==========================================
+            function downloadResult() {
+                if (!state.image) {
+                    showToast(currentLang === 'tr' ? 'Lütfen önce bir görsel yükleyin!' : 'Please upload an image first!');
+                    return;
+                }
+
+                const mime = state.exportFormat === 'png' ? 'image/png' : 
+                             (state.exportFormat === 'webp' ? 'image/webp' : 'image/jpeg');
+                const ext = state.exportFormat;
+
+                const link = document.createElement('a');
+                link.download = `${state.fileName}_${state.targetWidth}x${state.targetHeight}.${ext}`;
+                link.href = previewCanvas.toDataURL(mime, state.exportQuality);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                showToast(currentLang === 'tr' ? 'Görsel başarıyla indirildi!' : 'Image downloaded successfully!');
+            }
+
+            function copyToClipboard() {
+                if (!state.image) {
+                    showToast(currentLang === 'tr' ? 'Lütfen önce bir görsel yükleyin!' : 'Please upload an image first!');
+                    return;
+                }
+
+                previewCanvas.toBlob((blob) => {
+                    if (!blob) return;
+                    try {
+                        const item = new ClipboardItem({ 'image/png': blob });
+                        navigator.clipboard.write([item]).then(() => {
+                            showToast(currentLang === 'tr' ? 'Görsel panoya kopyalandı!' : 'Image copied to clipboard!');
+                        }).catch(() => {
+                            showToast(currentLang === 'tr' ? 'Kopyalama desteklenmiyor, indirmeyi deneyin.' : 'Clipboard copy not supported, try downloading.');
+                        });
+                    } catch (err) {
+                        showToast(currentLang === 'tr' ? 'Kopyalama desteklenmiyor, indirmeyi deneyin.' : 'Clipboard copy not supported, try downloading.');
+                    }
+                }, 'image/png');
+            }
+
+            function showToast(msg) {
+                toastNotify.textContent = msg;
+                toastNotify.classList.add('show');
+                setTimeout(() => {
+                    toastNotify.classList.remove('show');
+                }, 2800);
+            }
+
+            // ==========================================
+            // Language & Theme Handlers
+            // ==========================================
+            let currentLang = localStorage.getItem('galaverse-lang') || 'en';
+
+            function applyTranslations(lang) {
+                currentLang = lang;
+                document.querySelectorAll('[data-tr]').forEach(el => {
+                    const text = el.getAttribute(`data-${lang}`);
+                    if (text) el.innerHTML = text;
+                });
+
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+                });
+
+                updateLockText();
+            }
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.getAttribute('data-lang');
+                    localStorage.setItem('galaverse-lang', lang);
+                    applyTranslations(lang);
+                });
+            });
+
+            // Theme toggle
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('galaverse-theme', newTheme);
+                });
+            }
+
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const navLinks = document.getElementById('nav-links');
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', () => {
+                    menuToggle.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+            }
+
+            // Start
+            init();
+            applyTranslations(currentLang);
+
+        })();
+    </script>
+</body>
+</html>
